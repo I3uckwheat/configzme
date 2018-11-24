@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage})
 
 router.get('/', (req, res) => {
   res.send('homepage');
@@ -24,10 +27,10 @@ router.delete('/:username', (req, res) => {
 
 // routes for file operations
 router.get('/:username/:file', (req, res) => {
-  res.send(`Route for "${req.params.username}'s" "${req.params.file}" file`);
 });
 
-router.put('/:username/:file', (req, res) => {
+router.post('/:username/:file', upload.single('upload'), (req, res) => {
+  console.log(req.file.buffer.toString('utf8'));
   res.send(`Rotue for uploading a new file for ${req.params.username}, with the name of ${req.params.file}`);
 });
 
