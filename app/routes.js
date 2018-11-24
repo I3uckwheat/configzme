@@ -5,29 +5,33 @@ router.get('/', (req, res) => {
   res.send('homepage');
 });
 
-// routes for user operations
-router.post('/', (req, res) => {
-  res.send(`Route for creating a new user with username and password, and email`);
+const userController = require('./controllers/userController');
+
+// routes for username operations
+router.post('/', userController.register);
+
+router.get('/:username', (req, res) => {
+  res.send(`Route for ${req.params.username}'s config/settings (UI)`);
 });
 
-router.get('/:user', (req, res) => {
-  res.send(`Route for ${req.params.user}'s config/settings (UI)`);
+router.post('/:username', userController.authenticate, (req, res) => {
+  res.send('authenticated');
 });
 
-router.delete('/:user', (req, res) => {
-  res.send(`Route for deleting a user at the name of ${req.params.user}`)
+router.delete('/:username', (req, res) => {
+  res.send(`Route for deleting a username at the name of ${req.params.username}`)
 });
 
 // routes for file operations
-router.get('/:user/:file', (req, res) => {
-  res.send(`Route for "${req.params.user}'s" "${req.params.file}" file`);
+router.get('/:username/:file', (req, res) => {
+  res.send(`Route for "${req.params.username}'s" "${req.params.file}" file`);
 });
 
-router.put('/:user/:file', (req, res) => {
-  res.send(`Rotue for uploading a new file for ${req.params.user}, with the name of ${req.params.file}`);
+router.put('/:username/:file', (req, res) => {
+  res.send(`Rotue for uploading a new file for ${req.params.username}, with the name of ${req.params.file}`);
 });
 
-router.delete('/:user/:file', (req, res) => {
+router.delete('/:username/:file', (req, res) => {
   res.send(`Route for deleting a file at the name of ${req.paramsfile}`);
 });
 
