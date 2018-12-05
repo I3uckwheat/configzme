@@ -21,7 +21,7 @@ exports.register = (req, res, next) => {
   });
 }
 
-// Authenticats with basic auth
+// Authenticates with basic auth
 exports.authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization');
   const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
