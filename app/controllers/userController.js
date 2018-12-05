@@ -31,21 +31,31 @@ exports.register = (req, res, next) => {
   });
 }
 
-exports.addFile = async (req, res, next) => {
+exports.addFile = async (req, res) => {
 
+  const fileContents = req.file.buffer.toString();
 
-  const result = await User.updateOne({
-    $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
-  },
-  {
-    $addToSet: {
-      files: {
-        name: req.params.file,
-        contents: "fuck you"
+  try {
+    const result = await User.updateOne({
+      $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
+    },
+    {
+      $addToSet: {
+        files: {
+          name: req.params.file,
+          contents: fileContents
+        }
       }
-    }
-  });
+    });
 
-  if (result.nModified === 0) return res.send(`You already have a file named ${req.params.file}`);
-  return res.send(`${req.params.file} uploaded`)
+    if (result.nModified === 0) return res.send(`You already have a file named ${req.params.file}`);
+    return res.send(`${req.params.file} uploaded`)
+  } catch (e) {
+    console.log(e);
+    res.send('err');
+  }
+}
+
+exports.getFile = async (req, res, next) => {
+
 }
