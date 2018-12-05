@@ -5,6 +5,6 @@ exports.extractUserCredentials = {
     const credentials = authHeader.split(' ')[1];
 
     // Username and Passwrod are in the format 'username:password'
-    return new Buffer.from(credentials, 'base64').toString('utf8').split(':');
+    return new Buffer.from(credentials, 'base64').toString('utf8').split(/:(.+)/, 2);
   }
 }
