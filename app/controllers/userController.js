@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const { extractUserCredentials } = require('../helpers');
+const {
+  extractUserCredentials
+} = require('../helpers');
 const User = mongoose.model('User');
 
 exports.register = (req, res, next) => {
@@ -7,27 +9,43 @@ exports.register = (req, res, next) => {
   const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
   // TODO - validation of input
-  const user = new User({ username: username, active: true });
+  const user = new User({
+    username: username,
+    active: true
+  });
 
   User.register(user, password, (err, user) => {
-    if (err) console.error(err);
+    if (err) {
+      return res.send(err.message);
+    }
 
     const authenticate = User.authenticate();
     authenticate(username, password, (err, result) => {
-      if (err) console.error(err);
+      if (err) {
+        console.error(err);
+        return res.send(err);
+      }
 
-      console.log(result);
+      res.send('Registered');
     });
   });
 }
 
-// Authenticates with basic auth
-exports.authenticate = async (req, res, next) => {
-  const authHeader = req.get('Authorization');
-  const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
+exports.addFile = async (req, res, next) => {
 
-  const { user } = await User.authenticate()(username, password);
-  if (user) return next();
-  // TODO - make this a better error
-  return res.status(403).send('Access Denied');
+
+  const result = await User.updateOne({
+    $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
+  },
+  {
+    $addToSet: {
+      files: {
+        name: req.params.file,
+        contents: "fuck you"
+      }
+    }
+  });
+
+  if (result.nModified === 0) return res.send(`You already have a file named ${req.params.file}`);
+  return res.send(`${req.params.file} uploaded`)
 }

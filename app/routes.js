@@ -9,33 +9,15 @@ router.get('/', (req, res) => {
 });
 
 const userController = require('./controllers/userController');
+const authController = require('./controllers/authController');
 
 // routes for username operations
 router.post('/', userController.register);
 
-router.get('/:username', (req, res) => {
-  res.send(`Route for ${req.params.username}'s config/settings (UI)`);
-});
+router.post('/:file', authController.authenticate, upload.single(), userController.addFile);
 
-router.post('/:username', userController.authenticate, (req, res) => {
+router.get('/:file', authController.authenticate, (req, res) => {
   res.send('authenticated');
-});
-
-router.delete('/:username', (req, res) => {
-  res.send(`Route for deleting a username at the name of ${req.params.username}`)
-});
-
-// routes for file operations
-router.get('/:username/:file', (req, res) => {
-});
-
-router.post('/:username/:file', upload.single('upload'), (req, res) => {
-  console.log(req.file.buffer.toString('utf8'));
-  res.send(`Rotue for uploading a new file for ${req.params.username}, with the name of ${req.params.file}`);
-});
-
-router.delete('/:username/:file', (req, res) => {
-  res.send(`Route for deleting a file at the name of ${req.paramsfile}`);
 });
 
 module.exports = router;
