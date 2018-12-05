@@ -9,7 +9,11 @@ exports.authenticate = async (req, res, next) => {
 
   const { user } = await User.authenticate()(username, password);
   if (user) {
-    req.user = user;
+    req.user = {
+      _id: user._id,
+      username: user.username,
+      files: user.files
+    };
     return next();
   }
   // TODO - make this a better error

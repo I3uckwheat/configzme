@@ -32,7 +32,6 @@ exports.register = (req, res, next) => {
 }
 
 exports.addFile = async (req, res) => {
-
   const fileContents = req.file.buffer.toString();
 
   try {
@@ -57,5 +56,6 @@ exports.addFile = async (req, res) => {
 }
 
 exports.getFile = async (req, res, next) => {
-
+  const file = req.user.files.find(file => file.name === req.params.file)
+  res.send(file.contents);
 }
