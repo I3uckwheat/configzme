@@ -55,6 +55,23 @@ exports.addFile = async (req, res) => {
   }
 }
 
+exports.updateFile = async (req, res) => {
+  const subDocumentId = req.user.files.find(file => file.name === req.params.file)._id;
+  const fileContents = req.file.buffer.toString();
+
+  try {
+    const user = await User.findById(req.user._id)
+    const file = user.files.id(subDocumentId);
+    file.contents = fileContents;
+
+    await user.save()
+    res.send('updated');
+  } catch (e) {
+    console.log(e);
+    res.status.send('error');
+  }
+}
+
 exports.getAllFiles = async (req, res) => {
   const filenames = req.user.files.map(file => {
     return file.name;
@@ -65,7 +82,6 @@ exports.getAllFiles = async (req, res) => {
 
 exports.getFile = async (req, res, next) => {
   const file = req.user.files.find(file => file.name === req.params.file)
-  console.log(file);
   if (file) return res.send(file.contents);
   return res.send(`no file called ${req.params.file} found`)
 }
