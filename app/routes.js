@@ -13,9 +13,10 @@ const authController = require('./controllers/authController');
 
 // routes for username operations
 router.post('/', userController.register);
+router.get('/files', authController.authenticate, userController.getAllFiles);
 
 router.post('/:file', authController.authenticate, upload.single('file'), userController.addFile);
-
 router.get('/:file', authController.authenticate, userController.getFile);
+router.delete('/:file', authController.authenticate, userController.deleteFile);
 
 module.exports = router;

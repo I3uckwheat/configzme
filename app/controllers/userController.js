@@ -55,7 +55,34 @@ exports.addFile = async (req, res) => {
   }
 }
 
+exports.getAllFiles = async (req, res) => {
+  const filenames = req.user.files.map(file => {
+    return file.name;
+  });
+
+  res.send(filenames);
+}
+
 exports.getFile = async (req, res, next) => {
   const file = req.user.files.find(file => file.name === req.params.file)
-  res.send(file.contents);
+  console.log(file);
+  if (file) return res.send(file.contents);
+  return res.send(`no file called ${req.params.file} found`)
+}
+
+exports.deleteFile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const file = user.files.find((file => file.name === req.params.file));
+  if (file) {
+    try {
+      user.files.id(file._id).remove();
+      await user.save();
+      return res.send(`${req.params.file} deleted`);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send('there has been an error');
+    }
+  }
+
+  return res.send('no file found to delete');
 }
