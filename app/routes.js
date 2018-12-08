@@ -15,7 +15,6 @@ router.get('/*', (req, res, next) => {
 
 router.post('/', userController.register);
 router.get('/files', authController.authenticate, userController.getAllFiles);
-
 router.get('/:file', authController.authenticate, userController.getFile);
 router.post('/:file', authController.authenticate, upload.single('file'), userController.addFile);
 router.patch('/:file', authController.authenticate, upload.single('file'), userController.updateFile);
