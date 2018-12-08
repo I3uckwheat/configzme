@@ -7,11 +7,12 @@ const upload = multer({storage: storage})
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
-router.get('/', (req, res) => {
-  res.send('homepage');
+router.get('/*', (req, res, next) => {
+  const authHeader = req.get('Authorization');
+  if (!authHeader) return res.send('index');
+  return next();
 });
 
-// routes for username operations
 router.post('/', userController.register);
 router.get('/files', authController.authenticate, userController.getAllFiles);
 
