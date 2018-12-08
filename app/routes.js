@@ -4,12 +4,12 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage})
 
+const userController = require('./controllers/userController');
+const authController = require('./controllers/authController');
+
 router.get('/', (req, res) => {
   res.send('homepage');
 });
-
-const userController = require('./controllers/userController');
-const authController = require('./controllers/authController');
 
 // routes for username operations
 router.post('/', userController.register);
