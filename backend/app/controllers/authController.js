@@ -4,18 +4,23 @@ const User = mongoose.model('User');
 
 // Authenticates with basic auth
 exports.authenticate = async (req, res, next) => {
-  const authHeader = req.get('Authorization');
-  const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
+  // TODO - Allow session validation for browsers
+  try {
+    const authHeader = req.get('Authorization');
+    const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
-  const { user } = await User.authenticate()(username, password);
-  if (user) {
-    req.user = {
-      _id: user._id,
-      username: user.username,
-      files: user.files
-    };
-    return next();
+    const { user } = await User.authenticate()(username, password);
+    if (user) {
+      req.user = {
+        _id: user._id,
+        username: user.username,
+        files: user.files
+      };
+      return next();
+    }
+    // TODO - make this a better error
+    return res.status(403).send('Access Denied');
+  } catch (e) {
+    console.error(`Error -> URL: ${req.url} \n\n`, e);
   }
-  // TODO - make this a better error
-  return res.status(403).send('Access Denied');
 }
