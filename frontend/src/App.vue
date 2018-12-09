@@ -1,12 +1,30 @@
 <template>
   <div id="app">
     <div id="nav">
+      <p>data: {{data}}</p>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      data: ""
+    }
+  },
+  created() {
+    fetch('http://127.0.0.1:7777/test?api=true', {mode: 'no-cors'})
+      .then(res => res.json())
+      .then(res => this.data = res.data)
+      .catch(console.log)
+  }
+}
+</script>
+
 
 <style>
 #app {

@@ -20,7 +20,7 @@ router.get('/*', (req, res, next) => {
 
 router.use('public', 
   express.static(`${__dirname}/public/`, {fallthrough: true}),
-  (req, res) => res.sendfile(`${__dirname}/public/index.html`)
+  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`, {fallthrough: true})
 );
 
 router.get('api', (req, res) => res.send('console directions'));
