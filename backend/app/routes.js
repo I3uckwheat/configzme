@@ -8,10 +8,10 @@ const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
 router.get('/*', (req, res, next) => {
-  const userAgent = req.get('user-agent').split('/')[0];
   const authHeader = req.get('Authorization');
+  const userAgent = req.get('user-agent').split('/')[0];
 
-  if (userAgent !== 'curl') return res.send('index');
+  if (userAgent !== 'curl') return res.sendFile(`${__dirname}/public${req.url}`);
   if (!authHeader) return res.send('info');
   return next();
 });
