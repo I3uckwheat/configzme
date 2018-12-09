@@ -20,7 +20,7 @@ router.get('/*', (req, res, next) => {
 
 router.use('public', 
   express.static(`${__dirname}/public/`, {fallthrough: true}),
-  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`, {fallthrough: true})
+  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
 );
 
 router.get('api', (req, res) => res.send('console directions'));
@@ -30,5 +30,10 @@ router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
 router.patch('api/:file', authController.authenticate, upload.single('file'), userController.updateFile);
 router.delete('api/:file', authController.authenticate, userController.deleteFile);
+
+//  TODO - API 404
+router.use('*', (req, res) => {
+  res.status(404).send('not found');
+});
 
 module.exports = router;
