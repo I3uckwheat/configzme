@@ -8,19 +8,27 @@ const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
 router.get('/*', (req, res, next) => {
-  const authHeader = req.get('Authorization');
   const userAgent = req.get('user-agent').split('/')[0];
+  if (req.query.api === 'true' || userAgent === 'curl') {
+    req.url = `api${req.url}`
+    return next();
+  }
 
-  if (userAgent !== 'curl') return res.sendFile(`${__dirname}/public${req.url}`);
-  if (!authHeader) return res.send('info');
-  return next();
+  req.url = `public${req.url}`
+  next();
 });
 
-router.post('/', userController.register);
-router.get('/files', authController.authenticate, userController.getAllFiles);
-router.get('/:file', authController.authenticate, userController.getFile);
-router.post('/:file', authController.authenticate, upload.single('file'), userController.addFile);
-router.patch('/:file', authController.authenticate, upload.single('file'), userController.updateFile);
-router.delete('/:file', authController.authenticate, userController.deleteFile);
+router.use('public', 
+  express.static(`${__dirname}/public/`, {fallthrough: true}),
+  (req, res) => res.sendfile(`${__dirname}/public/index.html`)
+);
+
+router.get('api', (req, res) => res.send('console directions'));
+router.post('api', userController.register);
+router.get('api/files', authController.authenticate, userController.getAllFiles);
+router.get('api/:file', authController.authenticate, userController.getFile);
+router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
+router.patch('api/:file', authController.authenticate, upload.single('file'), userController.updateFile);
+router.delete('api/:file', authController.authenticate, userController.deleteFile);
 
 module.exports = router;
