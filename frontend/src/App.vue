@@ -17,7 +17,7 @@ export default {
     }
   },
   created() {
-    fetch('http://127.0.0.1:7777/test?api=true', {mode: 'no-cors'})
+    fetch('/test?api=true')
       .then(res => res.json())
       .then(res => this.data = res.data)
       .catch(console.log)
