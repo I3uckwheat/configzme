@@ -7,6 +7,7 @@ const upload = multer({storage: storage})
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
+
 router.get('/*', (req, res, next) => {
   const userAgent = req.get('user-agent').split('/')[0];
   if (req.query.api === 'true' || userAgent === 'curl') {
@@ -18,10 +19,19 @@ router.get('/*', (req, res, next) => {
   next();
 });
 
-router.use('public', 
-  express.static(`${__dirname}/public/`, {fallthrough: true}),
-  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
-);
+router.get('api/test', (req, res) => {
+  res.send('test success');
+})
+
+if (process.env.NODE_ENV === 'development') {
+  router.use('public', (req, res) => res.send('DEVELOPMENT ENV'));
+} else {
+  router.use('public', 
+    express.static(`{$__dirname}/public/`, {fallthrough: true}),
+    express.static(`${__dirname}/public/configz-frontend`, {fallthrough: true}),
+    (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
+  );
+}
 
 router.get('api', (req, res) => res.send('console directions'));
 router.post('api', userController.register);
