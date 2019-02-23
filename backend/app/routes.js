@@ -8,7 +8,7 @@ const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
 
-router.get('/*', (req, res, next) => {
+router.use((req, res, next) => {
   const userAgent = req.get('user-agent').split('/')[0];
   if (req.query.api === 'true' || userAgent === 'curl') {
     req.url = `api${req.url}`
@@ -33,17 +33,19 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-router.get('api', (req, res) => res.send('console directions'));
-router.post('api', userController.register);
 router.get('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
 router.patch('api/:file', authController.authenticate, upload.single('file'), userController.updateFile);
 router.delete('api/:file', authController.authenticate, userController.deleteFile);
 
+router.get('api', (req, res) => {res.send('console directions')});
+router.post('api', userController.register);
+
 //  TODO - API 404
 router.use('*', (req, res) => {
-  res.status(404).send('not found');
+  res.status(404).send('404 not found');
 });
 
 module.exports = router;
+
