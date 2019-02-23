@@ -20,7 +20,8 @@ exports.authenticate = async (req, res, next) => {
     }
     // TODO - make this a better error
     return res.status(403).send('Access Denied');
-  } catch (e) {
-    console.error(`Error -> URL: ${req.url} \n\n`, e);
+  } catch (err) {
+    console.error(`Error -> URL: ${req.url} \n\n`, err);
+    next(err)
   }
 }
