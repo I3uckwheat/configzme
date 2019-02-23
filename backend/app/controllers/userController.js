@@ -1,40 +1,44 @@
 const mongoose = require('mongoose');
+const User = mongoose.model('User');
+
 const {
   extractUserCredentials
 } = require('../helpers');
-const User = mongoose.model('User');
 
 exports.register = (req, res, next) => {
-  const authHeader = req.get('Authorization');
-  const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
+  try {
+    const authHeader = req.get('Authorization');
+    const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
-  // TODO - validation of input
-  const user = new User({
-    username: username,
-    active: true
-  });
+    // TODO - validation of input
+    const user = new User({
+      username: username,
+      active: true
+    });
 
-  User.register(user, password, (err, user) => {
-    if (err) {
-      return res.send(err.message);
-    }
-
-    const authenticate = User.authenticate();
-    authenticate(username, password, (err, result) => {
+    User.register(user, password, (err, user) => {
       if (err) {
-        console.error(err);
-        return res.send(err);
+        throw err;
       }
 
-      res.send('Registered');
+      const authenticate = User.authenticate();
+      authenticate(username, password, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        res.send('Registered');
+      });
     });
-  });
+  } catch (err) {
+    next(err)
+  }
 }
 
 exports.addFile = async (req, res) => {
-  const fileContents = req.file.buffer.toString();
-
   try {
+    const fileContents = req.file.buffer.toString();
+
     const result = await User.updateOne({
       $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
     },
@@ -49,35 +53,37 @@ exports.addFile = async (req, res) => {
 
     if (result.nModified === 0) return res.send(`You already have a file named ${req.params.file}`);
     return res.send(`${req.params.file} uploaded`)
-  } catch (e) {
-    console.log(e);
-    res.send('err');
+  } catch (err) {
+    next(err);
   }
 }
 
 exports.updateFile = async (req, res) => {
-  const subDocumentId = req.user.files.find(file => file.name === req.params.file)._id;
-  const fileContents = req.file.buffer.toString();
-
   try {
+    const subDocumentId = req.user.files.find(file => file.name === req.params.file)._id;
+    const fileContents = req.file.buffer.toString();
+
     const user = await User.findById(req.user._id)
     const file = user.files.id(subDocumentId);
     file.contents = fileContents;
 
     await user.save()
     res.send('updated');
-  } catch (e) {
-    console.log(e);
-    res.status.send('error');
+  } catch (err) {
+    next(err)
   }
 }
 
 exports.getAllFiles = async (req, res) => {
-  const filenames = req.user.files.map(file => {
-    return file.name;
-  });
+  try {
+    const filenames = req.user.files.map(file => {
+      return file.name;
+    });
 
-  res.send(filenames);
+    res.send(filenames);
+  } catch (err) {
+    next(err);
+  }
 }
 
 exports.getFile = async (req, res, next) => {
@@ -87,18 +93,17 @@ exports.getFile = async (req, res, next) => {
 }
 
 exports.deleteFile = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const file = user.files.find((file => file.name === req.params.file));
-  if (file) {
-    try {
+  try {
+    const user = await User.findById(req.user._id);
+    const file = user.files.find((file => file.name === req.params.file));
+    if (file) {
       user.files.id(file._id).remove();
       await user.save();
       return res.send(`${req.params.file} deleted`);
-    } catch (e) {
-      console.log(e);
-      res.status(500).send('there has been an error');
     }
-  }
 
-  return res.send('no file found to delete');
+    return res.send('no file found to delete');
+  } catch (err) {
+    next(err);
+  }
 }

@@ -12,4 +12,10 @@ require('./handlers/passport');
 const routes = require('./routes');
 app.use('/', routes);
 
+// Error handling
+app.use((err, req, res, next) => {
+  console.log(err);
+  next(err);
+});
+
 module.exports = app;
