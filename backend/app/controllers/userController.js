@@ -16,17 +16,12 @@ exports.getAllFiles = async (req, res, next) => {
 exports.getFile = async (req, res, next) => {
   const file = req.user.files.find(file => file.name === req.params.file)
   if (file) return res.send(file.contents);
-  return res.send(`no file called ${req.params.file} found`)
+  return res.send(`No file called ${req.params.file} found \n`)
 }
 
 exports.addFile = async (req, res, next) => {
   try {
-    try {
     const fileContents = req.file.buffer.toString();
-    } catch (error) {
-      return res.send("A file must be sent with a POST request\n");
-    }
-    
     const result = await User.updateOne({
       $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
     },
@@ -39,8 +34,8 @@ exports.addFile = async (req, res, next) => {
       }
     });
 
-    if (result.nModified === 0) return res.send(`You already have a file named ${req.params.file}`);
-    return res.send(`${req.params.file} uploaded`)
+    if (result.nModified === 0) return res.send(`You already have a file named "${req.params.file}"\n`);
+    return res.send(`"${req.params.file}" uploaded\n`)
   } catch (err) {
     next(err);
   }
@@ -56,7 +51,7 @@ exports.updateFile = async (req, res, next) => {
     file.contents = fileContents;
 
     await user.save()
-    res.send('updated');
+    res.send(`Updated: "${req.params.file}"\n`);
   } catch (err) {
     next(err)
   }
@@ -69,10 +64,10 @@ exports.deleteFile = async (req, res) => {
     if (file) {
       user.files.id(file._id).remove();
       await user.save();
-      return res.send(`${req.params.file} deleted`);
+      return res.send(`Deleted: "${req.params.file}"\n`);
     }
 
-    return res.send('no file found to delete');
+    return res.send("No file found to delete\n");
   } catch (err) {
     next(err);
   }

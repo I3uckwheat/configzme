@@ -3,12 +3,8 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage})
 
 exports.upload = (req, res, next) => {
-  upload.single('file')(req, res, err => {
-    if (err) {
-      return res.send('');
-    }
-
-    next();
-  });
+  // TODO - handle wrong upload name
+  // TODO - handle types of files
+  upload.single('file')(req, res, next);
 }
 
