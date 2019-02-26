@@ -6,21 +6,22 @@ const upload = multer({storage: storage})
 
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
+const uploadController = require('./controllers/uploadController');
 
 router.use((req, res, next) => {
-  const userAgent = req.get('user-agent').split('/')[0];
-  if (req.query.api === 'true' || userAgent === 'curl') {
-    req.url = `api${req.url}`
-    return next();
+  try {
+    const userAgent = req.get('user-agent').split('/')[0];
+    if (req.query.api === 'true' || userAgent === 'curl') {
+      req.url = `api${req.url}`
+      return next();
+    }
+
+    req.url = `public${req.url}`
+    next();
+  } catch(error) {
+    next(error);
   }
-
-  req.url = `public${req.url}`
-  next();
 });
-
-router.get('api/test', (req, res) => {
-  res.send('test success');
-})
 
 if (process.env.NODE_ENV === 'development') {
   router.use('public', (req, res) => res.send('DEVELOPMENT ENV'));
@@ -34,13 +35,14 @@ if (process.env.NODE_ENV === 'development') {
 
 router.get('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
-router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
-router.patch('api/:file', authController.authenticate, upload.single('file'), userController.updateFile);
+router.post('api/:file', authController.authenticate, uploadController.upload, userController.addFile);
+router.patch('api/:file', authController.authenticate, uploadController.upload, userController.updateFile);
 router.delete('api/:file', authController.authenticate, userController.deleteFile);
 
-// TODO - combine these requests to remove the need for `-X POST` on register
-router.post('api', userController.register);
-router.get('api', (req, res) => {
+router.post('api', authController.register);
+
+// Essentially api 404
+router.use('api', (req, res) => {
   const directions = (
 `------------------------------------------------------------
 Welcome to configz.me!
@@ -70,7 +72,6 @@ curl -u <username> -X DELETE configz.me/<filename>
   res.send(directions)
 });
 
-//  TODO - API 404
 router.use('*', (req, res) => {
   res.status(404).send('404 not found');
 });

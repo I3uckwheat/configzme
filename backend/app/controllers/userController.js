@@ -1,40 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-const {
-  extractUserCredentials
-} = require('../helpers');
-
-exports.register = (req, res, next) => {
-  try {
-    const authHeader = req.get('Authorization');
-    const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
-
-    // TODO - validation of input
-    const user = new User({
-      username: username,
-      active: true
-    });
-
-    User.register(user, password, (err, user) => {
-      if (err) {
-        throw err;
-      }
-
-      const authenticate = User.authenticate();
-      authenticate(username, password, (err, result) => {
-        if (err) {
-          throw err;
-        }
-
-        res.send('Registered');
-      });
-    });
-  } catch (err) {
-    next(err)
-  }
-}
-
 exports.addFile = async (req, res) => {
   try {
     const fileContents = req.file.buffer.toString();
