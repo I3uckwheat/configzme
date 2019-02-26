@@ -1,4 +1,3 @@
-// TODO refactor to middleware
 exports.extractUserCredentials = {
   fromBasicAuth(authHeader) {
     // get credentials from basic auth headers
