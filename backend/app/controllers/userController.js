@@ -1,6 +1,24 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
+exports.getAllFiles = async (req, res, next) => {
+  try {
+    const filenames = req.user.files.map(file => {
+      return file.name;
+    });
+
+    res.json(filenames);
+  } catch (err) {
+    next(err);
+  }
+}
+
+exports.getFile = async (req, res, next) => {
+  const file = req.user.files.find(file => file.name === req.params.file)
+  if (file) return res.send(file.contents);
+  return res.send(`no file called ${req.params.file} found`)
+}
+
 exports.addFile = async (req, res, next) => {
   try {
     try {
@@ -42,24 +60,6 @@ exports.updateFile = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
-
-exports.getAllFiles = async (req, res, next) => {
-  try {
-    const filenames = req.user.files.map(file => {
-      return file.name;
-    });
-
-    res.send(filenames);
-  } catch (err) {
-    next(err);
-  }
-}
-
-exports.getFile = async (req, res, next) => {
-  const file = req.user.files.find(file => file.name === req.params.file)
-  if (file) return res.send(file.contents);
-  return res.send(`no file called ${req.params.file} found`)
 }
 
 exports.deleteFile = async (req, res) => {
