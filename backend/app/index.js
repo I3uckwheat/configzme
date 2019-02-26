@@ -14,7 +14,6 @@ app.use('/', routes);
 
 // Error handling
 app.use((err, req, res, next) => {
-  console.log(err);
   next(err);
 });
 
