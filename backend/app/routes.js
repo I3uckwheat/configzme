@@ -33,8 +33,7 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-router.get('api/files', authController.authenticate, userController.getAllFiles);
-router.post('api/files', authController.authenticate, userController.getAllFiles);
+router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, uploadController.upload, userController.addFile);
 router.patch('api/:file', authController.authenticate, uploadController.upload, userController.updateFile);
