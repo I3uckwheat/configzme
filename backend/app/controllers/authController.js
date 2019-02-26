@@ -8,6 +8,7 @@ exports.authenticate = async (req, res, next) => {
   try {
     const authHeader = req.get('Authorization');
 
+    // If there is no auth header, go to 404
     if (!authHeader) return next('route');
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
@@ -21,17 +22,18 @@ exports.authenticate = async (req, res, next) => {
       return next();
     }
     // TODO - make this a better error
-    return res.status(403).send('Access Denied');
+    return res.status(403).send("Access Denied\n");
   } catch (err) {
     next(err)
   }
 }
 
-exports.register = (req, res, next) => {
+exports.register = async (req, res, next) => {
   try {
     const authHeader = req.get('Authorization');
 
-    if (!authHeader) return next('route');
+    // if there is no authHeader, go to 404
+   //  if (!authHeader) return next('route');
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
     // TODO - validation of input
@@ -40,20 +42,19 @@ exports.register = (req, res, next) => {
       active: true
     });
 
-    User.register(user, password, (err, user) => {
-      if (err) {
-        throw err;
+    try {
+       await User.register(user, password);
+    } catch (error) {
+      if (error.name === "UserExistsError") {
+        return res.send(error.message + "\n"); 
       }
+      throw error
+    }
 
-      const authenticate = User.authenticate();
-      authenticate(username, password, (err, result) => {
-        if (err) {
-          throw err;
-        }
+    const authenticate = User.authenticate();
+    await authenticate(username, password);
 
-        res.send('Registered');
-      });
-    });
+    res.send("Registered\n");
   } catch (err) {
     next(err)
   }
