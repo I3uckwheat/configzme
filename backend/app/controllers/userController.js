@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-exports.addFile = async (req, res) => {
+exports.addFile = async (req, res, next) => {
   try {
+    try {
     const fileContents = req.file.buffer.toString();
-
+    } catch (error) {
+      return res.send("A file must be sent with a POST request\n");
+    }
+    
     const result = await User.updateOne({
       $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
     },
@@ -24,7 +28,7 @@ exports.addFile = async (req, res) => {
   }
 }
 
-exports.updateFile = async (req, res) => {
+exports.updateFile = async (req, res, next) => {
   try {
     const subDocumentId = req.user.files.find(file => file.name === req.params.file)._id;
     const fileContents = req.file.buffer.toString();
@@ -40,7 +44,7 @@ exports.updateFile = async (req, res) => {
   }
 }
 
-exports.getAllFiles = async (req, res) => {
+exports.getAllFiles = async (req, res, next) => {
   try {
     const filenames = req.user.files.map(file => {
       return file.name;
