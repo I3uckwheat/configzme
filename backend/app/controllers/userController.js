@@ -7,7 +7,7 @@ exports.getAllFiles = async (req, res, next) => {
       return file.name;
     });
 
-    res.json(filenames);
+    res.send(JSON.stringify(filenames) + "\n");
   } catch (err) {
     next(err);
   }
