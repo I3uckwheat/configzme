@@ -54,7 +54,7 @@ exports.register = async (req, res, next) => {
     const authenticate = User.authenticate();
     await authenticate(username, password);
 
-    res.send("Registered\n");
+    res.send(`Registered as "${username}"\n`);
   } catch (err) {
     next(err)
   }
