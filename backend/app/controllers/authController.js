@@ -3,8 +3,8 @@ const { extractUserCredentials } = require('../helpers');
 const User = mongoose.model('User');
 
 // Authenticates with basic auth
+// TODO - Allow session validation for browsers
 exports.authenticate = async (req, res, next) => {
-  // TODO - Allow session validation for browsers
   try {
     const authHeader = req.get('Authorization');
 
@@ -21,7 +21,7 @@ exports.authenticate = async (req, res, next) => {
       };
       return next();
     }
-    // TODO - make this a better error
+
     return res.status(403).send("Access Denied\n");
   } catch (err) {
     next(err)
@@ -33,7 +33,7 @@ exports.register = async (req, res, next) => {
     const authHeader = req.get('Authorization');
 
     // if there is no authHeader, go to 404
-   //  if (!authHeader) return next('route');
+    // if (!authHeader) return next('route');
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
     // TODO - validation of input

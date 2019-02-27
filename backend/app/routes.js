@@ -33,11 +33,11 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-router.get('api/files', authController.authenticate, userController.getAllFiles);
+router.get('api/files*', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
-router.post('api/:file', authController.authenticate, uploadController.upload, userController.addFile);
-router.patch('api/:file', authController.authenticate, uploadController.upload, userController.updateFile);
-router.delete('api/:file', authController.authenticate, userController.deleteFile);
+router.post('api/:file/delete', authController.authenticate, uploadController.upload, userController.addFile);
+router.post('api/:file/update', authController.authenticate, uploadController.upload, userController.updateFile);
+router.post('api/:file/destroy', authController.authenticate, userController.deleteFile);
 
 router.post('api', authController.register);
 
@@ -61,10 +61,10 @@ curl -u <username> configz.me/<filename>
 curl -u <username> configz.me/files
 
 # updating files
-curl -u <username> -X PATCH -F file=@<your file> configz.me/<filename>
+curl -u <username> -F file=@<your file> configz.me/<filename>/update
 
 # Deleting files
-curl -u <username> -X DELETE configz.me/<filename>
+curl -u <username> configz.me/<filename>/destroy
 ------------------------------------------------------------
 
 `);
