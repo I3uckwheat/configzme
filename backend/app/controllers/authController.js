@@ -36,7 +36,6 @@ exports.register = async (req, res, next) => {
     if (!authHeader) return next('route');
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
-    // TODO - validation of input
     const user = new User({
       username: username,
       active: true

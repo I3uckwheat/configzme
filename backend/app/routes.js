@@ -33,7 +33,8 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-router.get('api/files*', authController.authenticate, userController.getAllFiles);
+// TODO - fix uploads
+router.get('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file/delete', authController.authenticate, uploadController.upload, userController.addFile);
 router.post('api/:file/update', authController.authenticate, uploadController.upload, userController.updateFile);
