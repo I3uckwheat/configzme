@@ -52,7 +52,7 @@ Welcome to configz.me!
 curl -u -X POST <username> configz.me
 
 # Uploading Files
-curl -u <username> --form file=@<your file> configz.me/<filename>
+curl -u <username> -F file=@<your file> configz.me/<filename>
 
 # Getting files
 curl -u <username> configz.me/<filename>
