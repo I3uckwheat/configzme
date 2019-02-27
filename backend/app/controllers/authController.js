@@ -33,7 +33,7 @@ exports.register = async (req, res, next) => {
     const authHeader = req.get('Authorization');
 
     // if there is no authHeader, go to 404
-    // if (!authHeader) return next('route');
+    if (!authHeader) return next('route');
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
     // TODO - validation of input
