@@ -6,7 +6,6 @@ const upload = multer({storage: storage})
 
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
-const uploadController = require('./controllers/uploadController');
 
 router.use((req, res, next) => {
   try {
@@ -34,10 +33,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // TODO - fix uploads
-router.get('api/files', authController.authenticate, userController.getAllFiles);
+router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
-router.post('api/:file/delete', authController.authenticate, uploadController.upload, userController.addFile);
-router.post('api/:file/update', authController.authenticate, uploadController.upload, userController.updateFile);
+router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
+router.post('api/:file/update', authController.authenticate, upload.single('file'), userController.updateFile);
 router.post('api/:file/destroy', authController.authenticate, userController.deleteFile);
 
 router.post('api', authController.register);
@@ -50,7 +49,7 @@ Welcome to configz.me!
 ------------------------------------------------------------
 
 # Registering
-curl -u -X POST <username> configz.me
+curl -u <username> -X POST configz.me
 
 # Uploading Files
 curl -u <username> -F file=@<your file> configz.me/<filename>
