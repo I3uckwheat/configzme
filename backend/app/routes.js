@@ -32,12 +32,11 @@ if (process.env.NODE_ENV === 'development') {
   );
 }
 
-// TODO - fix uploads
 router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
-router.post('api/:file/update', authController.authenticate, upload.single('file'), userController.updateFile);
-router.post('api/:file/destroy', authController.authenticate, userController.deleteFile);
+router.use('api/:file/update', authController.authenticate, upload.single('file'), userController.updateFile);
+router.use('api/:file/destroy', authController.authenticate, userController.deleteFile);
 
 router.post('api', authController.register);
 
