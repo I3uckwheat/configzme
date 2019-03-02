@@ -8,4 +8,4 @@ require('./app/models/User');
 
 const app = require('./app');
 
-app.listen(7777);
+app.listen(process.env.PORT || 7777);

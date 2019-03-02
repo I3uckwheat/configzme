@@ -22,7 +22,14 @@ router.use((req, res, next) => {
   }
 });
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.BACKEND_ONLY_MODE) {
+  router.use('public', (req, res) => {
+    res.send(
+    `<h1>Welcome to Configz.me</h1>
+      <p>run <span style="background:black;color:white;">curl configz.me</span> in the terminal for directions</p>
+    `);
+  });
+} else if (process.env.NODE_ENV === 'development') {
   router.use('public', (req, res) => res.send('DEVELOPMENT ENV'));
 } else {
   router.use('public', 
