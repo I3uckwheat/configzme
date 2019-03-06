@@ -50,28 +50,28 @@ router.post('api', authController.register);
 // Essentially api 404
 router.use('api', (req, res) => {
   const directions = (
-`------------------------------------------------------------
+`---------------------
 Welcome to configz.me!
-------------------------------------------------------------
+---------------------
 
 # Registering
-curl -u <username> -X POST configz.me
+curl -u <username> -X POST https://configz.me
 
 # Uploading Files
-curl -u <username> -F file=@<your file> configz.me/<filename>
+curl -u <username> -F file=@<your file> https://configz.me/<filename>
 
 # Getting files
-curl -u <username> configz.me/<filename>
+curl -u <username> https://configz.me/<filename>
 
 # Listing files
-curl -u <username> configz.me/files
+curl -u <username> https://configz.me/files
 
 # updating files
-curl -u <username> -F file=@<your file> configz.me/<filename>/update
+curl -u <username> -F file=@<your file> https://configz.me/<filename>/update
 
 # Deleting files
-curl -u <username> configz.me/<filename>/destroy
-------------------------------------------------------------
+curl -u <username> https://configz.me/<filename>/destroy
+---------------------
 
 `);
 
