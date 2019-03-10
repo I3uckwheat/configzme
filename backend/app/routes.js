@@ -22,22 +22,11 @@ router.use((req, res, next) => {
   }
 });
 
-if (process.env.BACKEND_ONLY_MODE) {
-  router.use('public', (req, res) => {
-    res.send(
-    `<h1>Welcome to Configz.me</h1>
-      <p>run <span style="background:black;color:white;">curl configz.me</span> in the terminal for directions</p>
-    `);
-  });
-} else if (process.env.NODE_ENV === 'development') {
-  router.use('public', (req, res) => res.send('DEVELOPMENT ENV'));
-} else {
-  router.use('public', 
-    express.static(`{$__dirname}/public/`, {fallthrough: true}),
-    express.static(`${__dirname}/public/configz-frontend`, {fallthrough: true}),
-    (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
-  );
-}
+router.use('public', 
+  express.static(`{$__dirname}/public/`, {fallthrough: true}),
+  express.static(`${__dirname}/public/configz-frontend`, {fallthrough: true}),
+  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
+);
 
 router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
