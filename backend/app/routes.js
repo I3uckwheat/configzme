@@ -2,16 +2,20 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const storage = multer.memoryStorage();
-const upload = multer({storage: storage})
+const upload = multer({storage: storage});
 
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
+const directionController = require('./controllers/directionController');
+
+const cliUserAgents = ['curl', 'Wget'];
 
 router.use((req, res, next) => {
   try {
     const userAgent = req.get('user-agent').split('/')[0];
-    if (req.query.api === 'true' || userAgent === 'curl') {
+    if (req.query.api === 'true' || cliUserAgents.includes(userAgent)) {
       req.url = `api${req.url}`
+      res.locals.userAgent = userAgent;
       return next();
     }
 
@@ -37,35 +41,7 @@ router.use('api/:file/destroy', authController.authenticate, userController.dele
 router.post('api', authController.register);
 
 // Essentially api 404
-router.use('api', (req, res) => {
-  const directions = (
-`---------------------
-Welcome to configz.me!
----------------------
-
-# Registering
-curl -u <username> -X POST https://configz.me
-
-# Uploading Files
-curl -u <username> -F file=@<your file> https://configz.me/<filename>
-
-# Getting files
-curl -u <username> https://configz.me/<filename>
-
-# Listing files
-curl -u <username> https://configz.me/files
-
-# updating files
-curl -u <username> -F file=@<your file> https://configz.me/<filename>/update
-
-# Deleting files
-curl -u <username> https://configz.me/<filename>/destroy
----------------------
-
-`);
-
-  res.send(directions)
-});
+router.use('api', directionController.showDirections);
 
 router.use('*', (req, res) => {
   res.status(404).send('404 not found');

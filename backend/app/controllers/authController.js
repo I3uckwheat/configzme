@@ -7,6 +7,7 @@ const User = mongoose.model('User');
 exports.authenticate = async (req, res, next) => {
   try {
     const authHeader = req.get('Authorization');
+    console.log(authHeader);
 
     // If there is no auth header, go to 404
     if (!authHeader) return next('route');
