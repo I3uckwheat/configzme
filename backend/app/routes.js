@@ -17,10 +17,10 @@ router.use((req, res, next) => {
       req.url = `api${req.url}`
       res.locals.userAgent = userAgent;
       return next();
+    } else {
+      req.url = `public${req.url}`
+      next();
     }
-
-    req.url = `public${req.url}`
-    next();
   } catch(error) {
     next(error);
   }
