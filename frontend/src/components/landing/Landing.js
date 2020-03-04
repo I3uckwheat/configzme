@@ -9,7 +9,7 @@ class Landing extends React.Component {
       <header className="header">
         <Title title="Configz.me" />
         <Slogan slogan="[Insert captivating slogan here]" />
-        <FeatureList features={this.props.features} />
+        <FeatureList />
       </header>
     );
   }
