@@ -1,6 +1,7 @@
 import React from "react";
 import Title from "./header/Title";
 import Slogan from "./header/Slogan";
+import FeatureList from "./FeatureList";
 
 class Landing extends React.Component {
   render() {
@@ -8,9 +9,7 @@ class Landing extends React.Component {
       <header className="header">
         <Title title="Configz.me" />
         <Slogan slogan="[Insert captivating slogan here]" />
-        {Object.keys(this.props.features).map(key => (
-          <p>{key}</p>
-        ))}
+        <FeatureList features={this.props.features} />
       </header>
     );
   }
