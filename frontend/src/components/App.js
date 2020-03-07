@@ -6,11 +6,11 @@ import Management from "./management/Management";
 class App extends React.Component {
   state = {
     isLoggedIn: false,
-    username: null,
+    username: null
   };
 
   render() {
-    const userView = (isLoggedIn) => {
+    const userView = isLoggedIn => {
       if (isLoggedIn) {
         console.log("Logged in!");
         return <Management />;
@@ -18,13 +18,9 @@ class App extends React.Component {
         console.log("Not Logged in!");
         return <Landing />;
       }
-    }
+    };
 
-    return (
-      <div className="App">
-        { userView(this.state.isLoggedIn) }
-      </div>
-    );
+    return <div className="App">{userView(this.state.isLoggedIn)}</div>;
   }
 }
 
