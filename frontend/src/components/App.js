@@ -12,11 +12,9 @@ class App extends React.Component {
   render() {
     const userView = isLoggedIn => {
       if (isLoggedIn) {
-        console.log("Logged in!");
         return <Management />;
       } else {
-        console.log("Not Logged in!");
-        return <Landing />;
+        return <Landing className="landing"/>;
       }
     };
 

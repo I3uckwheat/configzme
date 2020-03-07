@@ -1,5 +1,6 @@
 import React from "react";
-
+import NewFileButton from "./buttons/NewFile";
+import File from "./File";
 
 class Management extends React.Component {
   render() {
@@ -9,7 +10,12 @@ class Management extends React.Component {
           <h1>Configz.me</h1>
           <h3>[Insert captivating slogan here]</h3>
         </header>
-        <div>Welcome to the management view</div>
+        <div className="management" >
+          <NewFileButton />
+          <File />
+          <File />
+          <File />
+        </div>
       </React.Fragment>
     );
   }
