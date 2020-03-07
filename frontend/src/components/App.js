@@ -5,7 +5,7 @@ import Management from "./management/Management";
 
 class App extends React.Component {
   state = {
-    isLoggedIn: false,
+    isLoggedIn: true,
     username: null
   };
 
