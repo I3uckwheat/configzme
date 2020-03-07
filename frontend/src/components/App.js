@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/App.css";
 import Landing from "./landing/Landing";
+import Management from "./management/Management";
 
 class App extends React.Component {
   state = {
@@ -12,6 +13,7 @@ class App extends React.Component {
     const userView = (isLoggedIn) => {
       if (isLoggedIn) {
         console.log("Logged in!");
+        return <Management />;
       } else {
         console.log("Not Logged in!");
         return <Landing />;

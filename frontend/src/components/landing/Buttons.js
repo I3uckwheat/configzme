@@ -2,7 +2,7 @@ import React from "react";
 import LoginButton from "./LoginButton";
 import RegisterButton from "./RegisterButton";
 
-class Navbar extends React.Component {
+class Buttons extends React.Component {
   render() {
     return (
       <div className="navbar-container">
@@ -13,4 +13,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default Buttons;

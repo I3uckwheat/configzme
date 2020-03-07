@@ -1,6 +1,6 @@
 import React from "react";
 import FeatureList from "./FeatureList";
-import Navbar from "./Navbar";
+import Buttons from "./Buttons";
 
 class Landing extends React.Component {
   render() {
@@ -10,7 +10,7 @@ class Landing extends React.Component {
           <h1>Configz.me</h1>
           <h3>[Insert captivating slogan here]</h3>
         </header>
-        <Navbar />
+        <Buttons />
         <div className="content">
           <FeatureList />
         </div>
