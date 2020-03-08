@@ -1,11 +1,11 @@
 import React from "react";
-import "../css/App.css";
 import Landing from "./landing/Landing";
 import Management from "./management/Management";
 
+
 class App extends React.Component {
   state = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     username: null
   };
 
@@ -14,7 +14,7 @@ class App extends React.Component {
       if (isLoggedIn) {
         return <Management />;
       } else {
-        return <Landing className="landing"/>;
+        return <Landing />;
       }
     };
 
