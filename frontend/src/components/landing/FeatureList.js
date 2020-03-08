@@ -1,10 +1,11 @@
 import React from "react";
+import "../../css/featurelist.css"
 
 class FeatureList extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="get-started">
+        <div className="start-command">
           <p><span className="name">Run</span>:<span className="command">curl https://configz.me</span></p>
         </div>
         <div className="features">

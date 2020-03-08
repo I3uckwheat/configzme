@@ -1,0 +1,16 @@
+.name {
+  font-weight: bolder;
+}
+
+.features {
+  margin: 10px 0px;
+}
+
+.feature {
+  margin: 10px 0px;
+}
+
+.command {
+  background-color: rgb(136, 136, 136);
+  padding: 0.5px 2px;
+}
