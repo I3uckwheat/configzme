@@ -1,10 +1,12 @@
 import React from 'react';
+import Init from './Init';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
+      <Init oninit={(data) => {console.log(data)}}></Init>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

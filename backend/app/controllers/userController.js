@@ -8,7 +8,7 @@ exports.getAllFiles = async (req, res, next) => {
     });
 
     const files = JSON.stringify(filenames) + "\n"
-    res.send(`------------\nFiles: ${files} \nRun "curl configz.me" for configz.me usage\n`);
+    res.send(`------------\nFiles: ${files} \nRun "curl https://configz.me" for configz.me usage\n`);
   } catch (err) {
     next(err);
   }

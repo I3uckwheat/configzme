@@ -35,6 +35,8 @@ router.use('public',
 );
 
 router.use('api/init', initController.initialize);
+router.post('api/login', authController.login);
+router.post('api/logout', authController.logout);
 router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);

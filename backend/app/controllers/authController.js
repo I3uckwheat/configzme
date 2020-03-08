@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 const { extractUserCredentials } = require('../helpers');
 const User = mongoose.model('User');
+const passport = require('passport');
 
-// Authenticates with basic auth
-// TODO - Allow session validation for browsers
-exports.authenticate = async (req, res, next) => {
+async function authenticateByHeaders(req, res, next) {
   try {
     const authHeader = req.get('Authorization');
-    console.log(authHeader);
 
     // If there is no auth header, go to 404
     if (!authHeader) return next('route');
@@ -26,6 +24,28 @@ exports.authenticate = async (req, res, next) => {
     return res.status(403).send("Access Denied\n");
   } catch (err) {
     next(err)
+  }
+}
+
+async function authenticateByPassport(req, res, next) {
+  if (req.session.user) {
+    const user = req.session.user;
+
+    req.user = {
+      _id: user._id,
+      username: user.username,
+      files: user.files
+    };
+    return next();
+  }
+  return res.status(403).send("Access Denied\n");
+}
+
+exports.authenticate = async (req, res, next) => {
+  if(req.get('Authorization')) {
+    authenticateByHeaders(req, res, next);
+  } else {
+    authenticateByPassport(req, res, next);
   }
 }
 
@@ -58,4 +78,32 @@ exports.register = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+}
+
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    console.log(err, user)
+    if(!err) {
+
+      req.session.user = {
+        _id: user._id,
+        username: user.username,
+        files: user.files
+      };
+
+      return res.json({
+        username: user.username
+      });
+
+    } else {
+      return res.status(403).send("Access Denied\n");
+    }
+  })(req, res, next);
+}
+
+exports.logout = (req, res, next) => {
+  req.session.destroy((err) => {
+    res.clearCookie('connect.sid');
+    res.send('logout');
+  })
 }
