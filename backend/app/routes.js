@@ -6,9 +6,11 @@ const upload = multer({storage: storage});
 
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
+const initController = require('./controllers/initController');
 const directionController = require('./controllers/directionController');
 
 const cliUserAgents = ['curl', 'Wget'];
+
 
 router.use((req, res, next) => {
   try {
@@ -32,6 +34,7 @@ router.use('public',
   (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
 );
 
+router.use('api/init', initController.initialize);
 router.use('api/files', authController.authenticate, userController.getAllFiles);
 router.get('api/:file', authController.authenticate, userController.getFile);
 router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
