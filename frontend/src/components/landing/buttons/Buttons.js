@@ -8,7 +8,7 @@ class Buttons extends React.Component {
     return (
       <div className="buttons-container">
         <RegisterButton />
-        <LoginButton />
+        <LoginButton showLoginForm={this.props.showLoginForm} toggleForm={this.props.toggleForm}/>
       </div>
     );
   }
