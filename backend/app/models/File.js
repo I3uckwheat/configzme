@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const FileSchema = new Schema({
+  user: {type: Schema.Types.ObjectId, ref: "User"},
   name: {
     type: String,
     required: true,
@@ -10,8 +11,7 @@ const FileSchema = new Schema({
   contents: {
     type: String,
     required: true
-  },
-  extension: String
+  }
 });
 
 module.exports = mongoose.model('File', FileSchema);

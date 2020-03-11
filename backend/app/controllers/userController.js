@@ -29,12 +29,13 @@ exports.addFile = async (req, res, next) => {
   if(!existingUserFileNames.includes(req.params.file)) {
     const file = new File({
       name: req.params.file,
-      contents: fileContents
+      contents: fileContents,
+      user: user.id
     });
+    user.files.push(file._id),
 
     await Promise.all([
       file.save(),
-      user.files.push(file._id),
       user.save()
     ]);
 
