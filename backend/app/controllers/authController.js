@@ -3,6 +3,23 @@ const { extractUserCredentials } = require('../helpers');
 const User = mongoose.model('User');
 const passport = require('passport');
 
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if(err) return next(err);
+    if(!user) return res.sendStatus(403);
+    req.login(user, err => {
+      if(err) return next(err)
+    })
+
+    return res.sendStatus(201);
+  })(req, res, next);
+}
+
+exports.logout = (req, res, next) => {
+  req.logout();
+  res.sendStatus(204)
+}
+
 async function authenticateByHeaders(req, res, next) {
   try {
     const authHeader = req.get('Authorization');
@@ -79,30 +96,4 @@ exports.register = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-}
-
-exports.login = (req, res) => {
-  passport.authenticate('local', (err, user, info) => {
-    if(!err) {
-
-      req.session.user = {
-        _id: user._id,
-        username: user.username,
-      };
-
-      return res.json({
-        username: user.username
-      });
-
-    } else {
-      return res.status(403).send("Access Denied\n");
-    }
-  })(req, res);
-}
-
-exports.logout = (req, res, next) => {
-  req.session.destroy((err) => {
-    res.clearCookie('connect.sid');
-    res.send('logout');
-  })
 }
