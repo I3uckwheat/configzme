@@ -58,7 +58,7 @@ exports.upsertFile = async (req, res, next) => {
     return res.status(400).send("err_empty_file_attached");
   }
 
-  const file = await File.findOneAndUpdate(
+  await File.findOneAndUpdate(
     {user: req.user.id, name: req.params.file}, 
     { contents: fileContents}, 
     {new: true, upsert: true}
