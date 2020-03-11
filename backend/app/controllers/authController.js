@@ -20,6 +20,45 @@ exports.logout = (req, res, next) => {
   res.sendStatus(204)
 }
 
+exports.register = async (req, res, next) => {
+  User.register({username: req.body.username}, req.body.password, (err) => {
+    if(err) {
+      return next(err.message);
+    } 
+
+    return res.sendStatus(201);
+  });
+
+  // try {
+  //   const authHeader = req.get('Authorization');
+
+  //   // if there is no authHeader, go to 404
+  //   if (!authHeader) return next('route');
+  //   const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
+
+  //   const user = new User({
+  //     username: username,
+  //     active: true
+  //   });
+
+  //   try {
+  //      await User.register(user, password);
+  //   } catch (error) {
+  //     if (error.name === "UserExistsError") {
+  //       return res.send(error.message + "\n"); 
+  //     }
+  //     throw error
+  //   }
+
+  //   const authenticate = User.authenticate();
+  //   await authenticate(username, password);
+
+  //   res.send(`Registered as "${username}"\n`);
+  // } catch (err) {
+  //   next(err)
+  // }
+}
+
 async function authenticateByHeaders(req, res, next) {
   try {
     const authHeader = req.get('Authorization');
@@ -64,36 +103,5 @@ exports.authenticate = async (req, res, next) => {
     authenticateByHeaders(req, res, next);
   } else {
     authenticateByPassport(req, res, next);
-  }
-}
-
-exports.register = async (req, res, next) => {
-  try {
-    const authHeader = req.get('Authorization');
-
-    // if there is no authHeader, go to 404
-    if (!authHeader) return next('route');
-    const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
-
-    const user = new User({
-      username: username,
-      active: true
-    });
-
-    try {
-       await User.register(user, password);
-    } catch (error) {
-      if (error.name === "UserExistsError") {
-        return res.send(error.message + "\n"); 
-      }
-      throw error
-    }
-
-    const authenticate = User.authenticate();
-    await authenticate(username, password);
-
-    res.send(`Registered as "${username}"\n`);
-  } catch (err) {
-    next(err)
   }
 }

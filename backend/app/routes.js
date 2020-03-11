@@ -34,19 +34,20 @@ router.use((req, res, next) => {
 //   (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
 // );
 
+
 router.get('api/init', initController.initialize);
 router.post('api/login', authController.login);
 router.delete('api/logout', authController.logout);
+router.post('api/register', authController.register);
+router.get('api', directionController.showDirections);
 // router.use('api/files', authController.authenticate, userController.getAllFiles);
 // router.get('api/:file', authController.authenticate, userController.getFile);
 // router.post('api/:file', authController.authenticate, upload.single('file'), userController.addFile);
 // router.use('api/:file/update', authController.authenticate, upload.single('file'), userController.updateFile);
 // router.use('api/:file/destroy', authController.authenticate, userController.deleteFile);
 
-// router.post('api', authController.register);
 
 // // Essentially api 404
-// router.use('api', directionController.showDirections);
 
 router.use('*', (req, res) => {
   res.status(404);
