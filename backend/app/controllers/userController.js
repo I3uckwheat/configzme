@@ -8,9 +8,13 @@ exports.getAllFiles = async (req, res, next) => {
 }
 
 exports.getFile = async (req, res, next) => {
-  const file = req.user.files.find(file => file.name === req.params.file)
-  if (file) return res.send(file.contents);
-  return res.send(`No file called ${req.params.file} found \n`)
+  const user = await User.findById(req.user.id).populate("files")
+  const file = user.files.find(file => file.name === req.params.file);
+  if (!file) {
+    return res.sendStatus(404);
+  } else {
+    return res.send(file.contents);
+  }
 }
 
 exports.addFile = async (req, res, next) => {
