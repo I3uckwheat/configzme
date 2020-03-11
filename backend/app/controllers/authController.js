@@ -28,6 +28,7 @@ async function authenticateByHeaders(req, res, next) {
 }
 
 async function authenticateByPassport(req, res, next) {
+  
   if (req.session.user) {
     const user = req.session.user;
 
@@ -80,15 +81,13 @@ exports.register = async (req, res, next) => {
   }
 }
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   passport.authenticate('local', (err, user, info) => {
-    console.log(err, user)
     if(!err) {
 
       req.session.user = {
         _id: user._id,
         username: user.username,
-        files: user.files
       };
 
       return res.json({
@@ -98,7 +97,7 @@ exports.login = (req, res, next) => {
     } else {
       return res.status(403).send("Access Denied\n");
     }
-  })(req, res, next);
+  })(req, res);
 }
 
 exports.logout = (req, res, next) => {

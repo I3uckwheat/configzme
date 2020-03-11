@@ -7,6 +7,10 @@ exports.getAllFiles = async (req, res, next) => {
       return file.name;
     });
 
+    if(req.session.user) {
+      return res.status(200).json(filenames);
+    }
+
     const files = JSON.stringify(filenames) + "\n"
     res.send(`------------\nFiles: ${files} \nRun "curl https://configz.me" for configz.me usage\n`);
   } catch (err) {

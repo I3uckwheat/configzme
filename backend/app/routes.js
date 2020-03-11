@@ -13,6 +13,7 @@ const cliUserAgents = ['curl', 'Wget'];
 
 
 router.use((req, res, next) => {
+  
   try {
     const userAgent = req.get('user-agent').split('/')[0];
     if (req.query.api === 'true' || cliUserAgents.includes(userAgent)) {
