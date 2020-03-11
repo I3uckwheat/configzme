@@ -48,6 +48,7 @@ exports.addFile = async (req, res, next) => {
   }
 }
 
+// FIXME: upserting fails to add the ID to the User document
 exports.upsertFile = async (req, res, next) => {
   if(!req.file) { 
     return res.status(400).send("err_no_file_attached"); 
@@ -59,9 +60,9 @@ exports.upsertFile = async (req, res, next) => {
   }
 
   await File.findOneAndUpdate(
-    {user: req.user.id, name: req.params.file}, 
-    { contents: fileContents}, 
-    {new: true, upsert: true}
+    { user: req.user.id, name: req.params.file }, 
+    { contents: fileContents }, 
+    { new: true, upsert: true }
     ).exec();
 
   return res.sendStatus(200);
