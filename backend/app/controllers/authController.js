@@ -83,25 +83,11 @@ async function authenticateByHeaders(req, res, next) {
   }
 }
 
-async function authenticateByPassport(req, res, next) {
-  
-  if (req.session.user) {
-    const user = req.session.user;
-
-    req.user = {
-      _id: user._id,
-      username: user.username,
-      files: user.files
-    };
-    return next();
-  }
-  return res.status(403).send("Access Denied\n");
-}
-
-exports.authenticate = async (req, res, next) => {
+exports.ensureAuthentication = async (req, res, next) => {
   if(req.get('Authorization')) {
-    authenticateByHeaders(req, res, next);
+    // authenticateByHeaders(req, res, next);
   } else {
-    authenticateByPassport(req, res, next);
+    if(req.isAuthenticated()) return next();
+    return res.sendStatus(403);
   }
 }
