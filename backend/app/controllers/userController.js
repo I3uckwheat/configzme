@@ -8,8 +8,7 @@ exports.getAllFiles = async (req, res, next) => {
 }
 
 exports.getFile = async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate("files")
-  const file = user.files.find(file => file.name === req.params.file);
+  const file = File.findOne({user: req.user.id, name: req.params.file});
   if (!file) {
     return res.sendStatus(404);
   } else {
@@ -49,20 +48,23 @@ exports.addFile = async (req, res, next) => {
   }
 }
 
-exports.updateFile = async (req, res, next) => {
-  try {
-    const subDocumentId = req.user.files.find(file => file.name === req.params.file)._id;
-    const fileContents = req.file.buffer.toString();
-
-    const user = await User.findById(req.user._id)
-    const file = user.files.id(subDocumentId);
-    file.contents = fileContents;
-
-    await user.save()
-    res.send(`Updated: "${req.params.file}"\n`);
-  } catch (err) {
-    next(err)
+exports.upsertFile = async (req, res, next) => {
+  if(!req.file) { 
+    return res.status(400).send("err_no_file_attached"); 
   }
+
+  const fileContents = req.file.buffer.toString();
+  if(fileContents === "") {
+    return res.status(400).send("err_empty_file_attached");
+  }
+
+  const file = await File.findOneAndUpdate(
+    {user: req.user.id, name: req.params.file}, 
+    { contents: fileContents}, 
+    {new: true, upsert: true}
+    ).exec();
+
+  return res.sendStatus(200);
 }
 
 exports.deleteFile = async (req, res) => {
