@@ -1,12 +1,9 @@
 const express = require('express');
-const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
-
-app.use(cors());
 
 app.set('etag', false)
 
@@ -16,7 +13,6 @@ app.use((req, res, next) => {
   next();
 })
 
-require('./helpers/passport');
 
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
@@ -29,6 +25,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./helpers/passport');
 
 // To support JSON-encoded bodies
 const bodyParser = require('body-parser');
