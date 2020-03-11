@@ -5,6 +5,7 @@ mongoose.connect(process.env.DB_URI, {useNewUrlParser: true})
 
 // Import all models
 require('./app/models/User');
+require('./app/models/File');
 
 const app = require('./app');
 

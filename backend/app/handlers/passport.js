@@ -1,8 +1,8 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const Users = mongoose.model('Users');
 
-passport.use(User.createStrategy());
+passport.use(Users.createStrategy());
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());

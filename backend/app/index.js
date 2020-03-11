@@ -31,9 +31,6 @@ require('./helpers/passport');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// Setting up passport
-require('./handlers/passport');
-
 // Setting up routes
 const routes = require('./routes');
 app.use('/', routes);

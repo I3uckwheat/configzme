@@ -1,21 +1,10 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const File = mongoose.model('File');
 
 exports.getAllFiles = async (req, res, next) => {
-  try {
-    const filenames = req.user.files.map(file => {
-      return file.name;
-    });
-
-    if(req.session.user) {
-      return res.status(200).json(filenames);
-    }
-
-    const files = JSON.stringify(filenames) + "\n"
-    res.send(`------------\nFiles: ${files} \nRun "curl https://configz.me" for configz.me usage\n`);
-  } catch (err) {
-    next(err);
-  }
+  const user = await User.findById(req.user.id).populate("files");
+  res.json(user.files);
 }
 
 exports.getFile = async (req, res, next) => {
@@ -25,24 +14,33 @@ exports.getFile = async (req, res, next) => {
 }
 
 exports.addFile = async (req, res, next) => {
-  try {
-    const fileContents = req.file.buffer.toString();
-    const result = await User.updateOne({
-      $and: [{ _id: { $eq: req.user._id } }, { "files.name": { $ne: req.params.file } }] 
-    },
-    {
-      $addToSet: {
-        files: {
-          name: req.params.file,
-          contents: fileContents
-        }
-      }
+  if(!req.file) { 
+    return res.status(400).send("err_no_file_attached"); 
+  }
+
+  const fileContents = req.file.buffer.toString();
+  if(fileContents === "") {
+    return res.status(400).send("err_empty_file_attached");
+  }
+
+  const user = await User.findById(req.user.id).populate("files");
+  const existingUserFileNames = user.files.map(file => file.name);
+
+  if(!existingUserFileNames.includes(req.params.file)) {
+    const file = new File({
+      name: req.params.file,
+      contents: fileContents
     });
 
-    if (result.nModified === 0) return res.send(`You already have a file named "${req.params.file}"\n`);
-    return res.send(`"${req.params.file}" uploaded\n`)
-  } catch (err) {
-    next(err);
+    await Promise.all([
+      file.save(),
+      user.files.push(file._id),
+      user.save()
+    ]);
+
+    res.sendStatus(200);
+  } else {
+    res.status(400).send("err_file_already_exists");
   }
 }
 
