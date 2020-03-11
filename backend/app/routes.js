@@ -45,7 +45,7 @@ router.get('api/:file', authController.ensureAuthentication, userController.getF
 router.get('api/files', authController.ensureAuthentication, userController.getAllFiles);
 router.post('api/:file', authController.ensureAuthentication, upload.single('file'), userController.addFile);
 router.put('api/:file', authController.ensureAuthentication, upload.single('file'), userController.upsertFile);
-// router.use('api/:file/destroy', authController.authenticate, userController.deleteFile);
+router.delete('api/:file', authController.ensureAuthentication, userController.deleteFile);
 
 
 // // Essentially api 404

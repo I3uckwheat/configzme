@@ -35,7 +35,7 @@ exports.addFile = async (req, res, next) => {
       contents: fileContents,
       user: user.id
     });
-    user.files.push(file._id),
+    user.files.push(file.id),
 
     await Promise.all([
       file.save(),
@@ -68,17 +68,15 @@ exports.upsertFile = async (req, res, next) => {
 }
 
 exports.deleteFile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    const file = user.files.find((file => file.name === req.params.file));
-    if (file) {
-      user.files.id(file._id).remove();
-      await user.save();
-      return res.send(`Deleted: "${req.params.file}"\n`);
-    }
+  const user = await User.findById(req.user.id).populate("files");
 
-    return res.send("No file found to delete\n");
-  } catch (err) {
-    next(err);
-  }
+  const fileToRemove = user.files.find((file) => file.name === req.params.file);
+
+  const filesToKeep = user.files.filter((file) => file.name !== req.params.file);
+  user.files = filesToKeep;
+
+  await fileToRemove.remove();
+  await user.save();
+
+  res.sendStatus(200);
 }
