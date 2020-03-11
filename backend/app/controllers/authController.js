@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { extractUserCredentials } = require('../helpers');
+
 const User = mongoose.model('User');
 const passport = require('passport');
 
@@ -16,38 +17,38 @@ async function authenticateByHeaders(req, res, next) {
       req.user = {
         _id: user._id,
         username: user.username,
-        files: user.files
+        files: user.files,
       };
       return next();
     }
 
-    return res.status(403).send("Access Denied\n");
+    return res.status(403).send('Access Denied\n');
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 
 async function authenticateByPassport(req, res, next) {
   if (req.session.user) {
-    const user = req.session.user;
+    const { user } = req.session;
 
     req.user = {
       _id: user._id,
       username: user.username,
-      files: user.files
+      files: user.files,
     };
     return next();
   }
-  return res.status(403).send("Access Denied\n");
+  return res.status(403).send('Access Denied\n');
 }
 
 exports.authenticate = async (req, res, next) => {
-  if(req.get('Authorization')) {
+  if (req.get('Authorization')) {
     authenticateByHeaders(req, res, next);
   } else {
     authenticateByPassport(req, res, next);
   }
-}
+};
 
 exports.register = async (req, res, next) => {
   try {
@@ -58,17 +59,17 @@ exports.register = async (req, res, next) => {
     const [username, password] = extractUserCredentials.fromBasicAuth(authHeader);
 
     const user = new User({
-      username: username,
-      active: true
+      username,
+      active: true,
     });
 
     try {
-       await User.register(user, password);
+      await User.register(user, password);
     } catch (error) {
-      if (error.name === "UserExistsError") {
-        return res.send(error.message + "\n"); 
+      if (error.name === 'UserExistsError') {
+        return res.send(`${error.message}\n`);
       }
-      throw error
+      throw error;
     }
 
     const authenticate = User.authenticate();
@@ -76,34 +77,31 @@ exports.register = async (req, res, next) => {
 
     res.send(`Registered as "${username}"\n`);
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 exports.login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    console.log(err, user)
-    if(!err) {
-
+    console.log(err, user);
+    if (!err) {
       req.session.user = {
         _id: user._id,
         username: user.username,
-        files: user.files
+        files: user.files,
       };
 
       return res.json({
-        username: user.username
+        username: user.username,
       });
-
-    } else {
-      return res.status(403).send("Access Denied\n");
     }
+    return res.status(403).send('Access Denied\n');
   })(req, res, next);
-}
+};
 
 exports.logout = (req, res, next) => {
   req.session.destroy((err) => {
     res.clearCookie('connect.sid');
     res.send('logout');
-  })
-}
+  });
+};

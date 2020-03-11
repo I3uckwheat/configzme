@@ -1,16 +1,14 @@
 import React from "react";
 import NewFileButton from "./buttons/NewFile";
 import File from "./File";
+import Header from "../header/Header";
 
 class Management extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <header className="header">
-          <h1>Configz.me</h1>
-          <h3>[Insert captivating slogan here]</h3>
-        </header>
-        <div className="management" >
+        <Header />
+        <div className="management">
           <NewFileButton />
           <File />
           <File />

@@ -4,31 +4,79 @@ import Management from "./management/Management";
 
 class App extends React.Component {
   state = {
-    isLoggedIn: false,
     username: null,
-    showLoginForm: false,
+    showLoginForm: false
   };
 
-  toggleForm = (formstatus) => {
+  toggleForm = formstatus => {
     if (formstatus === false) {
       formstatus = true;
-      this.setState({showLoginForm: formstatus})
+      this.setState({ showLoginForm: formstatus });
     } else {
       formstatus = false;
-      this.setState({showLoginForm: formstatus})
+      this.setState({ showLoginForm: formstatus });
+    }
+  };
+
+  componentDidMount() {
+    this.checkLoginStatus();
+  }
+
+  async checkLoginStatus() {
+    console.log("checking login status");
+
+    try {
+      const response = await fetch("/init?api=true");
+      console.log(response);
+
+      const data = await response.json();
+      console.log(data);
+
+      this.setState({ username: data.username });
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
     }
   }
 
+  attemptLogin = async (username, password) => {
+    console.log(username, password);
+    const response = await fetch("/login?api=true", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    });
+    const data = await response.json();
+    this.setState({ username: data.username });
+  };
+
+  logout = () => {
+    // TODO
+    // POST/logout route here.
+    window.location.reload();
+  };
+
   render() {
-    const userView = isLoggedIn => {
-      if (isLoggedIn) {
+    const userView = username => {
+      if (username) {
         return <Management />;
       } else {
-        return <Landing showLoginForm={this.state.showLoginForm} toggleForm={this.toggleForm}/>;
+        return (
+          <Landing
+            showLoginForm={this.state.showLoginForm}
+            toggleForm={this.toggleForm}
+            attemptLogin={this.attemptLogin}
+          />
+        );
       }
     };
 
-    return <div className="App">{userView(this.state.isLoggedIn)}</div>;
+    return <div className="App">{userView(this.state.username)}</div>;
   }
 }
 
