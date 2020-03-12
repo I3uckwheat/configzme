@@ -50,8 +50,8 @@ router.delete('api/:file', authController.ensureAuthentication, userController.d
 
 // // Essentially api 404
 
-router.use('*', (req, res) => {
-  res.status(404);
+router.all('*', (req, res) => {
+  res.sendStatus(404);
 });
 
 module.exports = router;
