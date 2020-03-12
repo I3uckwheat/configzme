@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const File = mongoose.model('File');
 
-exports.getAllFiles = async (req, res, next) => {
+exports.getAllFiles = async (req, res) => {
   const user = await User.findById(req.user.id).populate("files").exec();
   res.json(user.files);
 }
@@ -16,7 +16,7 @@ exports.getFile = async (req, res, next) => {
   }
 }
 
-exports.addFile = async (req, res, next) => {
+exports.addFile = async (req, res) => {
   if(!req.file) { 
     return res.status(400).send("err_no_file_attached"); 
   }
@@ -47,7 +47,7 @@ exports.addFile = async (req, res, next) => {
   }
 }
 
-exports.upsertFile = async (req, res, next) => {
+exports.upsertFile = async (req, res) => {
   if(!req.file) { 
     return res.status(400).send("err_no_file_attached"); 
   }
