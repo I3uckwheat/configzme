@@ -35,10 +35,9 @@ exports.addFile = async (req, res, next) => {
       contents: fileContents,
       user: user.id
     });
-    user.files.push(file.id),
 
     await Promise.all([
-      file.save(),
+      user.addFile(file.id),
       user.save()
     ]);
 
