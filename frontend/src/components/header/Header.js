@@ -1,4 +1,5 @@
 import React from "react";
+import Buttons from "./buttons/Buttons";
 
 class Header extends React.Component {
   render() {
@@ -6,7 +7,11 @@ class Header extends React.Component {
       <header className="header">
         <h1>Configz.me</h1>
         <h3>[Insert captivating slogan here]</h3>
-        {/* move buttons here */}
+        <Buttons
+          showLoginForm={this.props.showLoginForm}
+          toggleForm={this.props.toggleForm}
+          loggedIn={this.props.loggedIn}
+        />
       </header>
     );
   }

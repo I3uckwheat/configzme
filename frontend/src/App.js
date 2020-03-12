@@ -1,6 +1,6 @@
 import React from "react";
-import Landing from "./landing/Landing";
-import Management from "./management/Management";
+import Landing from "./components/landing/Landing";
+import Management from "./components/management/Management";
 
 class App extends React.Component {
   state = {
@@ -64,10 +64,17 @@ class App extends React.Component {
   render() {
     const userView = username => {
       if (username) {
-        return <Management />;
+        return (
+          <Management
+            loggedIn={this.state.username}
+            toggleForm={this.toggleForm}
+            attemptLogin={this.attemptLogin}
+          />
+        );
       } else {
         return (
           <Landing
+            loggedIn={this.state.username}
             showLoginForm={this.state.showLoginForm}
             toggleForm={this.toggleForm}
             attemptLogin={this.attemptLogin}
