@@ -11,6 +11,7 @@ class Header extends React.Component {
           showLoginForm={this.props.showLoginForm}
           toggleForm={this.props.toggleForm}
           loggedIn={this.props.loggedIn}
+          logout={this.props.logout}
         />
       </header>
     );

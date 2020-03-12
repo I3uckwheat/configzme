@@ -55,9 +55,14 @@ class App extends React.Component {
     this.setState({ username: data.username });
   };
 
-  logout = () => {
-    // TODO
-    // POST/logout route here.
+  logout = async () => {
+    const response = await fetch("/logout?api=true", {
+      method: "POST"
+    });
+
+    const data = await response.json();
+
+    this.setState({ username: null });
     window.location.reload();
   };
 
@@ -69,6 +74,7 @@ class App extends React.Component {
             loggedIn={this.state.username}
             toggleForm={this.toggleForm}
             attemptLogin={this.attemptLogin}
+            logout={this.logout}
           />
         );
       } else {

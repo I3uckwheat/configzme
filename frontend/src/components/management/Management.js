@@ -10,6 +10,7 @@ class Management extends React.Component {
           toggleForm={this.props.toggleForm}
           showLoginForm={this.props.showLoginForm}
           loggedIn={this.props.loggedIn}
+          logout={this.props.logout}
         />
         <div className="management">
           <File />
