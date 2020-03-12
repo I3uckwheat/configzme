@@ -3,14 +3,14 @@ const User = mongoose.model('User');
 const File = mongoose.model('File');
 
 exports.getAllFiles = async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate("files");
+  const user = await User.findById(req.user.id).populate("files").exec();
   res.json(user.files);
 }
 
 exports.getFile = async (req, res, next) => {
-  const file = File.findOne({user: req.user.id, name: req.params.file});
+  const file = await File.findOne({user: req.user.id, name: req.params.file}).exec();
   if (!file) {
-    return res.sendStatus(404);
+    return next();
   } else {
     return res.send(file.contents);
   }

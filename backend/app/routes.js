@@ -41,8 +41,8 @@ router.post('api/login', authController.login);
 router.delete('api/logout', authController.logout);
 router.post('api/register', authController.register);
 
-router.get('api/:file', authController.ensureAuthentication, userController.getFile);
 router.get('api/files', authController.ensureAuthentication, userController.getAllFiles);
+router.get('api/:file', authController.ensureAuthentication, userController.getFile);
 router.post('api/:file', authController.ensureAuthentication, upload.single('file'), userController.addFile);
 router.put('api/:file', authController.ensureAuthentication, upload.single('file'), userController.upsertFile);
 router.delete('api/:file', authController.ensureAuthentication, userController.deleteFile);
