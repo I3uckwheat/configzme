@@ -75,10 +75,9 @@ exports.deleteFile = async (req, res) => {
   const user = await User.findById(req.user.id).populate("files");
 
   const fileToRemove = user.files.find((file) => file.name === req.params.file);
-
   const filesToKeep = user.files.filter((file) => file.name !== req.params.file);
-  user.files = filesToKeep;
 
+  user.files = filesToKeep;
   await fileToRemove.remove();
   await user.save();
 
