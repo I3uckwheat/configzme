@@ -51,18 +51,17 @@ class App extends React.Component {
         password
       })
     });
-    const data = await response.json();
-    this.setState({ username: data.username });
+    const status = await response.status;
+    if (status === 201) {
+      this.setState({ username: username });
+    }
   };
 
   logout = async () => {
-    const response = await fetch("/logout?api=true", {
-      method: "POST"
+    await fetch("/logout?api=true", {
+      method: "DELETE"
     });
 
-    const data = await response.json();
-
-    this.setState({ username: null });
     window.location.reload();
   };
 
