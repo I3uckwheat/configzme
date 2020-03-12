@@ -59,13 +59,18 @@ exports.upsertFile = async (req, res, next) => {
     return res.status(400).send("err_empty_file_attached");
   }
 
-  await File.findOneAndUpdate(
+  const userPromise = User.findById(req.user.id).populate("files").exec();
+  const filePromise = File.findOneAndUpdate(
     { user: req.user.id, name: req.params.file }, 
     { contents: fileContents }, 
     { new: true, upsert: true }
     ).exec();
 
-  return res.sendStatus(200);
+  const [user, file] = await Promise.all([userPromise, filePromise]);
+  const fileWasAdded = await user.addFile(file);
+
+  res.status(200);
+  return fileWasAdded ? res.send('file_added') : res.send('file_updated');
 }
 
 exports.deleteFile = async (req, res) => {
