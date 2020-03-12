@@ -4,7 +4,8 @@ const File = mongoose.model('File');
 
 exports.getAllFiles = async (req, res) => {
   const user = await User.findById(req.user.id).populate("files").exec();
-  res.json(user.files);
+  const fileNames = user.files.map(file => file.name);
+  res.json(fileNames);
 }
 
 exports.getFile = async (req, res, next) => {
@@ -12,7 +13,7 @@ exports.getFile = async (req, res, next) => {
   if (!file) {
     return next();
   } else {
-    return res.send(file.contents);
+    return res.json({file: file.contents});
   }
 }
 
@@ -41,7 +42,7 @@ exports.addFile = async (req, res) => {
       user.save()
     ]);
 
-    res.sendStatus(200);
+    res.sendStatus(201);
   } else {
     res.status(400).send("err_file_already_exists");
   }
