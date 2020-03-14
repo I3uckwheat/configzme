@@ -5,7 +5,9 @@ import Management from "./components/management/Management";
 class App extends React.Component {
   state = {
     username: null,
-    showLoginForm: false
+    showLoginForm: false,
+    filesFound: null,
+    fileNames: null
   };
 
   toggleForm = formstatus => {
@@ -22,22 +24,22 @@ class App extends React.Component {
     this.checkLoginStatus();
   }
 
-  async checkLoginStatus() {
-    console.log("checking login status");
+  checkLoginStatus = async () => {
+    // console.log("checking login status");
 
     try {
       const response = await fetch("/init?api=true");
-      console.log(response);
+      // console.log(response);
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       this.setState({ username: data.username });
     } catch (e) {
       console.log(e);
       console.log("Error!");
     }
-  }
+  };
 
   attemptLogin = async (username, password) => {
     console.log(username, password);
@@ -65,15 +67,37 @@ class App extends React.Component {
     window.location.reload();
   };
 
+  getFiles = async () => {
+    // console.log("getting files");
+
+    try {
+      const response = await fetch("/files?api=true");
+      // console.log(response);
+
+      const data = await response.json();
+      // console.log(data);
+      this.setState({
+        filesFound: true,
+        fileNames: data
+      });
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+    }
+  };
+
   render() {
     const userView = username => {
       if (username) {
         return (
           <Management
             loggedIn={this.state.username}
+            filesFound={this.state.filesFound}
             toggleForm={this.toggleForm}
             attemptLogin={this.attemptLogin}
             logout={this.logout}
+            getFiles={this.getFiles}
+            fileNames={this.state.fileNames}
           />
         );
       } else {

@@ -1,9 +1,22 @@
 import React from "react";
-import File from "./File";
+import Files from "./Files";
 import Header from "../header/Header";
 
 class Management extends React.Component {
+  componentDidMount() {
+    this.props.getFiles();
+  }
+
   render() {
+    const filesFound = () => {
+      if (this.props.filesFound) {
+        console.log("Found Files!");
+        return <Files fileNames={this.props.fileNames} />;
+      } else {
+        return <p>No Files Found.</p>;
+      }
+    };
+
     return (
       <React.Fragment>
         <Header
@@ -12,11 +25,7 @@ class Management extends React.Component {
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
         />
-        <div className="management">
-          <File />
-          <File />
-          <File />
-        </div>
+        <div className="management">{filesFound()}</div>
       </React.Fragment>
     );
   }
