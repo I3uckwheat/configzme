@@ -2,21 +2,22 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const File = mongoose.model('File');
 
-exports.getAllFiles = async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate("files");
-  res.json(user.files);
+exports.getAllFiles = async (req, res) => {
+  const user = await User.findById(req.user.id).populate("files").exec();
+  const fileNames = user.files.map(file => file.name);
+  res.json(fileNames);
 }
 
 exports.getFile = async (req, res, next) => {
-  const file = File.findOne({user: req.user.id, name: req.params.file});
+  const file = await File.findOne({user: req.user.id, name: req.params.file}).exec();
   if (!file) {
-    return res.sendStatus(404);
+    return next();
   } else {
-    return res.send(file.contents);
+    return res.json({file: file.contents});
   }
 }
 
-exports.addFile = async (req, res, next) => {
+exports.addFile = async (req, res) => {
   if(!req.file) { 
     return res.status(400).send("err_no_file_attached"); 
   }
@@ -35,21 +36,19 @@ exports.addFile = async (req, res, next) => {
       contents: fileContents,
       user: user.id
     });
-    user.files.push(file.id),
 
     await Promise.all([
-      file.save(),
+      user.addFile(file.id),
       user.save()
     ]);
 
-    res.sendStatus(200);
+    res.sendStatus(201);
   } else {
     res.status(400).send("err_file_already_exists");
   }
 }
 
-// FIXME: upserting fails to add the ID to the User document
-exports.upsertFile = async (req, res, next) => {
+exports.upsertFile = async (req, res) => {
   if(!req.file) { 
     return res.status(400).send("err_no_file_attached"); 
   }
@@ -59,23 +58,27 @@ exports.upsertFile = async (req, res, next) => {
     return res.status(400).send("err_empty_file_attached");
   }
 
-  await File.findOneAndUpdate(
+  const userPromise = User.findById(req.user.id).populate("files").exec();
+  const filePromise = File.findOneAndUpdate(
     { user: req.user.id, name: req.params.file }, 
     { contents: fileContents }, 
     { new: true, upsert: true }
     ).exec();
 
-  return res.sendStatus(200);
+  const [user, file] = await Promise.all([userPromise, filePromise]);
+  const fileWasAdded = await user.addFile(file);
+
+  res.status(200);
+  return fileWasAdded ? res.send('file_added') : res.send('file_updated');
 }
 
 exports.deleteFile = async (req, res) => {
   const user = await User.findById(req.user.id).populate("files");
 
   const fileToRemove = user.files.find((file) => file.name === req.params.file);
-
   const filesToKeep = user.files.filter((file) => file.name !== req.params.file);
-  user.files = filesToKeep;
 
+  user.files = filesToKeep;
   await fileToRemove.remove();
   await user.save();
 
