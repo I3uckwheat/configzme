@@ -6,9 +6,6 @@ import Header from "../header/Header";
 
 class Landing extends React.Component {
   render() {
-    if (this.props.showLoginForm === true) {
-    }
-
     return (
       <div className="landing">
         <Header

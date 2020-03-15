@@ -14,6 +14,7 @@ class Buttons extends React.Component {
             <RegisterButton />
             <LoginButton
               showLoginForm={this.props.showLoginForm}
+              attemptLogin={this.props.attemptLogin}
               toggleForm={this.props.toggleForm}
             />
           </>
@@ -21,7 +22,10 @@ class Buttons extends React.Component {
       } else {
         return (
           <>
-            <NewFileButton />
+            <NewFileButton
+              toggleAddFileForm={this.props.toggleAddFileForm}
+              showAddFileForm={this.props.showAddFileForm}
+            />
             <LogoutButton logout={this.props.logout} />
           </>
         );

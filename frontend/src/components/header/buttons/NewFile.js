@@ -3,7 +3,13 @@ import React from "react";
 class NewFileButton extends React.Component {
   render() {
     return (
-      <button>+ New File</button>
+      <button
+        onClick={() => {
+          this.props.toggleAddFileForm(this.props.showAddFileForm);
+        }}
+      >
+        + New File
+      </button>
     );
   }
 }
