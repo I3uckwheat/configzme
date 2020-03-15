@@ -22,10 +22,7 @@ class Buttons extends React.Component {
       } else {
         return (
           <>
-            <NewFileButton
-              toggleAddFileForm={this.props.toggleAddFileForm}
-              showAddFileForm={this.props.showAddFileForm}
-            />
+            <NewFileButton />
             <LogoutButton logout={this.props.logout} />
           </>
         );

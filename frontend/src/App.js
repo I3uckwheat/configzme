@@ -7,8 +7,7 @@ class App extends React.Component {
     username: null,
     showLoginForm: false,
     filesFound: null,
-    fileNames: null,
-    showAddFileForm: false
+    fileNames: null
   };
 
   toggleForm = formstatus => {
@@ -87,18 +86,6 @@ class App extends React.Component {
     }
   };
 
-  toggleAddFileForm = showAddFileForm => {
-    console.log(showAddFileForm);
-
-    if (showAddFileForm === false) {
-      showAddFileForm = true;
-      this.setState({ showAddFileForm: showAddFileForm });
-    } else {
-      showAddFileForm = false;
-      this.setState({ showAddFileForm: showAddFileForm });
-    }
-  };
-
   render() {
     const userView = username => {
       if (username) {
@@ -112,8 +99,6 @@ class App extends React.Component {
             logout={this.logout}
             getFiles={this.getFiles}
             fileNames={this.state.fileNames}
-            toggleAddFileForm={this.toggleAddFileForm}
-            showAddFileForm={this.state.showAddFileForm}
           />
         );
       } else {

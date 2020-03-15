@@ -3,13 +3,10 @@ import React from "react";
 class NewFileButton extends React.Component {
   render() {
     return (
-      <button
-        onClick={() => {
-          this.props.toggleAddFileForm(this.props.showAddFileForm);
-        }}
-      >
-        + New File
-      </button>
+      <form encType="multipart/form-data" action="" method="post">
+        <label htmlFor="file">Add a File:</label>
+        <input type="file" name="file" id="file" className="inputfile" />
+      </form>
     );
   }
 }
