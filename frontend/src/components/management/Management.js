@@ -19,6 +19,7 @@ class Management extends React.Component {
     return (
       <React.Fragment>
         <Header
+          
           toggleForm={this.props.toggleForm}
           showLoginForm={this.props.showLoginForm}
           loggedIn={this.props.loggedIn}
@@ -27,7 +28,8 @@ class Management extends React.Component {
           addFile={this.props.addFile}
         />
         {/* 
-          TODO create form that takes file name 
+          Look up form handling in React
+          TODO create modal form that takes file name 
           and includes a Submit button.
         */}
         <div className="management">{filesFound()}</div>

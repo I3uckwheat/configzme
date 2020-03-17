@@ -25,6 +25,8 @@ class App extends React.Component {
   }
 
   checkLoginStatus = async () => {
+    // TODO Tell user if backend has crashed
+
     // console.log("checking login status");
 
     try {
@@ -86,14 +88,18 @@ class App extends React.Component {
     }
   };
 
-  addFile = async file => {
+  addFile = async (file, fileName) => {
+    console.log(fileName);
+
+    const url = `/${fileName}?api=true`;
+    
     try {
       const formData = new FormData();
       const FileAdded = file;
 
       formData.append("file", FileAdded);
 
-      const sendFile = await fetch("/world?api=true", {
+      const sendFile = await fetch(url, {
         method: "POST",
         body: formData
       });
