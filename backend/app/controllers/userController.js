@@ -1,79 +1,78 @@
 const mongoose = require('mongoose');
+
 const User = mongoose.model('User');
 const File = mongoose.model('File');
 
 exports.getAllFiles = async (req, res) => {
-  const user = await User.findById(req.user.id).populate("files").exec();
-  const fileNames = user.files.map(file => file.name);
+  const user = await User.findById(req.user.id).populate('files').exec();
+  const fileNames = user.files.map((file) => file.name);
   res.json(fileNames);
-}
+};
 
 exports.getFile = async (req, res, next) => {
-  const file = await File.findOne({user: req.user.id, name: req.params.file}).exec();
+  const file = await File.findOne({ user: req.user.id, name: req.params.file }).exec();
   if (!file) {
     return next();
-  } else {
-    return res.json({file: file.contents});
   }
-}
+  return res.json({ file: file.contents });
+};
 
 exports.addFile = async (req, res) => {
-  if(!req.file) { 
-    return res.status(400).send("err_no_file_attached"); 
+  if (!req.file) {
+    return res.status(400).send('err_no_file_attached');
   }
 
   const fileContents = req.file.buffer.toString();
-  if(fileContents === "") {
-    return res.status(400).send("err_empty_file_attached");
+  if (fileContents === '') {
+    return res.status(400).send('err_empty_file_attached');
   }
 
-  const user = await User.findById(req.user.id).populate("files");
-  const existingUserFileNames = user.files.map(file => file.name);
+  const user = await User.findById(req.user.id).populate('files');
+  const existingUserFileNames = user.files.map((file) => file.name);
 
-  if(!existingUserFileNames.includes(req.params.file)) {
+  if (!existingUserFileNames.includes(req.params.file)) {
     const file = new File({
       name: req.params.file,
       contents: fileContents,
-      user: user.id
+      user: user.id,
     });
 
-    await Promise.all([
-      user.addFile(file.id),
-      user.save()
-    ]);
+    await file.save();
+    await user.addFile(file);
+    await user.save();
 
     res.sendStatus(201);
   } else {
-    res.status(400).send("err_file_already_exists");
+    res.status(400).send('err_file_already_exists');
   }
-}
+};
 
 exports.upsertFile = async (req, res) => {
-  if(!req.file) { 
-    return res.status(400).send("err_no_file_attached"); 
+  if (!req.file) {
+    return res.status(400).send('err_no_file_attached');
   }
 
   const fileContents = req.file.buffer.toString();
-  if(fileContents === "") {
-    return res.status(400).send("err_empty_file_attached");
+  if (fileContents === '') {
+    return res.status(400).send('err_empty_file_attached');
   }
 
-  const userPromise = User.findById(req.user.id).populate("files").exec();
+  const userPromise = User.findById(req.user.id).populate('files').exec();
   const filePromise = File.findOneAndUpdate(
-    { user: req.user.id, name: req.params.file }, 
-    { contents: fileContents }, 
-    { new: true, upsert: true }
-    ).exec();
+    { user: req.user.id, name: req.params.file },
+    { contents: fileContents },
+    { new: true, upsert: true },
+  ).exec();
 
   const [user, file] = await Promise.all([userPromise, filePromise]);
   const fileWasAdded = await user.addFile(file);
 
   res.status(200);
   return fileWasAdded ? res.send('file_added') : res.send('file_updated');
-}
+};
 
 exports.deleteFile = async (req, res) => {
-  const user = await User.findById(req.user.id).populate("files");
+  const user = await User.findById(req.user.id).populate('files');
 
   const fileToRemove = user.files.find((file) => file.name === req.params.file);
   const filesToKeep = user.files.filter((file) => file.name !== req.params.file);
@@ -83,4 +82,4 @@ exports.deleteFile = async (req, res) => {
   await user.save();
 
   res.sendStatus(200);
-}
+};
