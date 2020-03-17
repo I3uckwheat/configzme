@@ -24,7 +24,12 @@ class Management extends React.Component {
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}
+          addFile={this.props.addFile}
         />
+        {/* 
+          TODO create form that takes file name 
+          and includes a Submit button.
+        */}
         <div className="management">{filesFound()}</div>
       </React.Fragment>
     );

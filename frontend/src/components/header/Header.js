@@ -13,6 +13,7 @@ class Header extends React.Component {
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}
+          addFile={this.props.addFile}
         />
       </header>
     );

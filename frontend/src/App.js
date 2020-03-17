@@ -86,6 +86,25 @@ class App extends React.Component {
     }
   };
 
+  addFile = async file => {
+    try {
+      const formData = new FormData();
+      const FileAdded = file;
+
+      formData.append("file", FileAdded);
+
+      const sendFile = await fetch("/world?api=true", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await sendFile;
+      console.log(data);
+    } catch (event) {
+      console.log("Error!", event);
+    }
+  };
+
   render() {
     const userView = username => {
       if (username) {
@@ -99,6 +118,7 @@ class App extends React.Component {
             logout={this.logout}
             getFiles={this.getFiles}
             fileNames={this.state.fileNames}
+            addFile={this.addFile}
           />
         );
       } else {
