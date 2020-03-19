@@ -10,7 +10,10 @@ class File extends React.Component {
         <p>{this.props.fileName}</p>
         <DownloadFile />
         <EditFile />
-        <DeleteFile />
+        <DeleteFile
+          deleteFile={this.props.deleteFile}
+          fileName={this.props.fileName}
+        />
       </div>
     );
   }

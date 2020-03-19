@@ -19,7 +19,6 @@ class Management extends React.Component {
     return (
       <React.Fragment>
         <Header
-          
           toggleForm={this.props.toggleForm}
           showLoginForm={this.props.showLoginForm}
           loggedIn={this.props.loggedIn}
