@@ -1,30 +1,31 @@
 const mongoose = require('mongoose');
 const { extractUserCredentials } = require('../helpers');
+
 const User = mongoose.model('User');
 const passport = require('passport');
 
 exports.login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if(err) return next(err);
-    if(!user) return res.sendStatus(403);
-    req.login(user, err => {
-      if(err) return next(err)
-    })
+    if (err) return next(err);
+    if (!user) return res.sendStatus(403);
+    req.login(user, (err) => {
+      if (err) return next(err);
+    });
 
     return res.sendStatus(201);
   })(req, res, next);
-}
+};
 
 exports.logout = (req, res, next) => {
   req.logout();
-  res.sendStatus(204)
-}
+  res.sendStatus(204);
+};
 
 exports.register = async (req, res, next) => {
-  User.register({username: req.body.username}, req.body.password, (err) => {
-    if(err) {
+  User.register({ username: req.body.username }, req.body.password, (err) => {
+    if (err) {
       return next(err.message);
-    } 
+    }
 
     return res.sendStatus(201);
   });
@@ -45,7 +46,7 @@ exports.register = async (req, res, next) => {
   //      await User.register(user, password);
   //   } catch (error) {
   //     if (error.name === "UserExistsError") {
-  //       return res.send(error.message + "\n"); 
+  //       return res.send(error.message + "\n");
   //     }
   //     throw error
   //   }
@@ -57,7 +58,7 @@ exports.register = async (req, res, next) => {
   // } catch (err) {
   //   next(err)
   // }
-}
+};
 
 async function authenticateByHeaders(req, res, next) {
   try {
@@ -72,22 +73,22 @@ async function authenticateByHeaders(req, res, next) {
       req.user = {
         _id: user._id,
         username: user.username,
-        files: user.files
+        files: user.files,
       };
       return next();
     }
 
-    return res.status(403).send("Access Denied\n");
+    return res.status(403).send('Access Denied\n');
   } catch (err) {
-    next(err)
+    next(err);
   }
 }
 
 exports.ensureAuthentication = async (req, res, next) => {
-  if(req.get('Authorization')) {
+  if (req.get('Authorization')) {
     // authenticateByHeaders(req, res, next);
   } else {
-    if(req.isAuthenticated()) return next();
+    if (req.isAuthenticated()) return next();
     return res.sendStatus(403);
   }
-}
+};

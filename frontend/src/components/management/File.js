@@ -7,7 +7,7 @@ class File extends React.Component {
   render() {
     return (
       <div className="file">
-        <p>Filename</p>
+        <p>{this.props.fileName}</p>
         <DownloadFile />
         <EditFile />
         <DeleteFile />

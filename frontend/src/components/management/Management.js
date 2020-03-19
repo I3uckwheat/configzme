@@ -1,21 +1,38 @@
 import React from "react";
-import NewFileButton from "./buttons/NewFile";
-import File from "./File";
+import Files from "./Files";
+import Header from "../header/Header";
 
 class Management extends React.Component {
+  componentDidMount() {
+    this.props.getFiles();
+  }
+
   render() {
+    const filesFound = () => {
+      if (this.props.filesFound) {
+        return <Files fileNames={this.props.fileNames} />;
+      } else {
+        return <p>No Files Found.</p>;
+      }
+    };
+
     return (
       <React.Fragment>
-        <header className="header">
-          <h1>Configz.me</h1>
-          <h3>[Insert captivating slogan here]</h3>
-        </header>
-        <div className="management" >
-          <NewFileButton />
-          <File />
-          <File />
-          <File />
-        </div>
+        <Header
+          
+          toggleForm={this.props.toggleForm}
+          showLoginForm={this.props.showLoginForm}
+          loggedIn={this.props.loggedIn}
+          logout={this.props.logout}
+          attemptLogin={this.props.attemptLogin}
+          addFile={this.props.addFile}
+        />
+        {/* 
+          Look up form handling in React
+          TODO create modal form that takes file name 
+          and includes a Submit button.
+        */}
+        <div className="management">{filesFound()}</div>
       </React.Fragment>
     );
   }

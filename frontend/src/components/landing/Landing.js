@@ -1,18 +1,22 @@
 import React from "react";
-import FeatureList from "./FeatureList";
-import Buttons from "./buttons/Buttons";
 import "../../css/landing.css";
+import FeatureList from "./FeatureList";
+import LoginForm from "./LoginForm";
+import Header from "../header/Header";
 
 class Landing extends React.Component {
   render() {
     return (
       <div className="landing">
-        <header className="header">
-          <h1>Configz.me</h1>
-          <h3>[Insert captivating slogan here]</h3>
-        </header>
+        <Header
+          toggleForm={this.props.toggleForm}
+          showLoginForm={this.props.showLoginForm}
+          loggedIn={this.props.loggedIn}
+        />
         <div className="content">
-          <Buttons />
+          {this.props.showLoginForm ? (
+            <LoginForm attemptLogin={this.props.attemptLogin} />
+          ) : null}
           <div className="commands">
             <FeatureList />
           </div>
