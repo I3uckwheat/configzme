@@ -27,14 +27,10 @@ class App extends React.Component {
   checkLoginStatus = async () => {
     // TODO Tell user if backend has crashed
 
-    // console.log("checking login status");
-
     try {
       const response = await fetch("/init?api=true");
-      // console.log(response);
 
       const data = await response.json();
-      // console.log(data);
 
       this.setState({ username: data.username });
     } catch (e) {
@@ -70,14 +66,9 @@ class App extends React.Component {
   };
 
   getFiles = async () => {
-    // console.log("getting files");
-
     try {
       const response = await fetch("/files?api=true");
-      // console.log(response);
-
       const data = await response.json();
-      // console.log(data);
       this.setState({
         filesFound: true,
         fileNames: data
@@ -89,10 +80,8 @@ class App extends React.Component {
   };
 
   addFile = async (file, fileName) => {
-    console.log(fileName);
-
     const url = `/${fileName}?api=true`;
-    
+
     try {
       const formData = new FormData();
       const FileAdded = file;
@@ -106,6 +95,7 @@ class App extends React.Component {
 
       const data = await sendFile;
       console.log(data);
+      this.getFiles();
     } catch (event) {
       console.log("Error!", event);
     }
