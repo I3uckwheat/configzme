@@ -28,6 +28,11 @@ class NewFileButton extends React.Component {
 
     if (this.state.file && this.state.fileName) {
       this.props.addFile(this.state.file, this.state.fileName);
+      this.setState({
+        showAddFile: false,
+        fileName: "",
+        file: null
+      });
     }
   };
 
