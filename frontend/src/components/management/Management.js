@@ -3,6 +3,15 @@ import Files from "./Files";
 import Header from "../header/Header";
 
 class Management extends React.Component {
+  deleteFile = async filename => {
+    console.log("File Deleted");
+
+    await fetch(`/${filename}?api=true`, {
+      method: "DELETE"
+    });
+    this.props.getFiles();
+  };
+
   componentDidMount() {
     this.props.getFiles();
   }
@@ -10,7 +19,12 @@ class Management extends React.Component {
   render() {
     const filesFound = () => {
       if (this.props.filesFound) {
-        return <Files fileNames={this.props.fileNames} />;
+        return (
+          <Files
+            fileNames={this.props.fileNames}
+            deleteFile={this.deleteFile}
+          />
+        );
       } else {
         return <p>No Files Found.</p>;
       }
