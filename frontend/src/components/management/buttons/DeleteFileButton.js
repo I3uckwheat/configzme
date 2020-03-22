@@ -1,6 +1,6 @@
 import React from "react";
 
-class DeleteFile extends React.Component {
+class DeleteFileButton extends React.Component {
   render() {
     return (
       <button
@@ -14,4 +14,4 @@ class DeleteFile extends React.Component {
   }
 }
 
-export default DeleteFile;
+export default DeleteFileButton;

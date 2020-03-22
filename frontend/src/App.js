@@ -65,7 +65,7 @@ class App extends React.Component {
     window.location.reload();
   };
 
-  getFiles = async () => {
+  getFileNames = async () => {
     try {
       const response = await fetch("/files?api=true");
       const data = await response.json();
@@ -95,7 +95,7 @@ class App extends React.Component {
 
       const data = await sendFile;
       console.log(data);
-      this.getFiles();
+      this.getFileNames();
     } catch (event) {
       console.log("Error!", event);
     }
@@ -112,7 +112,7 @@ class App extends React.Component {
             toggleForm={this.toggleForm}
             attemptLogin={this.attemptLogin}
             logout={this.logout}
-            getFiles={this.getFiles}
+            getFiles={this.getFileNames}
             fileNames={this.state.fileNames}
             addFile={this.addFile}
           />

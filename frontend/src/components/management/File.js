@@ -1,19 +1,62 @@
 import React from "react";
-import DownloadFile from "./buttons/DownloadFile";
-import EditFile from "./buttons/EditFile";
-import DeleteFile from "./buttons/DeleteFile";
+import DownloadFileButton from "./buttons/DownloadFileButton";
+import ViewFileButton from "./buttons/ViewFileButton";
+import EditFileButton from "./buttons/EditFileButton";
+import DeleteFileButton from "./buttons/DeleteFileButton";
+import ViewFile from "./ViewFile";
 
 class File extends React.Component {
+  state = {
+    viewFileContents: false,
+    fileContents: null
+  };
+
+  getFileContents = async () => {
+    try {
+      const response = await fetch(`/${this.props.fileName}?api=true`);
+      const data = await response.json();
+
+      this.setState({
+        fileContents: data.file
+      });
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+    }
+
+    console.log("Show file contents");
+    console.log(this.state.viewFileContents);
+
+    if (this.state.viewFileContents) {
+      this.setState({ viewFileContents: false });
+    } else {
+      this.setState({ viewFileContents: true });
+    }
+  };
+
+  FileContents = () => {
+    return this.state.viewFileContents ? (
+      <ViewFile fileContents={this.state.fileContents} />
+    ) : null;
+  };
+
   render() {
     return (
       <div className="file">
         <p>{this.props.fileName}</p>
-        <DownloadFile />
-        <EditFile />
-        <DeleteFile
-          deleteFile={this.props.deleteFile}
-          fileName={this.props.fileName}
-        />
+        <div className="file-buttons">
+          <DownloadFileButton />
+          <ViewFileButton
+            viewFileContents={this.state.viewFileContents}
+            getFileContents={this.getFileContents}
+          />
+          <EditFileButton />
+          <DeleteFileButton
+            deleteFile={this.props.deleteFile}
+            fileName={this.props.fileName}
+          />
+        </div>
+        <this.FileContents />
       </div>
     );
   }
