@@ -25,8 +25,8 @@ class File extends React.Component {
       console.log("Error!");
     }
 
-    console.log("Show file contents");
-    console.log(this.state.viewFileContents);
+    // console.log("Show file contents");
+    // console.log(this.state.fileContents);
 
     if (this.state.viewFileContents) {
       this.setState({ viewFileContents: false });
@@ -41,11 +41,11 @@ class File extends React.Component {
     ) : null;
   };
 
-  DownloadFileFile = (filename, text) => {
+  DownloadFileLink = (filename, contents) => {
     if (this.state.downloadFile) {
       return (
         <a
-          href={`/data:text/plain;charset=utf-8${encodeURIComponent(text)}`}
+          href={`data:text/plain;charset=utf-8,${encodeURIComponent(contents)}`}
           download={`${filename}.txt`}
         >
           test
@@ -57,8 +57,8 @@ class File extends React.Component {
   };
 
   downloadFile = () => {
-    this.getFileContents();
     this.setState({ downloadFile: true });
+    this.getFileContents();
   };
 
   render() {
@@ -70,7 +70,7 @@ class File extends React.Component {
             downloadFile={this.downloadFile}
             fileUrl={this.state.fileUrl}
           />
-          {this.DownloadFileFile(this.props.fileName, this.state.fileContents)}
+          {this.DownloadFileLink(this.props.fileName, this.state.fileContents)}
           <ViewFileButton
             viewFileContents={this.state.viewFileContents}
             getFileContents={this.getFileContents}
