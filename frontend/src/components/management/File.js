@@ -8,7 +8,8 @@ import ViewFile from "./ViewFile";
 class File extends React.Component {
   state = {
     viewFileContents: false,
-    fileContents: null
+    fileContents: null,
+    downloadFile: false
   };
 
   getFileContents = async () => {
@@ -40,12 +41,36 @@ class File extends React.Component {
     ) : null;
   };
 
+  DownloadFileFile = (filename, text) => {
+    if (this.state.downloadFile) {
+      return (
+        <a
+          href={`/data:text/plain;charset=utf-8${encodeURIComponent(text)}`}
+          download={`${filename}.txt`}
+        >
+          test
+        </a>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  downloadFile = () => {
+    this.getFileContents();
+    this.setState({ downloadFile: true });
+  };
+
   render() {
     return (
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
-          <DownloadFileButton />
+          <DownloadFileButton
+            downloadFile={this.downloadFile}
+            fileUrl={this.state.fileUrl}
+          />
+          {this.DownloadFileFile(this.props.fileName, this.state.fileContents)}
           <ViewFileButton
             viewFileContents={this.state.viewFileContents}
             getFileContents={this.getFileContents}
