@@ -3,13 +3,14 @@ import React from "react";
 class DownloadFileButton extends React.Component {
   render() {
     return (
-      <button
-        onClick={() => {
-          this.props.downloadFile();
-        }}
+      <a
+        href={`data:text/plain;charset=utf-8,${encodeURIComponent(
+          this.props.contents
+        )}`}
+        download={`${this.props.filename}.txt`}
       >
         Download
-      </button>
+      </a>
     );
   }
 }

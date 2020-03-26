@@ -5,7 +5,7 @@ class ViewFileButton extends React.Component {
     return (
       <button
         onClick={() => {
-          this.props.getFileContents();
+          this.props.showFileContents();
         }}
       >
         View

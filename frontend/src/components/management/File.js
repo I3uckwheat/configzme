@@ -12,6 +12,10 @@ class File extends React.Component {
     downloadFile: false
   };
 
+  componentDidMount() {
+    this.getFileContents();
+  }
+
   getFileContents = async () => {
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
@@ -24,10 +28,9 @@ class File extends React.Component {
       console.log(e);
       console.log("Error!");
     }
+  };
 
-    // console.log("Show file contents");
-    // console.log(this.state.fileContents);
-
+  showFileContents = () => {
     if (this.state.viewFileContents) {
       this.setState({ viewFileContents: false });
     } else {
@@ -41,40 +44,16 @@ class File extends React.Component {
     ) : null;
   };
 
-  DownloadFileLink = (filename, contents) => {
-    if (this.state.downloadFile) {
-      return (
-        <a
-          href={`data:text/plain;charset=utf-8,${encodeURIComponent(contents)}`}
-          download={`${filename}.txt`}
-        >
-          test
-        </a>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  downloadFile = () => {
-    this.setState({ downloadFile: true });
-    this.getFileContents();
-  };
-
   render() {
     return (
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
           <DownloadFileButton
-            downloadFile={this.downloadFile}
-            fileUrl={this.state.fileUrl}
+            contents={this.state.fileContents}
+            filename={this.props.fileName}
           />
-          {this.DownloadFileLink(this.props.fileName, this.state.fileContents)}
-          <ViewFileButton
-            viewFileContents={this.state.viewFileContents}
-            getFileContents={this.getFileContents}
-          />
+          <ViewFileButton showFileContents={this.showFileContents} />
           <EditFileButton />
           <DeleteFileButton
             deleteFile={this.props.deleteFile}
