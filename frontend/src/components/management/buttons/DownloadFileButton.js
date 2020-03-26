@@ -1,4 +1,5 @@
 import React from "react";
+import "../../../css/buttons.css";
 
 class DownloadFileButton extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class DownloadFileButton extends React.Component {
           this.props.contents
         )}`}
         download={`${this.props.filename}.txt`}
+        className="psuedo-button"
       >
         Download
       </a>
