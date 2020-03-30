@@ -1,9 +1,6 @@
 import React from "react";
-import LoginButton from "./LoginButton";
-import RegisterButton from "./RegisterButton";
 import "../../../css/buttons.css";
 import NewFileButton from "./NewFile";
-import LogoutButton from "./LogoutButton";
 
 class Buttons extends React.Component {
   render() {
@@ -11,19 +8,27 @@ class Buttons extends React.Component {
       if (!this.props.loggedIn) {
         return (
           <>
-            <RegisterButton />
-            <LoginButton
-              showLoginForm={this.props.showLoginForm}
-              attemptLogin={this.props.attemptLogin}
-              toggleForm={this.props.toggleForm}
-            />
+            <button>Register</button>
+            <button
+              onClick={() => {
+                this.props.toggleForm(this.props.showLoginForm);
+              }}
+            >
+              Log In
+            </button>
           </>
         );
       } else {
         return (
           <>
             <NewFileButton addFile={this.props.addFile} />
-            <LogoutButton logout={this.props.logout} />
+            <button
+              onClick={() => {
+                this.props.logout();
+              }}
+            >
+              Logout
+            </button>
           </>
         );
       }
