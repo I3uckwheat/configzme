@@ -1,8 +1,5 @@
 import React from "react";
 import DownloadFileButton from "./buttons/DownloadFileButton";
-import ViewFileButton from "./buttons/ViewFileButton";
-import EditFileButton from "./buttons/EditFileButton";
-import DeleteFileButton from "./buttons/DeleteFileButton";
 import ViewFile from "./ViewFile";
 
 class File extends React.Component {
@@ -53,12 +50,21 @@ class File extends React.Component {
             contents={this.state.fileContents}
             filename={this.props.fileName}
           />
-          <ViewFileButton showFileContents={this.showFileContents} />
-          <EditFileButton />
-          <DeleteFileButton
-            deleteFile={this.props.deleteFile}
-            fileName={this.props.fileName}
-          />
+          <button
+            onClick={() => {
+              this.showFileContents();
+            }}
+          >
+            View
+          </button>
+          <button>Edit</button>
+          <button
+            onClick={() => {
+              this.props.deleteFile(this.props.fileName);
+            }}
+          >
+            Delete
+          </button>
         </div>
         <this.FileContents />
       </div>
