@@ -1,9 +1,14 @@
 import React from "react";
 
 class EditFileForm extends React.Component {
-  // editedContents = event => {
-  //   console.log(event.target.value);
-  // };
+  state = {
+    newFileContents: this.props.fileContents
+  };
+
+  editedContents = event => {
+    this.setState({ newFileContents: event.target.value });
+  };
+
   render() {
     return (
       <>
@@ -13,7 +18,8 @@ class EditFileForm extends React.Component {
           id="file-content"
           rows="4"
           cols="50"
-          defaultValue={this.props.fileContents}
+          value={this.state.newFileContents}
+          onChange={this.editedContents}
         ></textarea>
       </>
     );
