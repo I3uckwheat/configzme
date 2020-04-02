@@ -7,7 +7,11 @@ class Files extends React.Component {
 
     const listFiles = files.map((fileName, index) => (
       <li key={index}>
-        <File fileName={fileName} deleteFile={this.props.deleteFile} />
+        <File
+          fileName={fileName}
+          deleteFile={this.props.deleteFile}
+          addFile={this.props.addFile}
+        />
       </li>
     ));
 

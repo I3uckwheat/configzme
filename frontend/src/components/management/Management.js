@@ -3,6 +3,16 @@ import Files from "./Files";
 import Header from "../header/Header";
 
 class Management extends React.Component {
+  state = {
+    showAddFile: false,
+    fileName: "",
+    file: null
+  };
+
+  componentDidMount() {
+    this.props.getFiles();
+  }
+
   deleteFile = async filename => {
     console.log("File Deleted");
 
@@ -12,9 +22,34 @@ class Management extends React.Component {
     this.props.getFiles();
   };
 
-  componentDidMount() {
-    this.props.getFiles();
-  }
+  showAddFileForm = state => {
+    if (state) {
+      this.setState({ showAddFile: false });
+    } else {
+      this.setState({ showAddFile: true });
+    }
+  };
+
+  setFileName = event => {
+    this.setState({ fileName: event.target.value });
+  };
+
+  setFile = event => {
+    this.setState({ file: event.target.files[0] });
+  };
+
+  fileSubmitHandler = event => {
+    event.preventDefault();
+
+    if (this.state.file && this.state.fileName) {
+      this.props.addFile(this.state.file, this.state.fileName);
+      this.setState({
+        showAddFile: false,
+        fileName: "",
+        file: null
+      });
+    }
+  };
 
   render() {
     const filesFound = () => {
@@ -23,6 +58,7 @@ class Management extends React.Component {
           <Files
             fileNames={this.props.fileNames}
             deleteFile={this.deleteFile}
+            addFile={this.props.addFile}
           />
         );
       } else {
@@ -39,6 +75,13 @@ class Management extends React.Component {
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}
           addFile={this.props.addFile}
+          showAddFile={this.state.showAddFile}
+          fileName={this.state.fileName}
+          file={this.state.file}
+          showAddFileForm={this.showAddFileForm}
+          setFileName={this.setFileName}
+          setFile={this.setFile}
+          fileSubmitHandler={this.fileSubmitHandler}
         />
         {/* 
           Look up form handling in React

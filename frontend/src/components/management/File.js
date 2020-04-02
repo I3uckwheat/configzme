@@ -53,7 +53,10 @@ class File extends React.Component {
 
   ViewEditForm = () => {
     return this.state.showEditForm ? (
-      <EditFileForm fileContents={this.state.fileContents} />
+      <EditFileForm
+        fileContents={this.state.fileContents}
+        addFile={this.props.addFile}
+      />
     ) : null;
   };
 

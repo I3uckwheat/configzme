@@ -21,7 +21,16 @@ class Buttons extends React.Component {
       } else {
         return (
           <>
-            <NewFileButton addFile={this.props.addFile} />
+            <NewFileButton
+              addFile={this.props.addFile}
+              showAddFile={this.props.showAddFile}
+              fileName={this.props.fileName}
+              file={this.props.file}
+              showAddFileForm={this.props.showAddFileForm}
+              setFileName={this.props.setFileName}
+              setFile={this.props.setFile}
+              fileSubmitHandler={this.props.fileSubmitHandler}
+            />
             <button
               onClick={() => {
                 this.props.logout();

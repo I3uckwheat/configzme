@@ -6,7 +6,9 @@ class EditFileForm extends React.Component {
   };
 
   editedContents = event => {
-    this.setState({ newFileContents: event.target.value });
+    this.setState({
+      newFileContents: event.target.value
+    });
   };
 
   render() {

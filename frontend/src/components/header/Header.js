@@ -14,6 +14,13 @@ class Header extends React.Component {
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}
           addFile={this.props.addFile}
+          showAddFile={this.props.showAddFile}
+          fileName={this.props.fileName}
+          file={this.props.file}
+          showAddFileForm={this.props.showAddFileForm}
+          setFileName={this.props.setFileName}
+          setFile={this.props.setFile}
+          fileSubmitHandler={this.props.fileSubmitHandler}
         />
       </header>
     );
