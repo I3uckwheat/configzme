@@ -5,8 +5,7 @@ import Header from "../header/Header";
 class Management extends React.Component {
   state = {
     showAddFile: false,
-    fileName: "",
-    file: null
+    fileName: ""
   };
 
   componentDidMount() {
@@ -45,8 +44,7 @@ class Management extends React.Component {
       this.props.addFile(this.state.file, this.state.fileName);
       this.setState({
         showAddFile: false,
-        fileName: "",
-        file: null
+        fileName: ""
       });
     }
   };
@@ -58,7 +56,8 @@ class Management extends React.Component {
           <Files
             fileNames={this.props.fileNames}
             deleteFile={this.deleteFile}
-            addFile={this.props.addFile}
+            editFile={this.props.editFile}
+            fileName={this.state.fileName}
           />
         );
       } else {

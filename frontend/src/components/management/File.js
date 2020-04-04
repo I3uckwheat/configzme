@@ -8,7 +8,8 @@ class File extends React.Component {
     viewFileContents: false,
     fileContents: null,
     downloadFile: false,
-    showEditForm: false
+    showEditForm: false,
+    file: null
   };
 
   componentDidMount() {
@@ -21,7 +22,8 @@ class File extends React.Component {
       const data = await response.json();
 
       this.setState({
-        fileContents: data.file
+        fileContents: data.file,
+        file: data
       });
     } catch (e) {
       console.log(e);
@@ -55,7 +57,10 @@ class File extends React.Component {
     return this.state.showEditForm ? (
       <EditFileForm
         fileContents={this.state.fileContents}
-        addFile={this.props.addFile}
+        editFile={this.props.editFile}
+        file={this.state.file}
+        fileName={this.props.fileName}
+        getFileContents={this.getFileContents}
       />
     ) : null;
   };

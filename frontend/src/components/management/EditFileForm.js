@@ -9,6 +9,16 @@ class EditFileForm extends React.Component {
     this.setState({
       newFileContents: event.target.value
     });
+
+    const editedFile = new File(
+      [`${this.state.newFileContents}`],
+      `${this.props.fileName}`,
+      {
+        type: "text/plain"
+      }
+    );
+    this.props.editFile(editedFile, this.props.fileName);
+    this.props.getFileContents();
   };
 
   render() {
