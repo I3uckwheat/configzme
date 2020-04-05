@@ -55,27 +55,30 @@ class File extends React.Component {
     }
   };
 
-  editFile = async (file, fileName) => {
-    const url = `/${fileName}?api=true`;
+  editFile = async (file, fileName, contents) => {
+    if (contents === '') {
+      this.setState({fileContents: null})
+    } else {
+      const url = `/${fileName}?api=true`;
 
-    try {
-      const formData = new FormData();
-      const FileAdded = file;
-
-      formData.append("file", FileAdded);
-
-      const sendFile = await fetch(url, {
-        method: "put",
-        body: formData
-      });
-
-      const data = await sendFile;
-      console.log(data);
-      this.getFileContents();
-    } catch (event) {
-      console.log("Error!", event);
-    }
-
+      try {
+        const formData = new FormData();
+        const FileAdded = file;
+  
+        formData.append("file", FileAdded);
+  
+        const sendFile = await fetch(url, {
+          method: "put",
+          body: formData
+        });
+  
+        const data = await sendFile;
+        console.log(data);
+        this.getFileContents();
+      } catch (event) {
+        console.log("Error!", event);
+      }
+    } 
   };
 
   ViewEditForm = () => {
