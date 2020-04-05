@@ -56,7 +56,6 @@ class Management extends React.Component {
           <Files
             fileNames={this.props.fileNames}
             deleteFile={this.deleteFile}
-            editFile={this.props.editFile}
             fileName={this.state.fileName}
           />
         );

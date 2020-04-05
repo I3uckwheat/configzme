@@ -10,7 +10,6 @@ class Files extends React.Component {
         <File
           fileName={fileName}
           deleteFile={this.props.deleteFile}
-          editFile={this.props.editFile}
         />
       </li>
     ));

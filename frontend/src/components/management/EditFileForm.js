@@ -2,23 +2,29 @@ import React from "react";
 
 class EditFileForm extends React.Component {
   state = {
-    newFileContents: this.props.fileContents
+    newFileContents: this.props.fileContents,
   };
 
-  editedContents = event => {
-    this.setState({
-      newFileContents: event.target.value
-    });
-
-    const editedFile = new File(
-      [`${this.state.newFileContents}`],
-      `${this.props.fileName}`,
+  editedContents = (event) => {
+    console.log(event.target.value);
+    this.setState(
       {
-        type: "text/plain"
+        newFileContents: event.target.value,
+      },
+
+      () => {
+        const editedFile = new File(
+          [`${this.state.newFileContents}`],
+          `${this.props.fileName}`,
+          {
+            type: "text/plain",
+          }
+        );
+        console.log(this.state.newFileContents);
+        this.props.editFile(editedFile, this.props.fileName);
+        // this.props.getFileContents();
       }
     );
-    this.props.editFile(editedFile, this.props.fileName);
-    this.props.getFileContents();
   };
 
   render() {

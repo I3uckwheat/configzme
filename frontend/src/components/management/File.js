@@ -9,7 +9,7 @@ class File extends React.Component {
     fileContents: null,
     downloadFile: false,
     showEditForm: false,
-    file: null
+    file: null,
   };
 
   componentDidMount() {
@@ -17,13 +17,15 @@ class File extends React.Component {
   }
 
   getFileContents = async () => {
+    console.log("Getting file contents!");
+
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
       const data = await response.json();
 
       this.setState({
         fileContents: data.file,
-        file: data
+        file: data,
       });
     } catch (e) {
       console.log(e);
@@ -53,11 +55,34 @@ class File extends React.Component {
     }
   };
 
+  editFile = async (file, fileName) => {
+    const url = `/${fileName}?api=true`;
+
+    try {
+      const formData = new FormData();
+      const FileAdded = file;
+
+      formData.append("file", FileAdded);
+
+      const sendFile = await fetch(url, {
+        method: "put",
+        body: formData
+      });
+
+      const data = await sendFile;
+      console.log(data);
+      this.getFileContents();
+    } catch (event) {
+      console.log("Error!", event);
+    }
+
+  };
+
   ViewEditForm = () => {
     return this.state.showEditForm ? (
       <EditFileForm
         fileContents={this.state.fileContents}
-        editFile={this.props.editFile}
+        editFile={this.editFile}
         file={this.state.file}
         fileName={this.props.fileName}
         getFileContents={this.getFileContents}
