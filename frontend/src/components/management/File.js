@@ -6,7 +6,7 @@ import EditFileForm from "./EditFileForm";
 class File extends React.Component {
   state = {
     viewFileContents: false,
-    fileContents: null,
+    fileContents: '',
     downloadFile: false,
     showEditForm: false,
     file: null,
@@ -17,7 +17,6 @@ class File extends React.Component {
   }
 
   getFileContents = async () => {
-    console.log("Getting file contents!");
 
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
@@ -57,7 +56,7 @@ class File extends React.Component {
 
   editFile = async (file, fileName, contents) => {
     if (contents === '') {
-      this.setState({fileContents: null})
+      this.setState({fileContents: ''})
     } else {
       const url = `/${fileName}?api=true`;
 

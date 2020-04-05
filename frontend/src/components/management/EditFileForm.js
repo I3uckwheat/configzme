@@ -6,7 +6,6 @@ class EditFileForm extends React.Component {
   };
 
   editedContents = (event) => {
-    console.log(event.target.value);
     const contents = event.target.value;
     this.setState(
       {
@@ -21,7 +20,6 @@ class EditFileForm extends React.Component {
             type: "text/plain",
           }
         );
-        console.log(this.state.newFileContents);
         this.props.editFile(editedFile, this.props.fileName, contents);
       }
     );

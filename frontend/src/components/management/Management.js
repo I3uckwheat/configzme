@@ -9,7 +9,7 @@ class Management extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getFiles();
+    this.props.getFileNames();
   }
 
   deleteFile = async filename => {
@@ -18,7 +18,7 @@ class Management extends React.Component {
     await fetch(`/${filename}?api=true`, {
       method: "DELETE"
     });
-    this.props.getFiles();
+    this.props.getFileNames();
   };
 
   showAddFileForm = state => {
@@ -26,6 +26,28 @@ class Management extends React.Component {
       this.setState({ showAddFile: false });
     } else {
       this.setState({ showAddFile: true });
+    }
+  };
+
+  addFile = async (file, fileName) => {
+    const url = `/${fileName}?api=true`;
+
+    try {
+      const formData = new FormData();
+      const FileAdded = file;
+
+      formData.append("file", FileAdded);
+
+      const sendFile = await fetch(url, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await sendFile;
+      console.log(data);
+      this.props.getFileNames();
+    } catch (event) {
+      console.log("Error!", event);
     }
   };
 
@@ -41,7 +63,7 @@ class Management extends React.Component {
     event.preventDefault();
 
     if (this.state.file && this.state.fileName) {
-      this.props.addFile(this.state.file, this.state.fileName);
+      this.addFile(this.state.file, this.state.fileName);
       this.setState({
         showAddFile: false,
         fileName: ""
@@ -72,7 +94,7 @@ class Management extends React.Component {
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}
-          addFile={this.props.addFile}
+          addFile={this.addFile}
           showAddFile={this.state.showAddFile}
           fileName={this.state.fileName}
           file={this.state.file}
