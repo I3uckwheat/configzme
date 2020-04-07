@@ -37,8 +37,8 @@ class Management extends React.Component {
     this.getFileNames();
   };
 
-  showAddFileForm = state => {
-    if (state) {
+  showAddFileForm = showForm => {
+    if (showForm) {
       this.setState({ showAddFile: false });
     } else {
       this.setState({ showAddFile: true });

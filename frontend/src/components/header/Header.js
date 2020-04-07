@@ -12,7 +12,6 @@ class Header extends React.Component {
           toggleLoginForm={this.props.toggleLoginForm}
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
-          attemptLogin={this.props.attemptLogin}
           addFile={this.props.addFile}
           showAddFile={this.props.showAddFile}
           fileName={this.props.fileName}
