@@ -5,19 +5,6 @@ import Management from "./components/management/Management";
 class App extends React.Component {
   state = {
     username: null,
-    showLoginForm: false,
-    filesFound: null,
-    fileNames: null
-  };
-
-  toggleForm = formstatus => {
-    if (formstatus === false) {
-      formstatus = true;
-      this.setState({ showLoginForm: formstatus });
-    } else {
-      formstatus = false;
-      this.setState({ showLoginForm: formstatus });
-    }
   };
 
   componentDidMount() {
@@ -26,16 +13,14 @@ class App extends React.Component {
 
   checkLoginStatus = async () => {
     // TODO Tell user if backend has crashed
-
     try {
       const response = await fetch("/init?api=true");
-
       const data = await response.json();
 
       this.setState({ username: data.username });
     } catch (e) {
-      console.log(e);
       console.log("Error!");
+      console.log(e);
     }
   };
 
@@ -65,48 +50,27 @@ class App extends React.Component {
     window.location.reload();
   };
 
-  getFileNames = async () => {
-    try {
-      const response = await fetch("/files?api=true");
-      const data = await response.json();
-      this.setState({
-        filesFound: true,
-        fileNames: data
-      });
-    } catch (e) {
-      console.log(e);
-      console.log("Error!");
-    }
-  };
-
   render() {
     const userView = username => {
       if (username) {
         return (
           <Management
-            showLoginForm={this.state.showLoginForm}
             loggedIn={this.state.username}
-            filesFound={this.state.filesFound}
-            toggleForm={this.toggleForm}
-            attemptLogin={this.attemptLogin}
             logout={this.logout}
-            getFileNames={this.getFileNames}
-            fileNames={this.state.fileNames}
           />
         );
       } else {
         return (
-          <Landing
-            loggedIn={this.state.username}
-            showLoginForm={this.state.showLoginForm}
-            toggleForm={this.toggleForm}
-            attemptLogin={this.attemptLogin}
-          />
+          <Landing attemptLogin={this.attemptLogin}/>
         );
       }
     };
 
-    return <div className="App">{userView(this.state.username)}</div>;
+    return (
+      <div className="App">
+        {userView(this.state.username)}
+      </div>
+    );
   }
 }
 

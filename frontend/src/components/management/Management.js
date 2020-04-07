@@ -5,12 +5,28 @@ import Header from "../header/Header";
 class Management extends React.Component {
   state = {
     showAddFile: false,
-    fileName: ""
+    fileName: "",
+    filesFound: null,
+    fileNames: null
   };
 
   componentDidMount() {
-    this.props.getFileNames();
+    this.getFileNames();
   }
+
+  getFileNames = async () => {
+    try {
+      const response = await fetch("/files?api=true");
+      const data = await response.json();
+      this.setState({
+        filesFound: true,
+        fileNames: data
+      });
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+    }
+  };
 
   deleteFile = async filename => {
     console.log("File Deleted");
@@ -18,7 +34,7 @@ class Management extends React.Component {
     await fetch(`/${filename}?api=true`, {
       method: "DELETE"
     });
-    this.props.getFileNames();
+    this.getFileNames();
   };
 
   showAddFileForm = state => {
@@ -45,7 +61,7 @@ class Management extends React.Component {
 
       const data = await sendFile;
       console.log(data);
-      this.props.getFileNames();
+      this.getFileNames();
     } catch (event) {
       console.log("Error!", event);
     }
@@ -72,11 +88,11 @@ class Management extends React.Component {
   };
 
   render() {
-    const filesFound = () => {
-      if (this.props.filesFound) {
+    const fileList = () => {
+      if (this.state.filesFound) {
         return (
           <Files
-            fileNames={this.props.fileNames}
+            fileNames={this.state.fileNames}
             deleteFile={this.deleteFile}
             fileName={this.state.fileName}
           />
@@ -89,11 +105,8 @@ class Management extends React.Component {
     return (
       <React.Fragment>
         <Header
-          toggleForm={this.props.toggleForm}
-          showLoginForm={this.props.showLoginForm}
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
-          attemptLogin={this.props.attemptLogin}
           addFile={this.addFile}
           showAddFile={this.state.showAddFile}
           fileName={this.state.fileName}
@@ -108,7 +121,7 @@ class Management extends React.Component {
           TODO create modal form that takes file name 
           and includes a Submit button.
         */}
-        <div className="management">{filesFound()}</div>
+        <div className="management">{fileList()}</div>
       </React.Fragment>
     );
   }

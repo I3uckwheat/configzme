@@ -9,7 +9,7 @@ class Header extends React.Component {
         <h3>[Insert captivating slogan here]</h3>
         <Buttons
           showLoginForm={this.props.showLoginForm}
-          toggleForm={this.props.toggleForm}
+          toggleLoginForm={this.props.toggleLoginForm}
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
           attemptLogin={this.props.attemptLogin}

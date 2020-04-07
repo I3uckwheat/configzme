@@ -11,7 +11,7 @@ class Buttons extends React.Component {
             <button>Register</button>
             <button
               onClick={() => {
-                this.props.toggleForm(this.props.showLoginForm);
+                this.props.toggleLoginForm(this.props.showLoginForm);
               }}
             >
               Log In
