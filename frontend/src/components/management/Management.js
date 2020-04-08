@@ -1,6 +1,6 @@
 import React from "react";
 import Files from "./Files";
-import Header from "../header/Header";
+import Header from "../Header";
 
 class Management extends React.Component {
   state = {

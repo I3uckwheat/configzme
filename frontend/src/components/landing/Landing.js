@@ -2,7 +2,7 @@ import React from "react";
 import "../../css/landing.css";
 import FeatureList from "./FeatureList";
 import LoginForm from "./LoginForm";
-import Header from "../header/Header";
+import Header from "../Header";
 
 class Landing extends React.Component {
   state = {
