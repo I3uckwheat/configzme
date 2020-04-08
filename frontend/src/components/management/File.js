@@ -1,5 +1,6 @@
 import React from "react";
-import DownloadFileButton from "./buttons/DownloadFileButton";
+import "../../css/buttons.css";
+// import DownloadFileButton from "./buttons/DownloadFileButton";
 import ViewFile from "./ViewFile";
 import EditFileForm from "./EditFileForm";
 
@@ -47,11 +48,11 @@ class File extends React.Component {
   };
 
   editForm = () => {
-    if (!this.state.showEditForm) {
-      this.setState({ showEditForm: true });
-    } else {
+    if (this.state.showEditForm) {
       this.setState({ showEditForm: false });
-    }
+
+    } else {
+      this.setState({ showEditForm: true });    }
   };
 
   editFile = async (file, fileName, contents) => {
@@ -97,10 +98,15 @@ class File extends React.Component {
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
-          <DownloadFileButton
-            contents={this.state.fileContents}
-            filename={this.props.fileName}
-          />
+          <a
+          href={`data:text/plain;charset=utf-8,${encodeURIComponent(
+            this.state.fileContents
+          )}`}
+          download={`${this.props.fileName}.txt`}
+          className="psuedo-button"
+          >
+            Download
+          </a>
           <button
             onClick={() => {
               this.showFileContents();
@@ -117,8 +123,8 @@ class File extends React.Component {
             Delete
           </button>
         </div>
-        <this.FileContents />
-        <this.ViewEditForm />
+        {this.FileContents()}
+        {this.ViewEditForm()}
       </div>
     );
   }
