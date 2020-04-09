@@ -28,6 +28,20 @@ class Management extends React.Component {
     }
   };
 
+  fileList = () => {
+    if (this.state.filesFound) {
+      return (
+        <Files
+          fileNames={this.state.fileNames}
+          deleteFile={this.deleteFile}
+          fileName={this.state.fileName}
+        />
+      );
+    } else {
+      return <p>No Files Found.</p>;
+    }
+  };
+
   deleteFile = async filename => {
     console.log("File Deleted");
 
@@ -88,29 +102,13 @@ class Management extends React.Component {
   };
 
   render() {
-    const fileList = () => {
-      if (this.state.filesFound) {
-        return (
-          <Files
-            fileNames={this.state.fileNames}
-            deleteFile={this.deleteFile}
-            fileName={this.state.fileName}
-          />
-        );
-      } else {
-        return <p>No Files Found.</p>;
-      }
-    };
-
     return (
-      <React.Fragment>
+      <>
         <Header
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
-          addFile={this.addFile}
           showAddFile={this.state.showAddFile}
           fileName={this.state.fileName}
-          file={this.state.file}
           showAddFileForm={this.showAddFileForm}
           setFileName={this.setFileName}
           setFile={this.setFile}
@@ -121,8 +119,8 @@ class Management extends React.Component {
           TODO create modal form that takes file name 
           and includes a Submit button.
         */}
-        <div className="management">{fileList()}</div>
-      </React.Fragment>
+        <div className="management">{this.fileList()}</div>
+      </>
     );
   }
 }

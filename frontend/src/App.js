@@ -1,5 +1,5 @@
 import React from "react";
-import Landing from "./components/landing/Landing";
+import Landing from "./components/Landing";
 import Management from "./components/management/Management";
 
 class App extends React.Component {
@@ -50,25 +50,25 @@ class App extends React.Component {
     window.location.reload();
   };
 
-  render() {
-    const userView = username => {
-      if (username) {
-        return (
-          <Management
-            loggedIn={this.state.username}
-            logout={this.logout}
-          />
-        );
-      } else {
-        return (
-          <Landing attemptLogin={this.attemptLogin}/>
-        );
-      }
-    };
+  userView = username => {
+    if (username) {
+      return (
+        <Management
+          loggedIn={this.state.username}
+          logout={this.logout}
+        />
+      );
+    } else {
+      return (
+        <Landing attemptLogin={this.attemptLogin}/>
+      );
+    }
+  };
 
+  render() {
     return (
       <div className="App">
-        {userView(this.state.username)}
+        {this.userView(this.state.username)}
       </div>
     );
   }

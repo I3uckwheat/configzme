@@ -25,7 +25,7 @@ class EditFileForm extends React.Component {
     );
   };
 
-  render() {
+  EditForm = () => {
     return (
       <>
         <label htmlFor="file-content">File Content:</label>
@@ -38,7 +38,11 @@ class EditFileForm extends React.Component {
           onChange={this.editedContents}
         ></textarea>
       </>
-    );
+    )
+  }
+
+  render() {
+    return this.EditForm();
   }
 }
 

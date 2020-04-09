@@ -1,6 +1,5 @@
 import React from "react";
 import "../../css/buttons.css";
-// import DownloadFileButton from "./buttons/DownloadFileButton";
 import ViewFile from "./ViewFile";
 import EditFileForm from "./EditFileForm";
 
@@ -47,12 +46,8 @@ class File extends React.Component {
     ) : null;
   };
 
-  editForm = () => {
-    if (this.state.showEditForm) {
-      this.setState({ showEditForm: false });
-
-    } else {
-      this.setState({ showEditForm: true });    }
+  editFormToggle = () => {
+    this.state.showEditForm ? this.setState({ showEditForm: false }) : this.setState({ showEditForm: true });
   };
 
   editFile = async (file, fileName, contents) => {
@@ -81,7 +76,7 @@ class File extends React.Component {
     } 
   };
 
-  ViewEditForm = () => {
+  RenderEditForm = () => {
     return this.state.showEditForm ? (
       <EditFileForm
         fileContents={this.state.fileContents}
@@ -114,7 +109,7 @@ class File extends React.Component {
           >
             View
           </button>
-          <button onClick={this.editForm}>Edit</button>
+          <button onClick={this.editFormToggle}>Edit</button>
           <button
             onClick={() => {
               this.props.deleteFile(this.props.fileName);
@@ -124,7 +119,7 @@ class File extends React.Component {
           </button>
         </div>
         {this.FileContents()}
-        {this.ViewEditForm()}
+        {this.RenderEditForm()}
       </div>
     );
   }

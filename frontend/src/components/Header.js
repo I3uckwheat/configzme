@@ -1,5 +1,4 @@
 import React from "react";
-// import Buttons from "./buttons/Buttons";
 
 class Header extends React.Component {
   addFileForm() {
@@ -31,11 +30,7 @@ class Header extends React.Component {
       </form>
     );
 
-    if (this.props.showAddFile) {
-      return form;
-    } else {
-      return null;
-    }
+    return this.props.showAddFile ? form : null;
   }
 
   showbuttons = () => {
@@ -80,7 +75,7 @@ class Header extends React.Component {
       <header className="header">
         <h1>Configz.me</h1>
         <h3>[Insert captivating slogan here]</h3>
-        <div className="buttons-container">{this.showbuttons()}</div>
+        <div className="buttons">{this.showbuttons()}</div>
       </header>
     );
   }

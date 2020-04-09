@@ -3,9 +3,7 @@ import File from "./File";
 
 class Files extends React.Component {
   FileList = () => {
-    const files = this.props.fileNames;
-
-    const listFiles = files.map((fileName, index) => (
+    const listFiles = this.props.fileNames.map((fileName, index) => (
       <li key={index}>
         <File
           fileName={fileName}
