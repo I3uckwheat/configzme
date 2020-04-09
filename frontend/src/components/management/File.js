@@ -2,6 +2,7 @@ import React from "react";
 import "../../css/buttons.css";
 import ViewFile from "./ViewFile";
 import EditFileForm from "./EditFileForm";
+import DownloadButton from "./DownloadButton";
 
 class File extends React.Component {
   state = {
@@ -93,15 +94,7 @@ class File extends React.Component {
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
-          <a
-          href={`data:text/plain;charset=utf-8,${encodeURIComponent(
-            this.state.fileContents
-          )}`}
-          download={`${this.props.fileName}.txt`}
-          className="psuedo-button"
-          >
-            Download
-          </a>
+          <DownloadButton fileContents={this.state.fileContents} fileName={this.props.fileName}/>
           <button
             onClick={() => {
               this.showFileContents();
