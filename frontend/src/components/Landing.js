@@ -37,7 +37,7 @@ class Landing extends React.Component {
         <Header
           toggleLoginForm={this.toggleLoginForm}
           showLoginForm={this.state.showLoginForm}
-          loggedIn={this.props.loggedIn}
+          appCrashed={this.props.appCrashed}
         />
         <div className="content">
           {this.state.showLoginForm ? <this.LoginForm attemptLogin={this.props.attemptLogin} /> : null}
