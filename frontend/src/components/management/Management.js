@@ -1,39 +1,126 @@
 import React from "react";
 import Files from "./Files";
-import Header from "../header/Header";
+import Header from "../Header";
 
 class Management extends React.Component {
+  state = {
+    showAddFile: false,
+    fileName: "",
+    filesFound: null,
+    fileNames: null
+  };
+
   componentDidMount() {
-    this.props.getFiles();
+    this.getFileNames();
   }
 
-  render() {
-    const filesFound = () => {
-      if (this.props.filesFound) {
-        return <Files fileNames={this.props.fileNames} />;
-      } else {
-        return <p>No Files Found.</p>;
-      }
-    };
+  getFileNames = async () => {
+    try {
+      const response = await fetch("/files?api=true");
+      const data = await response.json();
+      this.setState({
+        filesFound: true,
+        fileNames: data
+      });
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+    }
+  };
 
+  fileList = () => {
+    if (this.state.filesFound) {
+      return (
+        <Files
+          fileNames={this.state.fileNames}
+          deleteFile={this.deleteFile}
+          fileName={this.state.fileName}
+        />
+      );
+    } else {
+      return <p>No Files Found.</p>;
+    }
+  };
+
+  deleteFile = async filename => {
+    console.log("File Deleted");
+
+    await fetch(`/${filename}?api=true`, {
+      method: "DELETE"
+    });
+    this.getFileNames();
+  };
+
+  showAddFileForm = showForm => {
+    if (showForm) {
+      this.setState({ showAddFile: false });
+    } else {
+      this.setState({ showAddFile: true });
+    }
+  };
+
+  addFile = async (file, fileName) => {
+    const url = `/${fileName}?api=true`;
+
+    try {
+      const formData = new FormData();
+      const FileAdded = file;
+
+      formData.append("file", FileAdded);
+
+      const sendFile = await fetch(url, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await sendFile;
+      console.log(data);
+      this.getFileNames();
+    } catch (event) {
+      console.log("Error!", event);
+    }
+  };
+
+  setFileName = event => {
+    this.setState({ fileName: event.target.value });
+  };
+
+  setFile = event => {
+    this.setState({ file: event.target.files[0] });
+  };
+
+  fileSubmitHandler = event => {
+    event.preventDefault();
+
+    if (this.state.file && this.state.fileName) {
+      this.addFile(this.state.file, this.state.fileName);
+      this.setState({
+        showAddFile: false,
+        fileName: ""
+      });
+    }
+  };
+
+  render() {
     return (
-      <React.Fragment>
+      <>
         <Header
-          
-          toggleForm={this.props.toggleForm}
-          showLoginForm={this.props.showLoginForm}
           loggedIn={this.props.loggedIn}
           logout={this.props.logout}
-          attemptLogin={this.props.attemptLogin}
-          addFile={this.props.addFile}
+          showAddFile={this.state.showAddFile}
+          fileName={this.state.fileName}
+          showAddFileForm={this.showAddFileForm}
+          setFileName={this.setFileName}
+          setFile={this.setFile}
+          fileSubmitHandler={this.fileSubmitHandler}
         />
         {/* 
           Look up form handling in React
           TODO create modal form that takes file name 
           and includes a Submit button.
         */}
-        <div className="management">{filesFound()}</div>
-      </React.Fragment>
+        <div className="management">{this.fileList()}</div>
+      </>
     );
   }
 }
