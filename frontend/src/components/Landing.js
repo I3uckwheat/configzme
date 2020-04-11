@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/landing.css";
 import "../css/featurelist.css"
+import "../css/modal-style.css"
 import Header from "./Header";
 
 class Landing extends React.Component {
@@ -14,20 +15,24 @@ class Landing extends React.Component {
 
   LoginForm = () => {
     return (
-      <form className="login-form">
-        <label htmlFor="username">Username:</label>
-        <input type="text" name="username" placeholder="Enter Username"></input>
-        <label htmlFor="password">Password:</label>
-        <input type="text" name="password" placeholder="Enter Password"></input>
-        <input
-          type="submit"
-          value="Submit"
-          onClick={event => {
-            event.preventDefault();
-            this.props.attemptLogin("test1", "testing123");
-          }}
-        ></input>
-      </form>
+      <div className="modal">
+      <div className="modal-content">
+        <form className="login-form">
+          <label htmlFor="username">Username:</label>
+          <input type="text" name="username" placeholder="Enter Username"></input>
+          <label htmlFor="password">Password:</label>
+          <input type="text" name="password" placeholder="Enter Password"></input>
+          <input
+            type="submit"
+            value="Submit"
+            onClick={event => {
+              event.preventDefault();
+              this.props.attemptLogin("test1", "testing123");
+            }}
+          ></input>
+        </form>
+      </div>        
+    </div>
     )
   }
 
