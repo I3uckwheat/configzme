@@ -1,25 +1,7 @@
 import React from "react";
+import Modal from "./Modal";
 
 class LoginModal extends React.Component {
-  formRef = React.createRef();
-
-  componentDidMount() {
-    document.addEventListener('click', this.handleClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleClick, false);
-  }
-
-  handleClick = (event) => {
-    console.log(this.formRef.current);
-    console.log(event.target);
-    
-    if (this.formRef.current === event.target) {
-      return this.props.toggleLoginForm(event, this.props.showLoginForm);
-    }
-  }
-
   render() {
     const form = (
       <form className="login-form">
@@ -47,7 +29,9 @@ class LoginModal extends React.Component {
       </form>
     )
     return (
-      form
+      <Modal>
+        {form}
+      </Modal>
     );
   }
 }

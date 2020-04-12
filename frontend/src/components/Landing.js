@@ -3,7 +3,6 @@ import "../css/landing.css";
 import "../css/featurelist.css"
 import "../css/modal-style.css"
 import Header from "./Header";
-import Modal from "./Modal";
 import LoginModal from "./LoginModal";
 
 class Landing extends React.Component {
@@ -18,13 +17,11 @@ class Landing extends React.Component {
   LoginForm = () => {
     if (this.state.showLoginForm) {
       return (
-        <Modal>
-          <LoginModal 
-            showLoginForm={this.state.showLoginForm} 
-            attemptLogin={this.props.attemptLogin}
-            toggleLoginForm={this.toggleLoginForm}
-          />
-        </Modal>
+        <LoginModal 
+          showLoginForm={this.state.showLoginForm} 
+          attemptLogin={this.props.attemptLogin}
+          toggleLoginForm={this.toggleLoginForm}
+        />
       )
     }
   }
