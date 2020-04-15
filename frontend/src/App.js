@@ -5,6 +5,7 @@ import Management from "./components/management/Management";
 class App extends React.Component {
   state = {
     username: null,
+    appCrashed: false,
   };
 
   componentDidMount() {
@@ -12,13 +13,13 @@ class App extends React.Component {
   }
 
   checkLoginStatus = async () => {
-    // TODO Tell user if backend has crashed
     try {
       const response = await fetch("/init?api=true");
       const data = await response.json();
 
       this.setState({ username: data.username });
     } catch (e) {
+      this.setState({appCrashed: true})
       console.log("Error!");
       console.log(e);
     }
@@ -51,17 +52,23 @@ class App extends React.Component {
   };
 
   userView = username => {
-    if (username) {
+    if (this.state.appCrashed) {
       return (
-        <Management
-          loggedIn={this.state.username}
-          logout={this.logout}
-        />
-      );
+        <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed}/>
+      )
     } else {
-      return (
-        <Landing attemptLogin={this.attemptLogin}/>
-      );
+      if (username) {
+        return (
+          <Management
+            loggedIn={this.state.username}
+            logout={this.logout}
+          />
+        );
+      } else {
+        return (
+          <Landing attemptLogin={this.attemptLogin} />
+        );
+      }
     }
   };
 
