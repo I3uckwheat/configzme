@@ -54,7 +54,7 @@ class App extends React.Component {
   userView = username => {
     if (this.state.appCrashed) {
       return (
-        <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed}/>
+        <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />
       )
     } else {
       if (username) {
@@ -65,9 +65,7 @@ class App extends React.Component {
           />
         );
       } else {
-        return (
-          <Landing attemptLogin={this.attemptLogin} />
-        );
+        return <Landing attemptLogin={this.attemptLogin}/>;
       }
     }
   };

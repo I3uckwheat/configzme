@@ -91,7 +91,7 @@ class Header extends React.Component {
   CrashIndicator = () => {
     if (this.props.appCrashed) {
       return (
-        <p className="crash-indicator">Hey, shit's borked, we're working on it!</p>
+        <p className="crash-indicator">Whoops. Something went wrong. We're working on it.</p>
       )
     }
   }

@@ -29,7 +29,10 @@ class LoginModal extends React.Component {
       </form>
     )
     return (
-      <Modal>
+      <Modal 
+        toggleLoginForm={this.props.toggleLoginForm}
+        showLoginForm={this.props.showLoginForm}
+      >
         {form}
       </Modal>
     );
