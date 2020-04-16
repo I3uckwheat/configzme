@@ -7,20 +7,20 @@ import LoginModal from "./LoginModal";
 
 class Landing extends React.Component {
   state = {
-    showLoginForm: false,
+    showLoginModal: false,
   }
 
-  toggleLoginForm = (modalStatus) => {
-    modalStatus ? this.setState({ showLoginForm: false }) : this.setState({ showLoginForm: true });
-  };
+  toggleLoginModal = (modalStatus) => {
+    modalStatus ? this.setState({ showLoginModal: false }) : this.setState({ showLoginModal: true });
+  }
 
   LoginForm = () => {
-    if (this.state.showLoginForm) {
+    if (this.state.showLoginModal) {
       return (
         <LoginModal 
           attemptLogin={this.props.attemptLogin}
-          showLoginForm={this.state.showLoginForm} 
-          toggleLoginForm={this.toggleLoginForm}
+          showLoginModal={this.state.showLoginModal} 
+          toggleLoginModal={this.toggleLoginModal}
         />
       )
     }
@@ -30,8 +30,8 @@ class Landing extends React.Component {
     return (
       <div className="landing">
         <Header
-          toggleLoginForm={this.toggleLoginForm}
-          showLoginForm={this.state.showLoginForm}
+          toggleLoginModal={this.toggleLoginModal}
+          showLoginModal={this.state.showLoginModal}
           appCrashed={this.props.appCrashed}
         />
         <div className="content">

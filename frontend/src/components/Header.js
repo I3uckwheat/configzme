@@ -78,7 +78,7 @@ class Header extends React.Component {
           <button>Register</button>
           <button
             onClick={() => {
-              this.props.toggleLoginForm(this.props.showLoginForm);
+              this.props.toggleLoginModal(this.props.showLoginModal);
             }}
           >
             Log In

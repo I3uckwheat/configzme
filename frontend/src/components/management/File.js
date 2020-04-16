@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/buttons.css";
-import ViewFile from "./ViewFile";
+import ViewFileModal from "./ViewFileModal";
 import EditFileForm from "./EditFileForm";
 import DownloadButton from "./DownloadButton";
 
@@ -37,13 +37,17 @@ class File extends React.Component {
     if (this.state.viewFileContents) {
       this.setState({ viewFileContents: false });
     } else {
-      this.setState({ viewFileContents: true });
+      this.setState({ viewFileContents: true }); 
     }
   };
 
   FileContents = () => {
     return this.state.viewFileContents ? (
-      <ViewFile fileContents={this.state.fileContents} />
+      <ViewFileModal
+        fileContents={this.state.fileContents}
+        toggleModal={this.showFileContents}
+        showModal={this.state.viewFileContents}
+      />
     ) : null;
   };
 
@@ -97,6 +101,7 @@ class File extends React.Component {
           <DownloadButton fileContents={this.state.fileContents} fileName={this.props.fileName}/>
           <button
             onClick={() => {
+              // TODO This is stopping the modal from closing
               this.showFileContents();
             }}
           >

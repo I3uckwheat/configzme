@@ -7,7 +7,7 @@ function Modal(props) {
       onClick={(event) => {
         // Check if clicked div is the same as the div we're attaching the onClick
         if (event.target === event.currentTarget) {
-          props.toggleLoginForm(props.showLoginForm)
+          props.toggleModal(props.showModal)
         }
       }}
     >

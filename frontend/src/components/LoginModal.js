@@ -12,7 +12,7 @@ class LoginModal extends React.Component {
         <div>
           <button 
             onClick={() => {
-              this.props.toggleLoginForm(this.props.showLoginForm);
+              this.props.toggleModal(this.props.showModal);
             }}
             className="close-modal">
               Cancel
@@ -30,8 +30,8 @@ class LoginModal extends React.Component {
     )
     return (
       <Modal 
-        toggleLoginForm={this.props.toggleLoginForm}
-        showLoginForm={this.props.showLoginForm}
+        toggleModal={this.props.toggleLoginModal}
+        showModal={this.props.showLoginModal}
       >
         {form}
       </Modal>

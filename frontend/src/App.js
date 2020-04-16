@@ -65,7 +65,11 @@ class App extends React.Component {
           />
         );
       } else {
-        return <Landing attemptLogin={this.attemptLogin}/>;
+        return (
+          <Landing 
+            attemptLogin={this.attemptLogin}
+          />
+        );
       }
     }
   };
