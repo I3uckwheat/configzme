@@ -89,6 +89,7 @@ class File extends React.Component {
         file={this.state.file}
         fileName={this.props.fileName}
         getFileContents={this.getFileContents}
+        editFormToggle={this.editFormToggle}
       />
     ) : null;
   };
@@ -101,7 +102,6 @@ class File extends React.Component {
           <DownloadButton fileContents={this.state.fileContents} fileName={this.props.fileName}/>
           <button
             onClick={() => {
-              // TODO This is stopping the modal from closing
               this.showFileContents();
             }}
           >
