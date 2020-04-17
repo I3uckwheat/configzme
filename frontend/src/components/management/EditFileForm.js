@@ -1,4 +1,5 @@
 import React from "react";
+import Modal from "../Modal";
 
 class EditFileForm extends React.Component {
   state = {
@@ -27,7 +28,11 @@ class EditFileForm extends React.Component {
 
   EditForm = () => {
     return (
-      <>
+      <Modal toggleModal={this.props.editFormToggle}>
+        <span
+          className="close"
+          onClick={this.props.editFormToggle}
+        >&times;</span>
         <label htmlFor="file-content">File Content:</label>
 
         <textarea
@@ -37,7 +42,7 @@ class EditFileForm extends React.Component {
           value={this.state.newFileContents}
           onChange={this.editedContents}
         ></textarea>
-      </>
+      </Modal>
     )
   }
 

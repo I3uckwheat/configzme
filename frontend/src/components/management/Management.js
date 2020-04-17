@@ -53,7 +53,11 @@ class Management extends React.Component {
 
   showAddFileForm = showForm => {
     if (showForm) {
-      this.setState({ showAddFile: false });
+      this.setState({ 
+        showAddFile: false,
+        fileName: ""
+      });
+      
     } else {
       this.setState({ showAddFile: true });
     }
@@ -114,11 +118,6 @@ class Management extends React.Component {
           setFile={this.setFile}
           fileSubmitHandler={this.fileSubmitHandler}
         />
-        {/* 
-          Look up form handling in React
-          TODO create modal form that takes file name 
-          and includes a Submit button.
-        */}
         <div className="management">{this.fileList()}</div>
       </>
     );

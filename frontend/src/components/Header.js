@@ -1,37 +1,21 @@
 import React from "react";
 import "../css/header.css"
+import "../css/modal-style.css"
+import AddFileModal from "./management/AddFileModal";
 
 class Header extends React.Component {
   addFileForm() {
-    const form = (
-      <form
-        encType="multipart/form-data"
-        method="POST"
-        autoComplete="off"
-        onSubmit={this.props.fileSubmitHandler}
-      >
-        <label htmlFor="file-name">Enter File Name:</label>
-        <input
-          type="text"
-          htmlFor="file-name"
-          name="file-name"
-          onChange={this.props.setFileName}
-          value={this.props.fileName}
-        ></input>
-
-        <label htmlFor="file">Add a File:</label>
-        <input
-          type="file"
-          name="file"
-          id="file"
-          className="inputfile"
-          onChange={this.props.setFile}
-        />
-        <input type="submit" value="Submit"></input>
-      </form>
-    );
-
-    return this.props.showAddFile ? form : null;
+    if (this.props.showAddFile) {
+      return (
+        <AddFileModal 
+        showAddFileForm={this.props.showAddFileForm}
+        showAddFile={this.props.showAddFile}
+        fileSubmitHandler={this.props.fileSubmitHandler}
+        setFileName={this.props.setFileName}
+        setFile={this.props.setFile}
+      />
+      )
+    }
   }
 
   showbuttons = () => {
@@ -61,7 +45,7 @@ class Header extends React.Component {
           <button>Register</button>
           <button
             onClick={() => {
-              this.props.toggleLoginForm(this.props.showLoginForm);
+              this.props.toggleLoginModal(this.props.showLoginModal);
             }}
           >
             Log In
@@ -74,7 +58,7 @@ class Header extends React.Component {
   CrashIndicator = () => {
     if (this.props.appCrashed) {
       return (
-        <p className="crash-indicator">Hey, shit's borked, we're working on it!</p>
+        <p className="crash-indicator">Whoops. Something went wrong. We're working on it.</p>
       )
     }
   }

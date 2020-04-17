@@ -1,8 +1,8 @@
 import React from "react";
 import "../../css/buttons.css";
-import ViewFile from "./ViewFile";
+import ViewFileModal from "./ViewFileModal";
 import EditFileForm from "./EditFileForm";
-import DownloadButton from "./DownloadButton";
+import {downloadFile} from "../../helpers/downloadHelper";
 
 class File extends React.Component {
   state = {
@@ -10,48 +10,48 @@ class File extends React.Component {
     fileContents: '',
     downloadFile: false,
     showEditForm: false,
-    file: null,
   };
 
-  componentDidMount() {
-    this.getFileContents();
-  }
-
   getFileContents = async () => {
-
+    if(this.state.fileContents) return this.state.fileContents;
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
       const data = await response.json();
-
-      this.setState({
-        fileContents: data.file,
-        file: data,
-      });
+      
+      this.setState({fileContents: data.file});
+      return data.file;
     } catch (e) {
       console.log(e);
       console.log("Error!");
     }
   };
 
-  showFileContents = () => {
+  showFileContents = async () => {
+    await this.getFileContents();
     if (this.state.viewFileContents) {
       this.setState({ viewFileContents: false });
     } else {
-      this.setState({ viewFileContents: true });
+      this.setState({ viewFileContents: true }); 
     }
   };
 
   FileContents = () => {
     return this.state.viewFileContents ? (
-      <ViewFile fileContents={this.state.fileContents} />
+      <ViewFileModal
+        fileContents={this.state.fileContents}
+        toggleModal={this.showFileContents}
+        showModal={this.state.viewFileContents}
+      />
     ) : null;
   };
 
-  editFormToggle = () => {
+  editFormToggle = async () => {
+    await this.getFileContents();
     this.state.showEditForm ? this.setState({ showEditForm: false }) : this.setState({ showEditForm: true });
   };
 
   editFile = async (file, fileName, contents) => {
+    // clears text if user removes/deletes all content
     if (contents === '') {
       this.setState({fileContents: ''})
     } else {
@@ -85,6 +85,7 @@ class File extends React.Component {
         file={this.state.file}
         fileName={this.props.fileName}
         getFileContents={this.getFileContents}
+        editFormToggle={this.editFormToggle}
       />
     ) : null;
   };
@@ -94,7 +95,11 @@ class File extends React.Component {
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
-          <DownloadButton fileContents={this.state.fileContents} fileName={this.props.fileName}/>
+        <button
+          onClick={() => downloadFile(`${this.props.fileName}.txt`, this.getFileContents)}
+        >
+          Download
+        </button>
           <button
             onClick={() => {
               this.showFileContents();
