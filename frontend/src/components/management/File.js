@@ -12,8 +12,11 @@ class File extends React.Component {
     showEditForm: false,
   };
 
-  getFileContents = async () => {
-    if(this.state.fileContents) return this.state.fileContents;
+  getFileContents = async (contents) => {
+    if(contents) {
+      this.setState({fileContents: contents})
+    }
+      
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
       const data = await response.json();
@@ -70,7 +73,8 @@ class File extends React.Component {
   
         const data = await sendFile;
         console.log(data);
-        this.getFileContents();
+        
+        this.getFileContents(contents);
       } catch (event) {
         console.log("Error!", event);
       }

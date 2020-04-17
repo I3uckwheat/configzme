@@ -10,7 +10,7 @@ class EditFileForm extends React.Component {
     const contents = event.target.value;
     this.setState(
       {
-        newFileContents: event.target.value,
+        newFileContents: contents,
       },
 
       () => {
