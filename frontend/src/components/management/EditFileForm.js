@@ -30,7 +30,7 @@ class EditFileForm extends React.Component {
     return (
       <Modal toggleModal={this.props.editFormToggle}>
         <span
-          class="close"
+          className="close"
           onClick={this.props.editFormToggle}
         >&times;</span>
         <label htmlFor="file-content">File Content:</label>

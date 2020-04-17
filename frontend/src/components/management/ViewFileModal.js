@@ -9,7 +9,7 @@ class ViewFileModal extends React.Component {
         showModal={this.props.showModal}
       >
         <span
-          class="close"
+          className="close"
           onClick={this.props.toggleModal}
         >&times;</span>
         <p>{this.props.fileContents}</p>
