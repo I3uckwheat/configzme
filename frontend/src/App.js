@@ -38,48 +38,19 @@ class App extends React.Component {
       })
     });
     const status = await response.status;
-    if (status === 201) {
-      this.setState({ username: username });
-    }
-  };
-
-  logout = async () => {
-    await fetch("/logout?api=true", {
-      method: "DELETE"
-    });
-
-    window.location.reload();
+    if (status === 201) this.setState({ username: username });
   };
 
   userView = username => {
     if (this.state.appCrashed) {
-      return (
-        <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />
-      )
+      return <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />;
     } else {
-      if (username) {
-        return (
-          <Management
-            loggedIn={this.state.username}
-            logout={this.logout}
-          />
-        );
-      } else {
-        return (
-          <Landing 
-            attemptLogin={this.attemptLogin}
-          />
-        );
-      }
+      return username ? <Management loggedIn={this.state.username} /> : <Landing attemptLogin={this.attemptLogin} />;
     }
   };
 
   render() {
-    return (
-      <div className="App">
-        {this.userView(this.state.username)}
-      </div>
-    );
+    return <div className="App">{this.userView(this.state.username)}</div>;
   }
 }
 

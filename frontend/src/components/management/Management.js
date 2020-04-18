@@ -120,7 +120,6 @@ class Management extends React.Component {
       <>
         <Header
           loggedIn={this.props.loggedIn}
-          logout={this.props.logout}
           showAddFile={this.state.showAddFile}
           fileName={this.state.fileName}
           showAddFileForm={this.showAddFileForm}

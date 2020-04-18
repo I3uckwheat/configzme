@@ -4,6 +4,14 @@ import "../css/modal-style.css"
 import AddFileModal from "./management/AddFileModal";
 
 class Header extends React.Component {
+  logout = async () => {
+    await fetch("/logout?api=true", {
+      method: "DELETE"
+    });
+
+    window.location.reload();
+  };
+
   addFileForm() {
     if (this.props.showAddFile) {
       return (
@@ -33,7 +41,7 @@ class Header extends React.Component {
           {this.addFileForm()}
           <button
             onClick={() => {
-              this.props.logout();
+              this.logout();
             }}
           >
             Logout

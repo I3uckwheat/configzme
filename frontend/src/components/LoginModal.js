@@ -12,7 +12,7 @@ class LoginModal extends React.Component {
         <div>
           <button 
             onClick={() => {
-              this.props.toggleModal(this.props.showModal);
+              this.props.toggleLoginModal(this.props.showLoginModal);
             }}
             className="close-modal">
               Cancel
