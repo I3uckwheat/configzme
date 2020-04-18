@@ -57,7 +57,8 @@ class Management extends React.Component {
     if (showForm) {
       this.setState({ 
         showAddFile: false,
-        fileName: ""
+        fileName: "",
+        NoFileEntered: false
       });
       
     } else {
