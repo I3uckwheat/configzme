@@ -38,14 +38,16 @@ class File extends React.Component {
     }
   };
 
-  FileContents = () => {
-    return this.state.viewFileContents ? (
-      <ViewFileModal
-        fileContents={this.state.fileContents}
-        toggleModal={this.showFileContents}
-        showModal={this.state.viewFileContents}
-      />
-    ) : null;
+  FileContentsModal = () => {
+    if (this.state.viewFileContents) {
+      return (
+        <ViewFileModal
+          fileContents={this.state.fileContents}
+          toggleModal={this.showFileContents}
+          showModal={this.state.viewFileContents}
+        />
+      )
+    }
   };
 
   editFormToggle = async () => {
@@ -81,17 +83,17 @@ class File extends React.Component {
     } 
   };
 
-  RenderEditForm = () => {
-    return this.state.showEditForm ? (
-      <EditFileForm
+  EditFileModal = () => {
+    if (this.state.showEditForm) {
+      return (
+        <EditFileForm
         fileContents={this.state.fileContents}
         editFile={this.editFile}
-        file={this.state.file}
         fileName={this.props.fileName}
-        getFileContents={this.getFileContents}
         editFormToggle={this.editFormToggle}
       />
-    ) : null;
+      )
+    }
   };
 
   deleteModalToggle = () => {
@@ -102,7 +104,7 @@ class File extends React.Component {
     }
   }
 
-  DeleteModal = () => {
+  DeleteFileModal = () => {
     if (this.state.confirmDeleteModal) {
       return (
         <DeleteFileModal 
@@ -112,8 +114,6 @@ class File extends React.Component {
           fileName={this.props.fileName}
         />
       )
-    } else {
-      return null;
     }
   }
 
@@ -138,9 +138,9 @@ class File extends React.Component {
         <button onClick={this.deleteModalToggle}>Delete</button>
         
         </div>
-        {this.FileContents()}
-        {this.RenderEditForm()}
-        {this.DeleteModal()}
+        {this.FileContentsModal()}
+        {this.EditFileModal()}
+        {this.DeleteFileModal()}
       </div>
     );
   }

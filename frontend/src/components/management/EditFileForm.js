@@ -26,13 +26,10 @@ class EditFileForm extends React.Component {
     );
   };
 
-  EditForm = () => {
+  render() {
     return (
       <Modal toggleModal={this.props.editFormToggle}>
-        <span
-          className="close"
-          onClick={this.props.editFormToggle}
-        >&times;</span>
+        <span onClick={this.props.editFormToggle}>&times;</span>
         <label htmlFor="file-content">File Content:</label>
 
         <textarea
@@ -44,10 +41,6 @@ class EditFileForm extends React.Component {
         ></textarea>
       </Modal>
     )
-  }
-
-  render() {
-    return this.EditForm();
   }
 }
 

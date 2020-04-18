@@ -32,21 +32,13 @@ class Management extends React.Component {
 
   fileList = () => {
     if (this.state.filesFound) {
-      return (
-        <Files
-          fileNames={this.state.fileNames}
-          deleteFile={this.deleteFile}
-          fileName={this.state.fileName}
-        />
-      );
+      return <Files fileNames={this.state.fileNames} deleteFile={this.deleteFile} />;
     } else {
       return <p>No Files Found.</p>;
     }
   };
 
   deleteFile = async filename => {
-    console.log("File Deleted");
-
     await fetch(`/${filename}?api=true`, {
       method: "DELETE"
     });
