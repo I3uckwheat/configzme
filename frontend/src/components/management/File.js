@@ -1,6 +1,7 @@
 import React from "react";
 import "../../css/buttons.css";
 import ViewFileModal from "./ViewFileModal";
+import DeleteFileModal from "./DeleteFileModal";
 import EditFileForm from "./EditFileForm";
 import {downloadFile} from "../../helpers/downloadHelper";
 
@@ -10,13 +11,12 @@ class File extends React.Component {
     fileContents: '',
     downloadFile: false,
     showEditForm: false,
+    confirmDeleteModal: false,
   };
 
   getFileContents = async (contents) => {
-    if(contents) {
-      this.setState({fileContents: contents})
-    }
-      
+    if(contents) this.setState({fileContents: contents})
+
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
       const data = await response.json();
@@ -94,6 +94,29 @@ class File extends React.Component {
     ) : null;
   };
 
+  deleteModalToggle = () => {
+    if (this.state.confirmDeleteModal) {
+      this.setState({ confirmDeleteModal: false });
+    } else {
+      this.setState({ confirmDeleteModal: true });
+    }
+  }
+
+  DeleteModal = () => {
+    if (this.state.confirmDeleteModal) {
+      return (
+        <DeleteFileModal 
+          toggleModal={this.deleteModalToggle}
+          showModal={this.state.confirmDeleteModal}
+          deleteFile={this.props.deleteFile}
+          fileName={this.props.fileName}
+        />
+      )
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <div className="file">
@@ -104,24 +127,20 @@ class File extends React.Component {
         >
           Download
         </button>
-          <button
-            onClick={() => {
-              this.showFileContents();
-            }}
-          >
-            View
-          </button>
-          <button onClick={this.editFormToggle}>Edit</button>
-          <button
-            onClick={() => {
-              this.props.deleteFile(this.props.fileName);
-            }}
-          >
-            Delete
-          </button>
+        <button
+          onClick={() => {
+            this.showFileContents();
+          }}
+        >
+          View
+        </button>
+        <button onClick={this.editFormToggle}>Edit</button>
+        <button onClick={this.deleteModalToggle}>Delete</button>
+        
         </div>
         {this.FileContents()}
         {this.RenderEditForm()}
+        {this.DeleteModal()}
       </div>
     );
   }
