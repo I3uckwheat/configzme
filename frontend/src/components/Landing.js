@@ -4,6 +4,7 @@ import "../css/featurelist.css"
 import "../css/modal-style.css"
 import Header from "./Header";
 import LoginModal from "./LoginModal";
+import TitleBar from "./TitleBar";
 
 class Landing extends React.Component {
   state = {
@@ -59,6 +60,7 @@ class Landing extends React.Component {
   render() {
     return (
       <div className="landing">
+        <TitleBar />
         <Header
           toggleLoginModal={this.toggleLoginModal}
           showLoginModal={this.state.showLoginModal}

@@ -1,6 +1,8 @@
 import React from "react";
 import Files from "./Files";
 import Header from "../Header";
+import TitleBar from "../TitleBar";
+
 
 class Management extends React.Component {
   state = {
@@ -110,6 +112,7 @@ class Management extends React.Component {
   render() {
     return (
       <>
+        <TitleBar />
         <Header
           loggedIn={this.props.loggedIn}
           showAddFile={this.state.showAddFile}
