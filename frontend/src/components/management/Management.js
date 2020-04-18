@@ -7,7 +7,9 @@ class Management extends React.Component {
     showAddFile: false,
     fileName: "",
     filesFound: null,
-    fileNames: null
+    fileNames: null,
+    file: null,
+    NoFileEntered: false,
   };
 
   componentDidMount() {
@@ -90,7 +92,10 @@ class Management extends React.Component {
   };
 
   setFile = event => {
-    this.setState({ file: event.target.files[0] });
+    this.setState({ 
+      file: event.target.files[0],
+      NoFileEntered: false
+    });
   };
 
   fileSubmitHandler = event => {
@@ -100,8 +105,12 @@ class Management extends React.Component {
       this.addFile(this.state.file, this.state.fileName);
       this.setState({
         showAddFile: false,
-        fileName: ""
+        fileName: "",
+        file: null
       });
+    } else if (this.state.file === null) {
+      console.log("No file found!");
+      this.setState({NoFileEntered: true})
     }
   };
 
@@ -117,6 +126,7 @@ class Management extends React.Component {
           setFileName={this.setFileName}
           setFile={this.setFile}
           fileSubmitHandler={this.fileSubmitHandler}
+          NoFileEntered={this.state.NoFileEntered}
         />
         <div className="management">{this.fileList()}</div>
       </>

@@ -2,10 +2,19 @@ import React from "react";
 import Modal from "../Modal";
 
 class AddFileModal extends React.Component {
-
+  NoFileError = () => {
+    if (this.props.NoFileEntered) {
+      return (
+        <p>A file is required for submission.</p>
+      )
+    } else {
+      return null;
+    }
+  }
   render() {
     return (
       <Modal toggleModal={this.props.showAddFileForm} showModal={this.props.showAddFile}>
+        <this.NoFileError />
         <form
             className={"add-file-form"}
             encType="multipart/form-data"
@@ -14,15 +23,16 @@ class AddFileModal extends React.Component {
             onSubmit={this.props.fileSubmitHandler}
           >
             
-            <label htmlFor="file-name">Enter File Name:</label>
+            <label htmlFor="filenameinput">Enter File Name:</label>
             <input
               type="text"
-              htmlFor="file-name"
-              name="file-name"
+              htmlFor="filenameinput"
+              name="filenameinput"
               onChange={this.props.setFileName}
               value={this.props.fileName}
+              required="required"
             ></input>
-
+  
             <label htmlFor="file">Add a File:</label>
             <input
               type="file"

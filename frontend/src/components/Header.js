@@ -8,12 +8,13 @@ class Header extends React.Component {
     if (this.props.showAddFile) {
       return (
         <AddFileModal 
-        showAddFileForm={this.props.showAddFileForm}
-        showAddFile={this.props.showAddFile}
-        fileSubmitHandler={this.props.fileSubmitHandler}
-        setFileName={this.props.setFileName}
-        setFile={this.props.setFile}
-      />
+          showAddFileForm={this.props.showAddFileForm}
+          showAddFile={this.props.showAddFile}
+          fileSubmitHandler={this.props.fileSubmitHandler}
+          setFileName={this.props.setFileName}
+          setFile={this.props.setFile}
+          NoFileEntered={this.props.NoFileEntered}
+        />
       )
     }
   }
