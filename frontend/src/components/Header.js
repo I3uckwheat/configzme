@@ -50,8 +50,9 @@ class Header extends React.Component {
     } else {
       return (
         <>
-          <button>Register</button>
+          <button className="base">Register</button>
           <button
+            className="base"
             onClick={() => {
               this.props.toggleLoginModal(this.props.showLoginModal);
             }}

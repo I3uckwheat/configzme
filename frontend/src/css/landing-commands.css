@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.feature-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #0075ff;
+  font-weight: bold;
+}
+
+.bracket {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #00ff38;
+}
+
+.command {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #ffffff;
+}
