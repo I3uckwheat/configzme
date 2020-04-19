@@ -3,7 +3,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: rgb(151, 151, 151);
+  background-color: #c4c4c4;
   padding-left: 5px;
 }
 
@@ -16,13 +16,13 @@
 }
 
 #red {
-  background-color: rgb(255, 0, 0);
+  background-color: #c80000;
 }
 
 #yellow {
-  background-color: rgb(255, 238, 0);
+  background-color: #f2cb00;
 }
 
 #green {
-  background-color: rgb(68, 170, 0);
+  background-color: #05eb00;
 }
