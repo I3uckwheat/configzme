@@ -1,6 +1,7 @@
 import React from "react";
 import AddFileModal from "./management/AddFileModal";
 import "../css/header.css"
+import "../css/buttons.css";
 
 class Header extends React.Component {
   logout = async () => {
@@ -50,15 +51,15 @@ class Header extends React.Component {
     } else {
       return (
         <>
-          <button className="base">Register</button>
           <button
-            className="base"
+            className="base blue"
             onClick={() => {
               this.props.toggleLoginModal(this.props.showLoginModal);
             }}
           >
             Log In
           </button>
+          <button className="base blue">Register</button>
         </>
       );
     }

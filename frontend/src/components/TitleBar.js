@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/title-bar.css";
 
-function TitleBar(props) {
+function TitleBar() {
   return (
     <>
       <div className="dots">

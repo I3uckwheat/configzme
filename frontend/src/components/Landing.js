@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import LoginModal from "./LoginModal";
 import TitleBar from "./TitleBar";
-import "../css/landing-commands.css";
+import "../css/landing.css";
 
 class Landing extends React.Component {
   state = {
@@ -77,6 +77,12 @@ class Landing extends React.Component {
             <span className="command">curl -u &lt;username&gt; https://configz.me/&lt;filename&gt;/destroy</span>
           </p>
         </div>
+        <div className="feature">
+          <p>
+            <span className="bracket">></span>
+            <span className="command cursor">&#9647;</span>
+          </p>
+        </div>
       </div>
     )
   }
@@ -85,12 +91,12 @@ class Landing extends React.Component {
     return (
       <div className="landing">
         <TitleBar />
-        <Header
-          toggleLoginModal={this.toggleLoginModal}
-          showLoginModal={this.state.showLoginModal}
-          appCrashed={this.props.appCrashed}
-        />
         <div className="content">
+          <Header
+            toggleLoginModal={this.toggleLoginModal}
+            showLoginModal={this.state.showLoginModal}
+            appCrashed={this.props.appCrashed}
+          />
           {this.LoginForm()}
           {this.configzCommands()}
         </div>

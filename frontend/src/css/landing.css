@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
+.feature {
+  margin: 35px 0px;
+}
+
 .feature-name {
   font-family: "Roboto", sans-serif;
   font-size: 18pt;
@@ -11,10 +15,19 @@
   font-family: "Roboto", sans-serif;
   font-size: 18pt;
   color: #00ff38;
+  margin-right: 10px;
 }
 
 .command {
   font-family: "Roboto", sans-serif;
   font-size: 18pt;
   color: #ffffff;
+}
+
+.content {
+  margin: 0px 30px;
+}
+
+.cursor {
+  background-color: #ffffff;
 }
