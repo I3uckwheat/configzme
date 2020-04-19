@@ -1,7 +1,6 @@
 import React from "react";
-import "../css/header.css"
-import "../css/modal-style.css"
 import AddFileModal from "./management/AddFileModal";
+import "../css/header.css"
 
 class Header extends React.Component {
   logout = async () => {
@@ -75,7 +74,6 @@ class Header extends React.Component {
       <header className="header">
         {this.CrashIndicator()}
         <h1>Configz.me</h1>
-        <h3>[Insert captivating slogan here]</h3>
         <div className="buttons">{this.showbuttons()}</div>
       </header>
     );

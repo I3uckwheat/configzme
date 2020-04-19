@@ -1,5 +1,4 @@
 import React from "react";
-import "../../css/buttons.css";
 import ViewFileModal from "./ViewFileModal";
 import DeleteFileModal from "./DeleteFileModal";
 import EditFileForm from "./EditFileForm";

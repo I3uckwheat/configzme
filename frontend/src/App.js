@@ -1,6 +1,7 @@
 import React from "react";
 import Landing from "./components/Landing";
 import Management from "./components/management/Management";
+import "./css/app.css";
 
 class App extends React.Component {
   state = {

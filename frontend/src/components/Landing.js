@@ -1,7 +1,4 @@
 import React from "react";
-import "../css/landing.css";
-import "../css/featurelist.css"
-import "../css/modal-style.css"
 import Header from "./Header";
 import LoginModal from "./LoginModal";
 import TitleBar from "./TitleBar";
