@@ -1,5 +1,6 @@
 import React from "react";
-import "../css/modal-style.css";
+import TitleBar from "./TitleBar";
+import "../css/modal.css";
 
 function Modal(props) {
   return (
@@ -13,6 +14,7 @@ function Modal(props) {
       }}
     >
       <div className="modal-content">
+        <TitleBar isModal={props.isModal}/>
         {props.children}
       </div>        
     </div>
