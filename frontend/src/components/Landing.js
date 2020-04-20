@@ -77,12 +77,6 @@ class Landing extends React.Component {
             <span className="command">curl -u &lt;username&gt; https://configz.me/&lt;filename&gt;/destroy</span>
           </p>
         </div>
-        <div className="feature">
-          <p>
-            <span className="bracket">></span>
-            <span className="command cursor">&#9647;</span>
-          </p>
-        </div>
       </div>
     )
   }
