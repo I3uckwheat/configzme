@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "../Modal";
+import Button from "../Button";
 
 function DeleteFileModal(props) {
   return (
@@ -7,17 +8,22 @@ function DeleteFileModal(props) {
       toggleModal={props.toggleModal}
       showModal={props.showModal}
     >
-      <p>Are you sure you want to delete this file?</p>
-      <button onClick={() => {
-        props.toggleModal();
-      }}>Cancel</button>
-      <button
-        onClick={() => {
-          props.deleteFile(props.fileName);
-        }}
-      >
-        Delete
-      </button>
+      <div className="modal-interior">
+        <p className="input-text">Are you sure you want to delete this file?</p>
+        <div className="buttons">
+          <Button
+            function={props.deleteFile}
+            argument={props.fileName}
+            styles="base green"
+            buttontext="Delete"
+          />
+          <Button
+            function={props.toggleModal}
+            styles="base white"
+            buttontext="Cancel"
+          />
+        </div>
+      </div>
     </Modal>
   );
 }
