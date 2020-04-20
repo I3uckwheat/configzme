@@ -19,7 +19,12 @@
   background-color: #c80000;
 }
 
-#red:hover {
+#red-modal {
+  background-color: #c80000;
+}
+
+#red-modal:hover {
+  background-color: #c80000;
   box-shadow: 0px 1px 3px #1f1f1fbe;
 }
 

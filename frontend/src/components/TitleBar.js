@@ -5,7 +5,7 @@ function TitleBar(props) {
   const redDot = (
     <span
       className="dot" 
-      id="red" 
+      id="red-modal" 
       onClick={() => {
         props.toggleModal(props.showModal)
       }}></span>
