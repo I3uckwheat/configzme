@@ -2,7 +2,14 @@ import React from "react";
 import "../css/title-bar.css";
 
 function TitleBar(props) {
-  const redDot = <span className="dot" id="red"></span>;
+  const redDot = (
+    <span
+      className="dot" 
+      id="red" 
+      onClick={() => {
+        props.toggleModal(props.showModal)
+      }}></span>
+  )
   const allDots = (
     <>
       <span className="dot" id="red"></span>

@@ -14,7 +14,11 @@ function Modal(props) {
       }}
     >
       <div className="modal-content">
-        <TitleBar isModal={props.isModal}/>
+        <TitleBar 
+          isModal={props.isModal}
+          toggleModal={props.toggleModal} 
+          showModal={props.showModal}
+        />
         {props.children}
       </div>        
     </div>
