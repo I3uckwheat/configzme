@@ -19,6 +19,10 @@
   background-color: #c80000;
 }
 
+#red:hover {
+  box-shadow: 0px 1px 3px #1f1f1fbe;
+}
+
 #yellow {
   background-color: #f2cb00;
 }
