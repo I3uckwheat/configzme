@@ -11,11 +11,20 @@
   border: 2px solid;
   width: 125px;
   height: 35px;
-  margin-right: 20px;
-  text-shadow: 2px 2px 2px #000000;
+  margin: 12px 10px;
 }
 
 .blue {
   color: #0075ff;
   border-color: #0075ff;
+}
+
+.green {
+  color: #00ff38;
+  border-color: #00ff38;
+}
+
+.white {
+  color: #ffffff;
+  border-color: #ffffff;
 }

@@ -75,7 +75,7 @@ class Header extends React.Component {
     return (
       <header className="header">
         {this.CrashIndicator()}
-        <h1>Configz.me</h1>
+        <h1 className="page-title">Configz.me</h1>
         <div className="buttons">{this.showbuttons()}</div>
       </header>
     );
