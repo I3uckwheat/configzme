@@ -3,12 +3,12 @@ import ViewFileModal from "./ViewFileModal";
 import DeleteFileModal from "./DeleteFileModal";
 import EditFileForm from "./EditFileForm";
 import {downloadFile} from "../../helpers/downloadHelper";
+import Button from "../Button";
 
 class File extends React.Component {
   state = {
     viewFileContents: false,
     fileContents: '',
-    downloadFile: false,
     showEditForm: false,
     confirmDeleteModal: false,
   };
@@ -121,21 +121,28 @@ class File extends React.Component {
       <div className="file">
         <p>{this.props.fileName}</p>
         <div className="file-buttons">
-        <button
-          onClick={() => downloadFile(`${this.props.fileName}.txt`, this.getFileContents)}
-        >
-          Download
-        </button>
-        <button
-          onClick={() => {
-            this.showFileContents();
-          }}
-        >
-          View
-        </button>
-        <button onClick={this.editFormToggle}>Edit</button>
-        <button onClick={this.deleteModalToggle}>Delete</button>
-        
+          <Button
+            function={downloadFile}
+            argument1={`${this.props.fileName}.txt`}
+            argument2={this.getFileContents}
+            styles="base green"
+            buttontext="Download"
+          />
+          <Button 
+            function={this.showFileContents}
+            styles="base blue"
+            buttontext="View"
+          />
+          <Button
+            function={this.editFormToggle}
+            styles="base blue"
+            buttontext="Edit"
+          />
+          <Button 
+            function={this.deleteModalToggle}
+            styles="base white"
+            buttontext="Delete"
+          />
         </div>
         {this.FileContentsModal()}
         {this.EditFileModal()}

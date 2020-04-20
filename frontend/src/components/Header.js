@@ -1,7 +1,7 @@
 import React from "react";
-import AddFileModal from "./management/AddFileModal";
 import "../css/header.css"
-import "../css/buttons.css";
+import AddFileModal from "./management/AddFileModal";
+import Button from "./Button";
 
 class Header extends React.Component {
   logout = async () => {
@@ -31,35 +31,30 @@ class Header extends React.Component {
     if (this.props.loggedIn) {
       return (
         <>
-          <button
-            onClick={() => {
-              this.props.showAddFileForm(this.props.showAddFile);
-            }}
-          >
-            + New File
-          </button>
+          <Button
+            function={this.props.showAddFileForm}
+            argument={this.props.showAddFile}
+            buttontext="+ New File"
+            styles="base green"
+          />
           {this.addFileForm()}
-          <button
-            onClick={() => {
-              this.logout();
-            }}
-          >
-            Logout
-          </button>
+          <Button 
+            function={this.logout}
+            buttontext="Logout"
+            styles="base blue"
+          />
         </>
       );
     } else {
       return (
         <>
-          <button
-            className="base blue"
-            onClick={() => {
-              this.props.toggleLoginModal(this.props.showLoginModal);
-            }}
-          >
-            Log In
-          </button>
-          <button className="base blue">Register</button>
+          <Button 
+            styles="base blue"
+            function={this.props.toggleLoginModal}
+            argument={this.props.showLoginModal}
+            buttontext="Log In"
+          />
+          <Button styles="base blue" buttontext="Register" />
         </>
       );
     }

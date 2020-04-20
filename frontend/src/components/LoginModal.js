@@ -40,7 +40,7 @@ class LoginModal extends React.Component {
                 }}
               ></input>
               <button
-                className="close-modal base white" 
+                className="close-modal base white"
                 onClick={() => {
                   this.props.toggleLoginModal(this.props.showLoginModal);
                 }}
