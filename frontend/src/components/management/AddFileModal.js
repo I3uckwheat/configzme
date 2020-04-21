@@ -16,56 +16,59 @@ function AddFileModal(props) {
   return (
     <Modal toggleModal={props.showAddFileForm} showModal={props.showAddFile} isModal={true}>
       <NoFileError />
-      <form
-          className="add-file-form modal-interior"
-          encType="multipart/form-data"
-          method="POST"
-          autoComplete="off"
-          onSubmit={props.fileSubmitHandler}
-        >
-          <label 
-            htmlFor="filenameinput"
-            className="input-label"
+      <div className="modal-interior">
+        <h1 className="modal-title">New File</h1>
+        <form
+            className="add-file-form"
+            encType="multipart/form-data"
+            method="POST"
+            autoComplete="off"
+            onSubmit={props.fileSubmitHandler}
           >
-            Enter File Name:
-          </label>
-          <input
-            type="text"
-            htmlFor="filenameinput"
-            name="filenameinput"
-            onChange={props.setFileName}
-            value={props.fileName}
-            required="required"
-            className="input-field"
-          ></input>
+            <label 
+              htmlFor="filenameinput"
+              className="input-label"
+            >
+              Enter File Name:
+            </label>
+            <input
+              type="text"
+              htmlFor="filenameinput"
+              name="filenameinput"
+              onChange={props.setFileName}
+              value={props.fileName}
+              required="required"
+              className="input-field"
+            ></input>
 
-          <label 
-            htmlFor="file"
-            className="input-label"  
-          >
-            Add a File:
-          </label>
-          <input
-            type="file"
-            name="file"
-            id="file"
-            onChange={props.setFile}
-          />
-          <div className="buttons">
-            <Button
-              function={props.showAddFileForm}
-              argument={props.showAddFile}
-              styles="base white"
-              buttontext="Cancel"
+            <label 
+              htmlFor="file"
+              className="input-label"  
+            >
+              Add a File:
+            </label>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              onChange={props.setFile}
             />
-            <Button
-              styles="base green"
-              type="submit"
-              value="Submit"
-              buttontext="Submit"
-            />
-          </div>
-        </form>
+            <div className="buttons">
+              <Button
+                function={props.showAddFileForm}
+                argument={props.showAddFile}
+                styles="base white"
+                buttontext="Cancel"
+              />
+              <Button
+                styles="base green"
+                type="submit"
+                value="Submit"
+                buttontext="Submit"
+              />
+            </div>
+          </form>
+      </div>
     </Modal>
   );
 }
