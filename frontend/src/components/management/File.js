@@ -4,6 +4,7 @@ import DeleteFileModal from "./DeleteFileModal";
 import EditFileForm from "./EditFileForm";
 import {downloadFile} from "../../helpers/downloadHelper";
 import Button from "../Button";
+import "../../css/file.css";
 
 class File extends React.Component {
   state = {
@@ -119,8 +120,9 @@ class File extends React.Component {
   render() {
     return (
       <div className="file">
-        <p>{this.props.fileName}</p>
-        <div className="file-buttons">
+        <p className="input-label">{this.props.fileName}</p>
+        <div className="buttons">
+          <span className="bracket">></span>
           <Button
             function={downloadFile}
             argument1={`${this.props.fileName}.txt`}

@@ -7,9 +7,10 @@ function DeleteFileModal(props) {
     <Modal 
       toggleModal={props.toggleModal}
       showModal={props.showModal}
+      isModal={true}
     >
       <div className="modal-interior">
-        <p className="input-text">Are you sure you want to delete this file?</p>
+        <p className="input-text">Are you sure?</p>
         <div className="buttons">
           <Button
             function={props.deleteFile}

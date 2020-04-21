@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "../Modal";
+import Button from "../Button";
 
 class EditFileForm extends React.Component {
   state = {
@@ -28,17 +29,23 @@ class EditFileForm extends React.Component {
 
   render() {
     return (
-      <Modal toggleModal={this.props.editFormToggle}>
-        <span onClick={this.props.editFormToggle}>&times;</span>
-        <label htmlFor="file-content">File Content:</label>
-
-        <textarea
-          id="file-content"
-          rows="4"
-          cols="50"
-          value={this.state.newFileContents}
-          onChange={this.editedContents}
-        ></textarea>
+      <Modal toggleModal={this.props.editFormToggle} isModal={true}>
+        <div className="modal-interior">
+          <label htmlFor="file-content" className="input-label">Edit:</label>
+          <textarea
+            id="file-content"
+            className="input-field"
+            rows="4"
+            cols="40"
+            value={this.state.newFileContents}
+            onChange={this.editedContents}
+          ></textarea>
+          <Button
+            function={this.props.editFormToggle}
+            styles="base green"
+            buttontext="Done Editing"
+          />
+        </div>
       </Modal>
     )
   }

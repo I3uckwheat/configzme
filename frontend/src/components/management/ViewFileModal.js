@@ -6,9 +6,9 @@ function ViewFileModal(props) {
     <Modal 
       toggleModal={props.toggleModal}
       showModal={props.showModal}
+      isModal={true}
     >
-      <span onClick={props.toggleModal}>&times;</span>
-      <p>{props.fileContents}</p>
+      <p className="modal-interior input-text">{props.fileContents}</p>
     </Modal>
   );
 }

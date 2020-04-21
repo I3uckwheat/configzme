@@ -20,7 +20,7 @@
 }
 
 .add-file-form {
-  background-color: rgb(255, 255, 255);
+  background-color: #2b2b2b;
   display: flex;
   flex-direction: column;
 }
@@ -37,12 +37,15 @@
 
 .input-pair {
   margin: 15px 0px;
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .modal-interior {
   margin: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .modal-title {
@@ -62,6 +65,8 @@
 .input-field {
   background: transparent;
   width: 80%;
+  color: #0075ff;
+  font-size: 16pt;
 }
 
 ::placeholder {
