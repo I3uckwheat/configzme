@@ -1,13 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-.buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 70%;
-  max-width: 650px;
-}
-
 .base {
   font-family: "Roboto", sans-serif;
   font-size: 14pt;
@@ -16,6 +8,7 @@
   width: 125px;
   height: 35px;
   margin: 12px 0px;
+  margin-right: 10px;
 }
 
 .blue {
