@@ -11,6 +11,7 @@ class Management extends React.Component {
     filesFound: null,
     fileNames: null,
     file: null,
+    enteredFileName: null,
     NoFileEntered: false,
   };
 
@@ -52,7 +53,8 @@ class Management extends React.Component {
       this.setState({ 
         showAddFile: false,
         fileName: "",
-        NoFileEntered: false
+        NoFileEntered: false,
+        enteredFileName: null
       });
       
     } else {
@@ -89,6 +91,7 @@ class Management extends React.Component {
   setFile = event => {
     this.setState({ 
       file: event.target.files[0],
+      enteredFileName: event.target.files[0].name,
       NoFileEntered: false
     });
   };
@@ -122,6 +125,7 @@ class Management extends React.Component {
           setFile={this.setFile}
           fileSubmitHandler={this.fileSubmitHandler}
           NoFileEntered={this.state.NoFileEntered}
+          enteredFileName={this.state.enteredFileName}
         />
         <div className="management">{this.fileList()}</div>
       </>

@@ -13,6 +13,12 @@ function AddFileModal(props) {
       return null;
     }
   }
+
+  function EnteredFile() {
+    if (props.enteredFileName) {
+      return props.enteredFileName;
+    }
+  }
   
   return (
     <Modal toggleModal={props.showAddFileForm} showModal={props.showAddFile} isModal={true}>
@@ -48,12 +54,15 @@ function AddFileModal(props) {
             >
               Add a File:
             </label>
-            <FileInput 
-              type="file"
-              name="file"
-              id="file"
-              onChange={props.setFile}
-            />
+            <div className="file-input">
+              <FileInput 
+                type="file"
+                name="file"
+                id="file"
+                onChange={props.setFile}
+              />
+              <span className="input-text entered-file">{EnteredFile()}</span>
+            </div>
             <div className="buttons">
               <Button
                 function={props.showAddFileForm}

@@ -82,3 +82,7 @@
 input {
   border: 1px solid #9b9b9b;
 }
+
+.entered-file {
+  margin-left: 20px;
+}
