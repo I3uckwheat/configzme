@@ -1,7 +1,7 @@
 import React from "react";
 import ViewFileModal from "./ViewFileModal";
 import DeleteFileModal from "./DeleteFileModal";
-import EditFileForm from "./EditFileForm";
+import EditFileForm from "./EditFileModal";
 import {downloadFile} from "../../helpers/downloadHelper";
 import Button from "../Button";
 import "../../css/file.css";

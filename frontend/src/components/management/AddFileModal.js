@@ -21,10 +21,8 @@ function AddFileModal(props) {
   }
   
   return (
-    <Modal toggleModal={props.showAddFileForm} showModal={props.showAddFile} isModal={true}>
+    <Modal toggleModal={props.showAddFileForm} showModal={props.showAddFile} isModal={true} title={props.title}>
       <NoFileError />
-      <div className="modal-interior">
-        <h1 className="modal-title">New File</h1>
         <form
             className="add-file-form"
             encType="multipart/form-data"
@@ -78,7 +76,6 @@ function AddFileModal(props) {
               />
             </div>
           </form>
-      </div>
     </Modal>
   );
 }

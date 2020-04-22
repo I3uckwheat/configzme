@@ -7,11 +7,9 @@ function ViewFileModal(props) {
       toggleModal={props.toggleModal}
       showModal={props.showModal}
       isModal={true}
+      title="File Contents"
     >
-      <div className="modal-interior">
-        <h1 className="modal-title">File Contents</h1>
-        <p className="modal-interior input-text">{props.fileContents}</p>
-      </div>
+      <p className="modal-interior input-text">{props.fileContents}</p>
     </Modal>
   );
 }

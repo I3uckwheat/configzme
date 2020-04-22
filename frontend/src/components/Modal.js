@@ -19,7 +19,10 @@ function Modal(props) {
           toggleModal={props.toggleModal} 
           showModal={props.showModal}
         />
-        {props.children}
+        <div className="modal-interior">
+          <h1 className="modal-title">{props.title}</h1>
+          {props.children}
+        </div>
       </div>        
     </div>
   );

@@ -23,6 +23,7 @@ class Header extends React.Component {
           setFile={this.props.setFile}
           NoFileEntered={this.props.NoFileEntered}
           enteredFileName={this.props.enteredFileName}
+          title="New File"
         />
       )
     }

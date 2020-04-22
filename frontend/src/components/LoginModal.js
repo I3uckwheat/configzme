@@ -7,10 +7,9 @@ function LoginModal(props) {
       toggleModal={props.toggleLoginModal}
       showModal={props.showLoginModal}
       isModal ={true}
+      title="Login"
     >
-      <div className="modal-interior">
-        <h1 className="modal-title">Login</h1>
-        <form className="login-form">
+      <form className="login-form">
           <div className="input-pair">
             <label htmlFor="username" className="input-label">Username:</label>
             <span>
@@ -45,7 +44,6 @@ function LoginModal(props) {
             </button>
           </div>
         </form>
-      </div>
     </Modal>
   );
 }
