@@ -38,7 +38,7 @@ class App extends React.Component {
         password
       })
     });
-    const status = await response.status;
+    const status = response.status;
     if (status === 201) this.setState({ username: username });
   };
 

@@ -32,3 +32,13 @@
 .cursor {
   background-color: #ffffff;
 }
+
+.crash-indicator {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #ffffff;
+  text-align: center;
+  margin: 0px 0px;
+  background-color: #c80000;
+  padding: 12px 0;
+}

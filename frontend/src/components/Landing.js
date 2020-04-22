@@ -81,10 +81,17 @@ class Landing extends React.Component {
     )
   }
 
+  CrashIndicator = () => {
+    if (this.props.appCrashed) {
+      return <div className="crash-indicator">Something went wrong. We're working on it.</div>;
+    }
+  }
+
   render() {
     return (
       <div className="landing">
         <TitleBar />
+        {this.CrashIndicator()}
         <div className="content">
           <Header
             toggleLoginModal={this.toggleLoginModal}

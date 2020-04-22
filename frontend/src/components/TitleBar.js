@@ -8,7 +8,8 @@ function TitleBar(props) {
       id="red-modal" 
       onClick={() => {
         props.toggleModal(props.showModal)
-      }}></span>
+      }}
+    ></span>
   )
   const allDots = (
     <>

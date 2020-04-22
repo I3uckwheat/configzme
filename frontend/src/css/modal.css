@@ -86,3 +86,13 @@ input {
 .entered-file {
   margin-left: 20px;
 }
+
+.select-file {
+  font-family: "Roboto", sans-serif;
+  color: #ffffff;
+  font-size: 18pt;
+  width: 100%;
+  background-color: #c80000;
+  text-align: center;
+  padding: 10px 0px;
+}
