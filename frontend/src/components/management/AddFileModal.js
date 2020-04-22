@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "../Modal";
 import Button from "../Button";
+import FileInput from "./FileInput";
 
 function AddFileModal(props) {
   function NoFileError() {
@@ -47,7 +48,7 @@ function AddFileModal(props) {
             >
               Add a File:
             </label>
-            <input
+            <FileInput 
               type="file"
               name="file"
               id="file"
