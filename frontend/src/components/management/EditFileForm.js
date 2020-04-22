@@ -31,6 +31,7 @@ class EditFileForm extends React.Component {
     return (
       <Modal toggleModal={this.props.editFormToggle} isModal={true}>
         <div className="modal-interior">
+          <h1 className="modal-title">Edit File</h1>
           <label htmlFor="file-content" className="input-label">Edit:</label>
           <textarea
             id="file-content"

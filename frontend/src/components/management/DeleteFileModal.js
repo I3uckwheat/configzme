@@ -10,6 +10,7 @@ function DeleteFileModal(props) {
       isModal={true}
     >
       <div className="modal-interior">
+        <h1 className="modal-title">Delete File</h1>
         <p className="input-text">Are you sure?</p>
         <div className="buttons">
           <Button

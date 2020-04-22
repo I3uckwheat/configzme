@@ -19,8 +19,8 @@ class FileInput extends React.Component {
   }
 
   handleFileSelect = (e) => {
-    this.fileSelector.click();
     e.preventDefault();
+    this.fileSelector.click();
   }
   
   render(){
