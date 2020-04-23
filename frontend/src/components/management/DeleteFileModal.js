@@ -3,6 +3,13 @@ import Modal from "../Modal";
 import Button from "../Button";
 
 function DeleteFileModal(props) {
+  async function deleteFile(filename) {
+    await fetch(`/${filename}?api=true`, {
+      method: "DELETE"
+    });
+    props.getFileNames();
+  };
+  
   return (
     <Modal 
       toggleModal={props.toggleModal}
@@ -13,7 +20,7 @@ function DeleteFileModal(props) {
       <p className="input-text">Are you sure?</p>
       <div className="buttons">
         <Button
-          function={props.deleteFile}
+          function={deleteFile}
           argument={props.fileName}
           styles="base green"
           buttontext="Delete"

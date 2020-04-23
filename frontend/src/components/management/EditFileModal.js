@@ -9,18 +9,12 @@ class EditFileForm extends React.Component {
 
   editedContents = (event) => {
     const contents = event.target.value;
-    this.setState(
-      {
-        newFileContents: contents,
-      },
-
+    this.setState({newFileContents: contents},
       () => {
         const editedFile = new File(
           [`${this.state.newFileContents}`],
           `${this.props.fileName}`,
-          {
-            type: "text/plain",
-          }
+          {type: "text/plain",}
         );
         this.props.editFile(editedFile, this.props.fileName, contents);
       }
@@ -31,19 +25,19 @@ class EditFileForm extends React.Component {
     return (
       <Modal toggleModal={this.props.editFormToggle} isModal={true} title="Edit File">
         <label htmlFor="file-content" className="input-label">Edit:</label>
-            <textarea
-              id="file-content"
-              className="input-field"
-              rows="4"
-              cols="40"
-              value={this.state.newFileContents}
-              onChange={this.editedContents}
-            ></textarea>
-            <Button
-              function={this.props.editFormToggle}
-              styles="base green"
-              buttontext="Done Editing"
-            />
+        <textarea
+          id="file-content"
+          className="input-field"
+          rows="4"
+          cols="40"
+          value={this.state.newFileContents}
+          onChange={this.editedContents}
+        ></textarea>
+        <Button
+          function={this.props.editFormToggle}
+          styles="base green"
+          buttontext="Done Editing"
+        />
       </Modal>
     )
   }

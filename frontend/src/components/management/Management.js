@@ -35,17 +35,10 @@ class Management extends React.Component {
 
   fileList = () => {
     if (this.state.filesFound) {
-      return <Files fileNames={this.state.fileNames} deleteFile={this.deleteFile} />;
+      return <Files fileNames={this.state.fileNames} getFileNames={this.getFileNames} />;
     } else {
       return <p>No Files Found.</p>;
     }
-  };
-
-  deleteFile = async filename => {
-    await fetch(`/${filename}?api=true`, {
-      method: "DELETE"
-    });
-    this.getFileNames();
   };
 
   showAddFileForm = showForm => {

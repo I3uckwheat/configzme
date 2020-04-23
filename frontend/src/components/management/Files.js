@@ -8,7 +8,7 @@ function Files(props) {
         <li key={fileName}>
           <File
             fileName={fileName}
-            deleteFile={props.deleteFile}
+            getFileNames={props.getFileNames}
           />
         </li>
       ))}

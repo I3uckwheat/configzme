@@ -82,9 +82,7 @@ class Landing extends React.Component {
   }
 
   CrashIndicator = () => {
-    if (this.props.appCrashed) {
-      return <div className="crash-indicator">Something went wrong. We're working on it.</div>;
-    }
+    return this.props.appCrashed ? <p className="crash-indicator">Something went wrong. We're on it!</p> : null;
   }
 
   render() {

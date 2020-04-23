@@ -4,13 +4,7 @@ import "../css/modal.css";
 
 function Modal(props) {
   function NoFileError() {
-    if (props.error) {
-      return (
-        <p className="select-file">Select a file</p>
-      )
-    } else {
-      return null;
-    }
+    return props.error ? <p className="select-file">Select a file</p> : null
   }
 
   return (

@@ -112,6 +112,7 @@ class File extends React.Component {
           showModal={this.state.confirmDeleteModal}
           deleteFile={this.props.deleteFile}
           fileName={this.props.fileName}
+          getFileNames={this.props.getFileNames}
         />
       )
     }
