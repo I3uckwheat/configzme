@@ -1,78 +1,73 @@
 import React from "react";
 import "../css/header.css"
-import "../css/modal-style.css"
 import AddFileModal from "./management/AddFileModal";
+import Button from "./Button";
 
-class Header extends React.Component {
-  addFileForm() {
-    if (this.props.showAddFile) {
+function Header(props) {
+  async function logout() {
+    await fetch("/logout?api=true", {
+      method: "DELETE"
+    });
+
+    window.location.reload();
+  };
+
+  function addFileForm() {
+    if (props.showAddFile) {
       return (
         <AddFileModal 
-        showAddFileForm={this.props.showAddFileForm}
-        showAddFile={this.props.showAddFile}
-        fileSubmitHandler={this.props.fileSubmitHandler}
-        setFileName={this.props.setFileName}
-        setFile={this.props.setFile}
-      />
+          showAddFileForm={props.showAddFileForm}
+          showAddFile={props.showAddFile}
+          fileSubmitHandler={props.fileSubmitHandler}
+          setFileName={props.setFileName}
+          setFile={props.setFile}
+          NoFileEntered={props.NoFileEntered}
+          enteredFileName={props.enteredFileName}
+          title="New File"
+        />
       )
     }
   }
 
-  showbuttons = () => {
-    if (this.props.loggedIn) {
+  function showbuttons() {
+    if (props.loggedIn) {
       return (
         <>
-          <button
-            onClick={() => {
-              this.props.showAddFileForm(this.props.showAddFile);
-            }}
-          >
-            + New File
-          </button>
-          {this.addFileForm()}
-          <button
-            onClick={() => {
-              this.props.logout();
-            }}
-          >
-            Logout
-          </button>
+          <Button
+            function={props.showAddFileForm}
+            argument={props.showAddFile}
+            buttontext="+ New File"
+            styles="base green"
+          />
+          {addFileForm()}
+          <Button 
+            function={logout}
+            buttontext="Logout"
+            styles="base blue"
+          />
         </>
       );
     } else {
       return (
         <>
-          <button>Register</button>
-          <button
-            onClick={() => {
-              this.props.toggleLoginModal(this.props.showLoginModal);
-            }}
-          >
-            Log In
-          </button>
+          <Button 
+            function={props.toggleLoginModal}
+            argument={props.showLoginModal}
+            buttontext="Log In"
+            styles="base blue"
+          />
+          <Button styles="base blue" buttontext="Register" />
         </>
       );
     }
   };
 
-  CrashIndicator = () => {
-    if (this.props.appCrashed) {
-      return (
-        <p className="crash-indicator">Whoops. Something went wrong. We're working on it.</p>
-      )
-    }
-  }
-
-  render() {
-    return (
-      <header className="header">
-        {this.CrashIndicator()}
-        <h1>Configz.me</h1>
-        <h3>[Insert captivating slogan here]</h3>
-        <div className="buttons">{this.showbuttons()}</div>
-      </header>
-    );
-  }
+  return (
+    <header className="header">
+      <h1 className="page-title">Configz.me</h1>
+      <div className="buttons">{showbuttons()}</div>
+    </header>
+  );
 }
 
 export default Header;

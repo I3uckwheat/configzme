@@ -1,18 +1,27 @@
-.buttons-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 30px;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.base {
+  font-family: "Roboto", sans-serif;
+  font-size: 14pt;
+  background: transparent;
+  border: 2px solid;
+  width: 125px;
+  height: 35px;
+  margin: 12px 0px;
+  margin-right: 10px;
 }
 
-.psuedo-button {
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #eeeeee;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #cccccc;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #cccccc;
+.blue {
+  color: #0075ff;
+  border-color: #0075ff;
+}
+
+.green {
+  color: #00ff38;
+  border-color: #00ff38;
+}
+
+.white {
+  color: #ffffff;
+  border-color: #ffffff;
 }

@@ -1,15 +1,44 @@
-.landing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.feature {
+  margin: 35px 0px;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.feature-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #0075ff;
+  font-weight: bold;
+}
+
+.bracket {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #00ff38;
+  margin-right: 10px;
+  padding-top: 15px;
+}
+
+.command {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #ffffff;
 }
 
 .commands {
-  margin-top: 60px;
+  margin: 0px 40px;
+}
+
+.cursor {
+  background-color: #ffffff;
+}
+
+.crash-indicator {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #ffffff;
+  text-align: center;
+  margin: 0px 0px;
+  background-color: #c80000;
+  padding: 12px 0;
 }

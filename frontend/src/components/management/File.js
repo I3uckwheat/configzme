@@ -1,19 +1,22 @@
 import React from "react";
-import "../../css/buttons.css";
 import ViewFileModal from "./ViewFileModal";
-import EditFileForm from "./EditFileForm";
+import DeleteFileModal from "./DeleteFileModal";
+import EditFileForm from "./EditFileModal";
 import {downloadFile} from "../../helpers/downloadHelper";
+import Button from "../Button";
+import "../../css/file.css";
 
 class File extends React.Component {
   state = {
     viewFileContents: false,
     fileContents: '',
-    downloadFile: false,
     showEditForm: false,
+    confirmDeleteModal: false,
   };
 
-  getFileContents = async () => {
-    if(this.state.fileContents) return this.state.fileContents;
+  getFileContents = async (contents) => {
+    if(contents) this.setState({fileContents: contents})
+
     try {
       const response = await fetch(`/${this.props.fileName}?api=true`);
       const data = await response.json();
@@ -35,14 +38,16 @@ class File extends React.Component {
     }
   };
 
-  FileContents = () => {
-    return this.state.viewFileContents ? (
-      <ViewFileModal
-        fileContents={this.state.fileContents}
-        toggleModal={this.showFileContents}
-        showModal={this.state.viewFileContents}
-      />
-    ) : null;
+  FileContentsModal = () => {
+    if (this.state.viewFileContents) {
+      return (
+        <ViewFileModal
+          fileContents={this.state.fileContents}
+          toggleModal={this.showFileContents}
+          showModal={this.state.viewFileContents}
+        />
+      )
+    }
   };
 
   editFormToggle = async () => {
@@ -70,54 +75,81 @@ class File extends React.Component {
   
         const data = await sendFile;
         console.log(data);
-        this.getFileContents();
+        
+        this.getFileContents(contents);
       } catch (event) {
         console.log("Error!", event);
       }
     } 
   };
 
-  RenderEditForm = () => {
-    return this.state.showEditForm ? (
-      <EditFileForm
+  EditFileModal = () => {
+    if (this.state.showEditForm) {
+      return (
+        <EditFileForm
         fileContents={this.state.fileContents}
         editFile={this.editFile}
-        file={this.state.file}
         fileName={this.props.fileName}
-        getFileContents={this.getFileContents}
         editFormToggle={this.editFormToggle}
       />
-    ) : null;
+      )
+    }
   };
+
+  deleteModalToggle = () => {
+    if (this.state.confirmDeleteModal) {
+      this.setState({ confirmDeleteModal: false });
+    } else {
+      this.setState({ confirmDeleteModal: true });
+    }
+  }
+
+  DeleteFileModal = () => {
+    if (this.state.confirmDeleteModal) {
+      return (
+        <DeleteFileModal 
+          toggleModal={this.deleteModalToggle}
+          showModal={this.state.confirmDeleteModal}
+          deleteFile={this.props.deleteFile}
+          fileName={this.props.fileName}
+          getFileNames={this.props.getFileNames}
+        />
+      )
+    }
+  }
 
   render() {
     return (
       <div className="file">
-        <p>{this.props.fileName}</p>
-        <div className="file-buttons">
-        <button
-          onClick={() => downloadFile(`${this.props.fileName}.txt`, this.getFileContents)}
-        >
-          Download
-        </button>
-          <button
-            onClick={() => {
-              this.showFileContents();
-            }}
-          >
-            View
-          </button>
-          <button onClick={this.editFormToggle}>Edit</button>
-          <button
-            onClick={() => {
-              this.props.deleteFile(this.props.fileName);
-            }}
-          >
-            Delete
-          </button>
+        <p className="input-label">{this.props.fileName}</p>
+        <div className="buttons">
+          <span className="bracket">></span>
+          <Button
+            function={downloadFile}
+            argument1={`${this.props.fileName}.txt`}
+            argument2={this.getFileContents}
+            styles="base green"
+            buttontext="Download"
+          />
+          <Button 
+            function={this.showFileContents}
+            styles="base blue"
+            buttontext="View"
+          />
+          <Button
+            function={this.editFormToggle}
+            styles="base blue"
+            buttontext="Edit"
+          />
+          <Button 
+            function={this.deleteModalToggle}
+            styles="base white"
+            buttontext="Delete"
+          />
         </div>
-        {this.FileContents()}
-        {this.RenderEditForm()}
+        {this.FileContentsModal()}
+        {this.EditFileModal()}
+        {this.DeleteFileModal()}
       </div>
     );
   }

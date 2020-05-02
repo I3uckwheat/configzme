@@ -1,13 +1,18 @@
 import React from "react";
 import Files from "./Files";
 import Header from "../Header";
+import TitleBar from "../TitleBar";
+
 
 class Management extends React.Component {
   state = {
     showAddFile: false,
     fileName: "",
     filesFound: null,
-    fileNames: null
+    fileNames: null,
+    file: null,
+    enteredFileName: null,
+    NoFileEntered: false,
   };
 
   componentDidMount() {
@@ -30,32 +35,19 @@ class Management extends React.Component {
 
   fileList = () => {
     if (this.state.filesFound) {
-      return (
-        <Files
-          fileNames={this.state.fileNames}
-          deleteFile={this.deleteFile}
-          fileName={this.state.fileName}
-        />
-      );
+      return <Files fileNames={this.state.fileNames} getFileNames={this.getFileNames} />;
     } else {
       return <p>No Files Found.</p>;
     }
-  };
-
-  deleteFile = async filename => {
-    console.log("File Deleted");
-
-    await fetch(`/${filename}?api=true`, {
-      method: "DELETE"
-    });
-    this.getFileNames();
   };
 
   showAddFileForm = showForm => {
     if (showForm) {
       this.setState({ 
         showAddFile: false,
-        fileName: ""
+        fileName: "",
+        NoFileEntered: false,
+        enteredFileName: null
       });
       
     } else {
@@ -90,7 +82,11 @@ class Management extends React.Component {
   };
 
   setFile = event => {
-    this.setState({ file: event.target.files[0] });
+    this.setState({ 
+      file: event.target.files[0],
+      enteredFileName: event.target.files[0].name,
+      NoFileEntered: false
+    });
   };
 
   fileSubmitHandler = event => {
@@ -100,23 +96,29 @@ class Management extends React.Component {
       this.addFile(this.state.file, this.state.fileName);
       this.setState({
         showAddFile: false,
-        fileName: ""
+        fileName: "",
+        file: null
       });
+    } else if (this.state.file === null) {
+      console.log("No file found!");
+      this.setState({NoFileEntered: true})
     }
   };
 
   render() {
     return (
       <>
+        <TitleBar />
         <Header
           loggedIn={this.props.loggedIn}
-          logout={this.props.logout}
           showAddFile={this.state.showAddFile}
           fileName={this.state.fileName}
           showAddFileForm={this.showAddFileForm}
           setFileName={this.setFileName}
           setFile={this.setFile}
           fileSubmitHandler={this.fileSubmitHandler}
+          NoFileEntered={this.state.NoFileEntered}
+          enteredFileName={this.state.enteredFileName}
         />
         <div className="management">{this.fileList()}</div>
       </>

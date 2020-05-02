@@ -1,50 +1,72 @@
 import React from "react";
 import Modal from "../Modal";
+import Button from "../Button";
+import FileInput from "./FileInput";
 
-class AddFileModal extends React.Component {
+function AddFileModal(props) {
+  return (
+    <Modal
+      toggleModal={props.showAddFileForm}
+      showModal={props.showAddFile}
+      isModal={true}
+      title={props.title}
+      error={props.NoFileEntered}
+    >
+      <form
+        className="add-file-form"
+        encType="multipart/form-data"
+        method="POST"
+        autoComplete="off"
+        onSubmit={props.fileSubmitHandler}
+      >
+        <label 
+          htmlFor="filenameinput"
+          className="input-label"
+        >
+          Enter File Name:
+        </label>
+        <input
+          type="text"
+          htmlFor="filenameinput"
+          name="filenameinput"
+          onChange={props.setFileName}
+          value={props.fileName}
+          required="required"
+          className="input-field"
+        ></input>
 
-  render() {
-    return (
-      <Modal toggleModal={this.props.showAddFileForm} showModal={this.props.showAddFile}>
-        <form
-            className={"add-file-form"}
-            encType="multipart/form-data"
-            method="POST"
-            autoComplete="off"
-            onSubmit={this.props.fileSubmitHandler}
-          >
-            
-            <label htmlFor="file-name">Enter File Name:</label>
-            <input
-              type="text"
-              htmlFor="file-name"
-              name="file-name"
-              onChange={this.props.setFileName}
-              value={this.props.fileName}
-            ></input>
-
-            <label htmlFor="file">Add a File:</label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              className="inputfile"
-              onChange={this.props.setFile}
+        <label 
+          htmlFor="file"
+          className="input-label"  
+        >
+          Add a File:
+        </label>
+        <div className="file-input">
+          <FileInput 
+            type="file"
+            name="file"
+            id="file"
+            onChange={props.setFile}
+          />
+          <span className="input-text entered-file">{props.enteredFileName}</span>
+        </div>
+        <div className="buttons">
+          <Button
+              styles="base green"
+              type="submit"
+              value="Submit"
+              buttontext="Submit"
             />
-            <div className="form-buttons">
-              <button 
-                onClick={() => {
-                  this.props.showAddFileForm(this.props.showAddFile);
-                }}
-                className="close-modal">
-                  Cancel
-              </button>
-              <input type="submit" value="Submit"></input>
-            </div>
-          </form>
-      </Modal>
-    );
-  }
+          <Button
+            function={props.showAddFileForm}
+            argument={props.showAddFile}
+            styles="base white"
+            buttontext="Cancel"
+          />
+        </div>
+      </form>
+    </Modal>
+  );
 }
 
 export default AddFileModal;
