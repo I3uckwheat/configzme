@@ -24,10 +24,10 @@ exports.logout = (req, res, next) => {
 exports.register = async (req, res, next) => {
   User.register({ username: req.body.username }, req.body.password, (err) => {
     if (err) {
-      return next(err.message);
+      return res.status(409).send(err.message);
     }
 
-    return res.sendStatus(201);
+    return next();
   });
 
   // try {

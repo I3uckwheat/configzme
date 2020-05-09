@@ -39,7 +39,7 @@ router.get('api', directionController.showDirections);
 router.get('api/init', initController.initialize);
 router.post('api/login', authController.login);
 router.delete('api/logout', authController.logout);
-router.post('api/register', authController.register);
+router.post('api/register', authController.register, authController.login);
 
 router.get('api/files', authController.ensureAuthentication, userController.getAllFiles);
 router.get('api/:file', authController.ensureAuthentication, userController.getFile);
