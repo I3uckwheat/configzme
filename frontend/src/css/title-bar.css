@@ -13,6 +13,7 @@
   width: 16px;
   border-radius: 50%;
   display: inline-block;
+  cursor: pointer;
 }
 
 #red {
