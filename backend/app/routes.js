@@ -52,18 +52,32 @@ router.put('api/:file', authController.ensureAuthentication, upload.single('file
 router.delete('api/:file', authController.ensureAuthentication, userController.deleteFile);
 
 
-// cli 
+/**
+ * CLI
+ */
+// Show directions
 router.get('cli', directionController.showDirections);
+
+// register
 router.post('cli', authController.handleBasicAuth, authController.register, cli.handleRegisterSuccess);
 
+// Updating a file
+router.post('cli/:file/update', 
+  authController.authenticateByHeaders, 
+  upload.single('file'), 
+  userController.upsertFile
+);
+
+// Get single file
 router.get('cli/:file', authController.authenticateByHeaders, userController.getFileCli);
+
+// Upload file
 router.post('cli/:file',
   authController.authenticateByHeaders,
   upload.single('file'),
   userController.addFile
 );
 
-router.put('cli')
 
 router.use('cli', cli.badCommand);
 
