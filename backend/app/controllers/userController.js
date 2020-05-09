@@ -17,6 +17,15 @@ exports.getFile = async (req, res, next) => {
   return res.json({ file: file.contents });
 };
 
+exports.getFileCli = async (req, res, next) => {
+  const file = await File.findOne({ user: req.user.id, name: req.params.file }).exec();
+  if (!file) {
+    return next();
+  }
+
+  return res.send(file.contents);
+};
+
 exports.addFile = async (req, res) => {
   if (!req.file) {
     return res.status(400).send('err_no_file_attached\n');

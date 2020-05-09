@@ -55,11 +55,15 @@ router.delete('api/:file', authController.ensureAuthentication, userController.d
 // cli 
 router.get('cli', directionController.showDirections);
 router.post('cli', authController.handleBasicAuth, authController.register, cli.handleRegisterSuccess);
+
+router.get('cli/:file', authController.authenticateByHeaders, userController.getFileCli);
 router.post('cli/:file',
   authController.authenticateByHeaders,
   upload.single('file'),
   userController.addFile
 );
+
+router.put('cli')
 
 router.use('cli', cli.badCommand);
 
