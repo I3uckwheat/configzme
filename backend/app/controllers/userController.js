@@ -19,15 +19,15 @@ exports.getFile = async (req, res, next) => {
 
 exports.addFile = async (req, res) => {
   if (!req.file) {
-    return res.status(400).send('err_no_file_attached');
+    return res.status(400).send('err_no_file_attached\n');
   }
 
   const fileContents = req.file.buffer.toString();
   if (fileContents === '') {
-    return res.status(400).send('err_empty_file_attached');
+    return res.status(400).send('err_empty_file_attached\n');
   }
 
-  const user = await User.findById(req.user.id).populate('files');
+  const user = await User.findById(req.user.id).populate('files').exec();
   const existingUserFileNames = user.files.map((file) => file.name);
 
   if (!existingUserFileNames.includes(req.params.file)) {
@@ -41,20 +41,20 @@ exports.addFile = async (req, res) => {
     await user.addFile(file);
     await user.save();
 
-    res.sendStatus(201);
+    res.status(201).send('Created Successfully\n');
   } else {
-    res.status(400).send('err_file_already_exists');
+    res.status(400).send('err_file_already_exists\n');
   }
 };
 
 exports.upsertFile = async (req, res) => {
   if (!req.file) {
-    return res.status(400).send('err_no_file_attached');
+    return res.status(400).send('err_no_file_attached\n');
   }
 
   const fileContents = req.file.buffer.toString();
   if (fileContents === '') {
-    return res.status(400).send('err_empty_file_attached');
+    return res.status(400).send('err_empty_file_attached\n');
   }
 
   const userPromise = User.findById(req.user.id).populate('files').exec();
@@ -68,7 +68,7 @@ exports.upsertFile = async (req, res) => {
   const fileWasAdded = await user.addFile(file);
 
   res.status(200);
-  return fileWasAdded ? res.send('file_added') : res.send('file_updated');
+  return fileWasAdded ? res.send('file_added\n') : res.send('file_updated\n');
 };
 
 exports.deleteFile = async (req, res) => {
