@@ -86,9 +86,13 @@ exports.deleteFile = async (req, res) => {
   const fileToRemove = user.files.find((file) => file.name === req.params.file);
   const filesToKeep = user.files.filter((file) => file.name !== req.params.file);
 
+  if (!fileToRemove) {
+    return res.status(404).send("File Not Found\n");
+  }
+
   user.files = filesToKeep;
   await fileToRemove.remove();
   await user.save();
 
-  res.sendStatus(200);
+  res.status(200).send("File Deleted\n");
 };

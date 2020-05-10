@@ -61,19 +61,24 @@ router.get('cli', directionController.showDirections);
 // register
 router.post('cli', authController.handleBasicAuth, authController.register, cli.handleRegisterSuccess);
 
+router.use('cli', authController.authenticateByHeaders);
+
 // Updating a file
 router.post('cli/:file/update', 
-  authController.authenticateByHeaders, 
   upload.single('file'), 
   userController.upsertFile
 );
 
+// Deleting a file
+router.get('cli/:file/destroy', 
+  userController.deleteFile
+);
+
 // Get single file
-router.get('cli/:file', authController.authenticateByHeaders, userController.getFileCli);
+router.get('cli/:file', userController.getFileCli);
 
 // Upload file
 router.post('cli/:file',
-  authController.authenticateByHeaders,
   upload.single('file'),
   userController.addFile
 );
