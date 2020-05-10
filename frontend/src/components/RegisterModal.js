@@ -5,19 +5,53 @@ class RegisterModal extends React.Component{
   state = {
     enteredUsername: '',
     initialPassword: '',
-    confirmedPassword: ''
+    confirmedPassword: '',
+    emptyUsername: false,
+    noPassword: false,
+    pwNoMatch: false
   }
 
   handleUsername = (event) => {
-    this.setState({enteredUsername: event.target.value})
+    this.setState({enteredUsername: event.target.value});
+    if (event.target.value !== "") {
+      this.setState({ emptyUsername: false })
+    }
   }
 
   handleInitialPassword = (event) => {
-    this.setState({initialPassword: event.target.value})
+    this.setState({initialPassword: event.target.value});
+    if (event.target.value !== "") {
+      this.setState({ noPassword: false })
+    }
   }
 
   handleConfirmedPassword = (event) => {
-    this.setState({confirmedPassword: event.target.value})
+    this.setState({confirmedPassword: event.target.value});
+  }
+
+  checkInput = () => {
+    if (this.state.enteredUsername === '') {
+      this.setState({ emptyUsername: true })
+    }
+
+    if (this.state.initialPassword === '') {
+      this.setState({ noPassword: true})
+    } else if (this.state.initialPassword === this.state.confirmedPassword) {
+      this.setState({ pwNoMatch: false })
+      
+    } else {
+      this.setState({ pwNoMatch: true })
+    }
+
+    if (!this.state.emptyUsername && !this.state.pwNoMatch) {
+      const credentials = {
+        "username": this.state.enteredUsername,
+        "password": this.state.confirmedPassword
+      }
+      console.log(credentials);
+      
+      this.props.attemptRegistration();
+    }
   }
   
   render() {
@@ -27,6 +61,9 @@ class RegisterModal extends React.Component{
         showModal={this.props.showRegisterModal}
         isModal ={true}
         title="Register"
+        emptyUsername={this.state.emptyUsername}
+        noPassword={this.state.noPassword}
+        pwNoMatch={this.state.pwNoMatch}
       >
         <p className="input-text">Enter your desired credentials below:</p>
         <form className="login-form">
@@ -34,21 +71,21 @@ class RegisterModal extends React.Component{
               <label htmlFor="username" className="input-label">Choose Username:</label>
               <span>
                 <span className="bracket">></span>
-                <input type="text" name="username" placeholder="Username" className="input-field" onChange={this.handleUsername}></input>
+                <input autoComplete="off" type="text" name="username" placeholder="Username" className="input-field" onChange={this.handleUsername}></input>
               </span>
             </div>
             <div className="input-pair">
               <label htmlFor="password" className="input-label">Set Password:</label>
               <span>
                 <span className="bracket">></span>
-                <input type="text" name="password" placeholder="Password" className="input-field" onChange={this.handleInitialPassword}></input>
+                <input type="password" name="password" placeholder="Password" className="input-field" onChange={this.handleInitialPassword}></input>
               </span>
             </div>
             <div className="input-pair">
               <label htmlFor="password-confirm" className="input-label">Confirm Password:</label>
               <span>
                 <span className="bracket">></span>
-                <input type="text" name="password-confirm" placeholder="Confirm Password" className="input-field" onChange={this.handleConfirmedPassword}></input>
+                <input type="password" name="password-confirm" placeholder="Confirm Password" className="input-field" onChange={this.handleConfirmedPassword}></input>
               </span>
             </div>
             <div>
@@ -58,7 +95,7 @@ class RegisterModal extends React.Component{
                 value="Submit"
                 onClick={event => {
                   event.preventDefault();
-                  this.props.attemptRegistration();
+                  this.checkInput();
                 }}
               ></input>
               <button

@@ -3,8 +3,19 @@ import TitleBar from "./TitleBar";
 import "../css/modal.css";
 
 function Modal(props) {
-  function NoFileError() {
-    return props.error ? <p className="select-file">Select a file</p> : null
+  function errorMessage() {
+    let errorText = null;
+    if (props.NoFileEntered) {
+      errorText = "Select a file";
+    } else if (props.emptyUsername) {
+      errorText = "Username Required"
+    } else if (props.noPassword) {
+      errorText = "Password Required"
+    } else if (props.pwNoMatch) {
+      errorText = "Passwords Must Match"
+    }
+
+    if (errorText) return <p className="select-file">{errorText}</p>;
   }
 
   return (
@@ -21,7 +32,7 @@ function Modal(props) {
           toggleModal={props.toggleModal} 
           showModal={props.showModal}
         />
-        {NoFileError()}
+        {errorMessage()}
         <div className="modal-interior">
           <h1 className="modal-title">{props.title}</h1>
           {props.children}

@@ -10,7 +10,7 @@ function AddFileModal(props) {
       showModal={props.showAddFile}
       isModal={true}
       title={props.title}
-      error={props.NoFileEntered}
+      NoFileEntered={props.NoFileEntered}
     >
       <form
         className="add-file-form"

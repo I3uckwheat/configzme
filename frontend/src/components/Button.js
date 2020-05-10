@@ -11,7 +11,7 @@ function Button(props) {
       {props.buttontext}
     </button>
     )
-  } else {
+  } else if (props.function) {
     return (
       <button 
       className={props.styles}
@@ -22,6 +22,8 @@ function Button(props) {
       {props.buttontext}
     </button>
     )
+  } else {
+    return <button className={props.styles}>{props.buttontext}</button>;
   }
 }
 
