@@ -44,13 +44,7 @@ class RegisterModal extends React.Component{
     }
 
     if (!this.state.emptyUsername && !this.state.pwNoMatch) {
-      const credentials = {
-        "username": this.state.enteredUsername,
-        "password": this.state.confirmedPassword
-      }
-      console.log(credentials);
-      
-      this.props.attemptRegistration();
+      this.props.attemptRegistration(this.state.enteredUsername, this.state.confirmedPassword);
     }
   }
   

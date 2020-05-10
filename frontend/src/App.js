@@ -26,19 +26,23 @@ class App extends React.Component {
     }
   };
 
-  attemptRegistration = async () => {
-    console.log('Registration Attempted');
-    
-    // try {
-    //   const response = await fetch("/register?api=true");
-    //   const data = await response.json();
-
-    //   this.setState({ username: data.username });
-    // } catch (e) {
-    //   this.setState({appCrashed: true})
-    //   console.log("Error!");
-    //   console.log(e);
-    // }
+  attemptRegistration = async (username, password) => {
+    try {
+      const response = await fetch("/register?api=true", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          username,
+          password
+        })
+      });
+        const data = await response.json();
+        console.log(data);
+    } catch (event) {
+      console.log(event);
+    }
   };
 
   attemptLogin = async (username, password) => {
