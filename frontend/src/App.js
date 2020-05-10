@@ -26,6 +26,21 @@ class App extends React.Component {
     }
   };
 
+  attemptRegistration = async () => {
+    console.log('Registration Attempted');
+    
+    // try {
+    //   const response = await fetch("/register?api=true");
+    //   const data = await response.json();
+
+    //   this.setState({ username: data.username });
+    // } catch (e) {
+    //   this.setState({appCrashed: true})
+    //   console.log("Error!");
+    //   console.log(e);
+    // }
+  };
+
   attemptLogin = async (username, password) => {
     console.log(username, password);
     const response = await fetch("/login?api=true", {
@@ -46,7 +61,16 @@ class App extends React.Component {
     if (this.state.appCrashed) {
       return <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />;
     } else {
-      return username ? <Management loggedIn={this.state.username} /> : <Landing attemptLogin={this.attemptLogin} />;
+      if (username) {
+        return <Management loggedIn={this.state.username} />;
+      } else {
+        return (
+          <Landing 
+            attemptLogin={this.attemptLogin}
+            attemptRegistration={this.attemptRegistration}
+          />
+        )
+      }
     }
   };
 

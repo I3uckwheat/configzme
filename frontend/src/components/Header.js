@@ -56,7 +56,12 @@ function Header(props) {
             buttontext="Log In"
             styles="base blue"
           />
-          <Button styles="base blue" buttontext="Register" />
+          <Button 
+            function={props.toggleRegisterModal}
+            argument={props.showRegisterModal}
+            styles="base blue"
+            buttontext="Register"
+          />
         </>
       );
     }

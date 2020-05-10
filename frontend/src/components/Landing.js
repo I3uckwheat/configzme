@@ -1,16 +1,22 @@
 import React from "react";
 import Header from "./Header";
 import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 import TitleBar from "./TitleBar";
 import "../css/landing.css";
 
 class Landing extends React.Component {
   state = {
     showLoginModal: false,
+    showRegisterModal: false,
   }
 
   toggleLoginModal = (modalStatus) => {
     modalStatus ? this.setState({ showLoginModal: false }) : this.setState({ showLoginModal: true });
+  }
+
+  toggleRegisterModal = (modalStatus) => {
+    modalStatus ? this.setState({ showRegisterModal: false }) : this.setState({ showRegisterModal: true });
   }
 
   LoginForm = () => {
@@ -20,6 +26,18 @@ class Landing extends React.Component {
           attemptLogin={this.props.attemptLogin}
           showLoginModal={this.state.showLoginModal} 
           toggleLoginModal={this.toggleLoginModal}
+        />
+      )
+    }
+  }
+
+  RegisterForm = () => {
+    if (this.state.showRegisterModal) {
+      return (
+        <RegisterModal
+          showRegisterModal={this.state.showRegisterModal} 
+          toggleRegisterModal={this.toggleRegisterModal}
+          attemptRegistration={this.props.attemptRegistration}
         />
       )
     }
@@ -94,9 +112,12 @@ class Landing extends React.Component {
           <Header
             toggleLoginModal={this.toggleLoginModal}
             showLoginModal={this.state.showLoginModal}
+            toggleRegisterModal={this.toggleRegisterModal}
+            showRegisterModal={this.state.showRegisterModal}
             appCrashed={this.props.appCrashed}
           />
           {this.LoginForm()}
+          {this.RegisterForm()}
           {this.configzCommands()}
         </div>
       </div>
