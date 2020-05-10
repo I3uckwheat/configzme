@@ -84,7 +84,6 @@ router.get('cli/:file/destroy',
   userController.deleteFile
 );
 
-
 router.use('cli', cli.badCommand);
 
 

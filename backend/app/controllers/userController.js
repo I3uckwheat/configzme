@@ -20,7 +20,7 @@ exports.getFile = async (req, res, next) => {
 exports.getFileCli = async (req, res, next) => {
   const file = await File.findOne({ user: req.user.id, name: req.params.file }).exec();
   if (!file) {
-    return next();
+    return res.status(404).send("File Not Found\n");
   }
 
   return res.send(file.contents);
