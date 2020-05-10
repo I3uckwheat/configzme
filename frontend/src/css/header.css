@@ -11,3 +11,10 @@
   -webkit-text-stroke: 1px #000000;
   margin-left: -2px;
 }
+
+.user {
+  font-family: "Roboto", sans-serif;
+  font-size: 18pt;
+  color: #0075ff;
+  margin: 10px 0px;
+}

@@ -67,9 +67,15 @@ function Header(props) {
     }
   };
 
+  function showUsername() {
+    if (props.loggedIn) {
+      return <p className="user">{`User: ${props.loggedIn}`}</p>;
+    }
+  }
   return (
     <header className="header">
       <h1 className="page-title">Configz.me</h1>
+      {showUsername()}
       <div className="buttons">{showbuttons()}</div>
     </header>
   );
