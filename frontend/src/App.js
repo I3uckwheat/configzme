@@ -7,6 +7,8 @@ class App extends React.Component {
   state = {
     username: null,
     appCrashed: false,
+    usernameTaken: false,
+    badCredentials: false
   };
 
   componentDidMount() {
@@ -27,6 +29,8 @@ class App extends React.Component {
   };
 
   attemptRegistration = async (username, password) => {
+    console.log("Registration Attempted");
+    
     try {
       const response = await fetch("/register?api=true", {
         method: "POST",
@@ -38,15 +42,24 @@ class App extends React.Component {
           password
         })
       });
-        const data = await response.json();
-        console.log(data);
-    } catch (event) {
-      console.log(event);
+      
+      const data = await response.json();
+      console.log(data);
+      
+      const status = response.status;
+      console.log(status);
+      
+      if (status === 409) {
+        this.setState({ usernameTaken: true });
+        console.log(this.state.usernameTaken);
+      }
+      
+    } catch (e) {
+      console.log(e);
     }
   };
 
   attemptLogin = async (username, password) => {
-    console.log(username, password);
     const response = await fetch("/login?api=true", {
       method: "POST",
       headers: {
@@ -59,6 +72,9 @@ class App extends React.Component {
     });
     const status = response.status;
     if (status === 201) this.setState({ username: username });
+    if (status === 403 && username !== '' && password !== '') {
+      this.setState({ badCredentials: true });
+    } 
   };
 
   userView = username => {
@@ -72,6 +88,7 @@ class App extends React.Component {
           <Landing 
             attemptLogin={this.attemptLogin}
             attemptRegistration={this.attemptRegistration}
+            badCredentials={this.state.badCredentials}
           />
         )
       }
