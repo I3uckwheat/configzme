@@ -9,6 +9,12 @@ exports.getAllFiles = async (req, res) => {
   res.json(fileNames);
 };
 
+exports.getAllFilesCli = async (req, res) => {
+  const user = await User.findById(req.user.id).populate('files').exec();
+  const fileNames = user.files.map((file) => file.name);
+  res.send(JSON.stringify(fileNames) + '\n');
+};
+
 exports.getFile = async (req, res, next) => {
   const file = await File.findOne({ user: req.user.id, name: req.params.file }).exec();
   if (!file) {

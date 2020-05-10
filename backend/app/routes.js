@@ -64,6 +64,9 @@ router.post('cli', authController.handleBasicAuth, authController.register, cli.
 // Route gaurd
 router.use('cli', authController.authenticateByHeaders);
 
+// Get all files
+router.get('cli/files', userController.getAllFilesCli);
+
 // Get single file
 router.get('cli/:file', userController.getFileCli);
 
