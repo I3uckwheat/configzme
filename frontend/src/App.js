@@ -7,7 +7,6 @@ class App extends React.Component {
   state = {
     username: '',
     appCrashed: false,
-    usernameTaken: false,
     badCredentials: false,
   };
 
@@ -24,36 +23,6 @@ class App extends React.Component {
     } catch (e) {
       this.setState({appCrashed: true})
       console.log("Error!");
-      console.log(e);
-    }
-  };
-
-  clearRegistrationModal = () => {
-    this.setState({ usernameTaken: false })
-  }
-
-  attemptRegistration = async (username, password) => {
-    try {
-      const response = await fetch("/register?api=true", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ 
-          username,
-          password
-        })
-      });
-      
-      const data = await response;
-      console.log(data);
-
-      const status = response.status;
-
-      if (status === 201) this.attemptLogin(username, password);
-      
-      if (status === 409) this.setState({ usernameTaken: true });
-    } catch (e) {
       console.log(e);
     }
   };
@@ -91,10 +60,7 @@ class App extends React.Component {
         return (
           <Landing 
             attemptLogin={this.attemptLogin}
-            attemptRegistration={this.attemptRegistration}
             badCredentials={this.state.badCredentials}
-            usernameTaken={this.state.usernameTaken}
-            clearRegistrationModal={this.clearRegistrationModal}
           />
         )
       }

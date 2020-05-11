@@ -38,7 +38,6 @@ class RegisterModal extends React.Component {
       this.setState({ noPassword: true})
     } else if (this.state.initialPassword === this.state.confirmedPassword) {
       this.setState({ pwNoMatch: false })
-      
     } else {
       this.setState({ pwNoMatch: true })
     }
