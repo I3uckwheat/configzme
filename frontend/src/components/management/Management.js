@@ -2,6 +2,7 @@ import React from "react";
 import Files from "./Files";
 import Header from "../Header";
 import TitleBar from "../TitleBar";
+import "../../css/management.css";
 
 
 class Management extends React.Component {
@@ -9,9 +10,9 @@ class Management extends React.Component {
     showAddFile: false,
     fileName: "",
     filesFound: null,
-    fileNames: null,
+    fileNames: [],
     file: null,
-    enteredFileName: null,
+    enteredFileName: '',
     NoFileEntered: false,
   };
 
@@ -34,10 +35,10 @@ class Management extends React.Component {
   };
 
   fileList = () => {
-    if (this.state.filesFound) {
+    if (this.state.fileNames.length >= 1) {
       return <Files fileNames={this.state.fileNames} getFileNames={this.getFileNames} />;
     } else {
-      return <p>No Files Found.</p>;
+      return <p className="no-files">No Files Found.</p>;
     }
   };
 
@@ -47,7 +48,7 @@ class Management extends React.Component {
         showAddFile: false,
         fileName: "",
         NoFileEntered: false,
-        enteredFileName: null
+        enteredFileName: ''
       });
       
     } else {
@@ -97,7 +98,8 @@ class Management extends React.Component {
       this.setState({
         showAddFile: false,
         fileName: "",
-        file: null
+        file: null,
+        enteredFileName: '',
       });
     } else if (this.state.file === null) {
       console.log("No file found!");

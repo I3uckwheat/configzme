@@ -72,6 +72,7 @@ function Header(props) {
       return <p className="user">{`User: ${props.loggedIn}`}</p>;
     }
   }
+  
   return (
     <header className="header">
       <h1 className="page-title">Configz.me</h1>

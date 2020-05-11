@@ -9,7 +9,6 @@ class App extends React.Component {
     appCrashed: false,
     usernameTaken: false,
     badCredentials: false,
-    validCredentials: null
   };
 
   componentDidMount() {
@@ -29,9 +28,11 @@ class App extends React.Component {
     }
   };
 
+  clearRegistrationModal = () => {
+    this.setState({ usernameTaken: false })
+  }
+
   attemptRegistration = async (username, password) => {
-    console.log("Registration Attempted");
-    
     try {
       const response = await fetch("/register?api=true", {
         method: "POST",
@@ -48,20 +49,10 @@ class App extends React.Component {
       console.log(data);
 
       const status = response.status;
-      console.log(status);
 
-      if (status === 201) {
-        console.log("Status 201");
-        this.setState({ validCredentials: true })
-        this.attemptLogin(username, password)
-      }
+      if (status === 201) this.attemptLogin(username, password);
       
-      if (status === 409) {
-        console.log("Status 409");
-        this.setState({ usernameTaken: true });
-        console.log(this.state.usernameTaken);
-      }
-      
+      if (status === 409) this.setState({ usernameTaken: true });
     } catch (e) {
       console.log(e);
     }
@@ -87,7 +78,12 @@ class App extends React.Component {
 
   userView = username => {
     if (this.state.appCrashed) {
-      return <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />;
+      return (
+        <Landing 
+          attemptLogin={this.attemptLogin}
+          appCrashed={this.state.appCrashed}
+        />
+      );
     } else {
       if (username) {
         return <Management loggedIn={this.state.username} />;
@@ -97,6 +93,8 @@ class App extends React.Component {
             attemptLogin={this.attemptLogin}
             attemptRegistration={this.attemptRegistration}
             badCredentials={this.state.badCredentials}
+            usernameTaken={this.state.usernameTaken}
+            clearRegistrationModal={this.clearRegistrationModal}
           />
         )
       }

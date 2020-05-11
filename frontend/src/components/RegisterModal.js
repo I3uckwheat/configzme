@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "./Modal";
 
-class RegisterModal extends React.Component{
+class RegisterModal extends React.Component {
   state = {
     enteredUsername: '',
     initialPassword: '',
@@ -58,6 +58,7 @@ class RegisterModal extends React.Component{
         emptyUsername={this.state.emptyUsername}
         noPassword={this.state.noPassword}
         pwNoMatch={this.state.pwNoMatch}
+        usernameTaken={this.props.usernameTaken}
       >
         <p className="input-text">Enter your desired credentials below:</p>
         <form className="login-form">

@@ -16,7 +16,12 @@ class Landing extends React.Component {
   }
 
   toggleRegisterModal = (modalStatus) => {
-    modalStatus ? this.setState({ showRegisterModal: false }) : this.setState({ showRegisterModal: true });
+    if (modalStatus) {
+      this.setState({ showRegisterModal: false });
+      this.props.clearRegistrationModal();
+    } else {
+      this.setState({ showRegisterModal: true });
+    }
   }
 
   LoginForm = () => {
@@ -26,6 +31,7 @@ class Landing extends React.Component {
           attemptLogin={this.props.attemptLogin}
           showLoginModal={this.state.showLoginModal} 
           toggleLoginModal={this.toggleLoginModal}
+          badCredentials={this.props.badCredentials}
         />
       )
     }
@@ -38,6 +44,7 @@ class Landing extends React.Component {
           showRegisterModal={this.state.showRegisterModal} 
           toggleRegisterModal={this.toggleRegisterModal}
           attemptRegistration={this.props.attemptRegistration}
+          usernameTaken={this.props.usernameTaken}
         />
       )
     }

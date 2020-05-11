@@ -6,13 +6,17 @@ function Modal(props) {
   function errorMessage() {
     let errorText = null;
     if (props.NoFileEntered) {
-      errorText = "Select a file";
+      errorText = "Select a file.";
     } else if (props.emptyUsername) {
-      errorText = "Username Required"
+      errorText = "Username Required."
     } else if (props.noPassword) {
-      errorText = "Password Required"
+      errorText = "Password Required."
     } else if (props.pwNoMatch) {
-      errorText = "Passwords Must Match"
+      errorText = "Passwords Must Match."
+    } else if (props.badCredentials) {
+      errorText = "Incorrect Credentials. Please try again."
+    } else if (props.usernameTaken) {
+      errorText = "That username is taken. Please try something else."
     }
 
     if (errorText) return <p className="select-file">{errorText}</p>;

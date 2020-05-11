@@ -51,6 +51,7 @@ class LoginModal extends React.Component{
         title="Login"
         emptyUsername={this.state.emptyUsername}
         noPassword={this.state.emptyPassword}
+        badCredentials={this.props.badCredentials}
       >
         <form className="login-form">
             <div className="input-pair">
