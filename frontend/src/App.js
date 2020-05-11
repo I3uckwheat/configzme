@@ -5,10 +5,11 @@ import "./css/app.css";
 
 class App extends React.Component {
   state = {
-    username: null,
+    username: '',
     appCrashed: false,
     usernameTaken: false,
-    badCredentials: false
+    badCredentials: false,
+    validCredentials: null
   };
 
   componentDidMount() {
@@ -43,13 +44,20 @@ class App extends React.Component {
         })
       });
       
-      const data = await response.json();
+      const data = await response;
       console.log(data);
-      
+
       const status = response.status;
       console.log(status);
+
+      if (status === 201) {
+        console.log("Status 201");
+        this.setState({ validCredentials: true })
+        this.attemptLogin(username, password)
+      }
       
       if (status === 409) {
+        console.log("Status 409");
         this.setState({ usernameTaken: true });
         console.log(this.state.usernameTaken);
       }
@@ -74,7 +82,7 @@ class App extends React.Component {
     if (status === 201) this.setState({ username: username });
     if (status === 403 && username !== '' && password !== '') {
       this.setState({ badCredentials: true });
-    } 
+    }
   };
 
   userView = username => {
