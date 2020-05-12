@@ -65,13 +65,11 @@ class Landing extends React.Component {
       });
       
       const data = await response;
-      console.log(data);
-
-      const status = response.status;
+      const status = data.status;
       if (status === 201) this.props.attemptLogin(username, password);
       if (status === 409) this.setState({ usernameTaken: true });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

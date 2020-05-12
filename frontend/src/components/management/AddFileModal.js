@@ -55,14 +55,16 @@ function AddFileModal(props) {
               styles="base green"
               type="submit"
               value="Submit"
-              buttontext="Submit"
-            />
+          >
+            Submit
+          </Button>
           <Button
             function={props.showAddFileForm}
             argument={props.showAddFile}
             styles="base white"
-            buttontext="Cancel"
-          />
+          >
+            Cancel
+          </Button>
         </div>
       </form>
     </Modal>

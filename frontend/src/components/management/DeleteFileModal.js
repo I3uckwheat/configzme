@@ -23,13 +23,15 @@ function DeleteFileModal(props) {
           function={deleteFile}
           argument={props.fileName}
           styles="base green"
-          buttontext="Delete"
-        />
+        >
+          Delete
+        </Button>
         <Button
           function={props.toggleModal}
           styles="base white"
-          buttontext="Cancel"
-        />
+        >
+          Cancel
+        </Button>
       </div>
     </Modal>
   );
