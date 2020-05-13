@@ -36,17 +36,15 @@ function Header(props) {
           <Button
             function={props.showAddFileForm}
             argument={props.showAddFile}
+            buttontext="+ New File"
             styles="base green"
-          >
-            + New File
-          </Button>
+          />
           {addFileForm()}
           <Button 
             function={logout}
+            buttontext="Logout"
             styles="base blue"
-          >
-            Logout
-          </Button>
+          />
         </>
       );
     } else {
@@ -55,17 +53,15 @@ function Header(props) {
           <Button 
             function={props.toggleLoginModal}
             argument={props.showLoginModal}
+            buttontext="Log In"
             styles="base blue"
-          >
-            Log In
-          </Button>
+          />
           <Button 
             function={props.toggleRegisterModal}
             argument={props.showRegisterModal}
             styles="base blue"
-          >
-            Register
-          </Button>
+            buttontext="Register"
+          />
         </>
       );
     }

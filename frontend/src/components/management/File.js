@@ -129,27 +129,23 @@ class File extends React.Component {
             argument1={`${this.props.fileName}.txt`}
             argument2={this.getFileContents}
             styles="base green"
-          >
-            Download
-          </Button>
+            buttontext="Download"
+          />
           <Button 
             function={this.showFileContents}
             styles="base blue"
-          >
-            View
-          </Button>
+            buttontext="View"
+          />
           <Button
             function={this.editFormToggle}
             styles="base blue"
-          >
-            Edit
-          </Button>
+            buttontext="Edit"
+          />
           <Button 
             function={this.deleteModalToggle}
             styles="base white"
-          >
-            Delete
-          </Button>
+            buttontext="Delete"
+          />
         </div>
         {this.FileContentsModal()}
         {this.EditFileModal()}

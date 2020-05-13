@@ -36,9 +36,8 @@ class EditFileForm extends React.Component {
         <Button
           function={this.props.editFormToggle}
           styles="base green"
-        >
-          Done Editing
-        </Button>
+          buttontext="Done Editing"
+        />
       </Modal>
     )
   }

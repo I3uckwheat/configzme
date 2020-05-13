@@ -8,7 +8,7 @@ function Button(props) {
       className={props.styles}
       onClick={() => props.function(props.argument1, props.argument2)}
     >
-      {props.children}
+      {props.buttontext}
     </button>
     )
   } else if (props.function) {
@@ -19,11 +19,11 @@ function Button(props) {
         props.function(props.argument)
       }}
     >
-      {props.children}
+      {props.buttontext}
     </button>
     )
   } else {
-    return <button className={props.styles}>{props.children}</button>;
+    return <button className={props.styles}>{props.buttontext}</button>;
   }
 }
 

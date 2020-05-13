@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "./Modal";
-import Button from "./Button";
 
 class LoginModal extends React.Component{
   state = {
@@ -54,13 +53,7 @@ class LoginModal extends React.Component{
         noPassword={this.state.emptyPassword}
         badCredentials={this.props.badCredentials}
       >
-        <form 
-          className="login-form"
-          onSubmit={event => {
-            event.preventDefault();
-            this.collectCredentials();
-          }}
-        >
+        <form className="login-form">
             <div className="input-pair">
               <label htmlFor="username" className="input-label">Username:</label>
               <span>
@@ -76,12 +69,15 @@ class LoginModal extends React.Component{
               </span>
             </div>
             <div>
-              <Button
-                styles="base green"
+              <input
+                className="base green"
                 type="submit"
-              >
-                Submit
-              </Button>
+                value="Submit"
+                onClick={event => {
+                  event.preventDefault();
+                  this.collectCredentials();
+                }}
+              ></input>
               <button
                 className="close-modal base white"
                 onClick={() => {

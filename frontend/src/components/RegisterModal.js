@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "./Modal";
-import Button from "./Button";
 
 class RegisterModal extends React.Component {
   state = {
@@ -61,13 +60,7 @@ class RegisterModal extends React.Component {
         usernameTaken={this.props.usernameTaken}
       >
         <p className="input-text">Enter your desired credentials below:</p>
-        <form 
-          className="login-form" 
-          onSubmit={event => {
-            event.preventDefault();
-            this.checkInput();
-          }}
-        >
+        <form className="login-form">
             <div className="input-pair">
               <label htmlFor="username" className="input-label">Choose Username:</label>
               <span>
@@ -90,20 +83,23 @@ class RegisterModal extends React.Component {
               </span>
             </div>
             <div>
-              <Button
-                styles="base green"
+              <input
+                className="base green"
                 type="submit"
                 value="Submit"
-              >
-                Submit
-              </Button>
-              <Button
-                styles="close-modal base white"
-                function={this.props.toggleRegisterModal}
-                argument={this.props.showRegisterModal}
+                onClick={event => {
+                  event.preventDefault();
+                  this.checkInput();
+                }}
+              ></input>
+              <button
+                className="close-modal base white"
+                onClick={() => {
+                  this.props.toggleRegisterModal(this.props.showRegisterModal);
+                }}
               >
                 Cancel
-              </Button>
+              </button>
             </div>
           </form>
       </Modal>
