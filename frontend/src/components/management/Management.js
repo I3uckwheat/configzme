@@ -4,7 +4,6 @@ import Header from "../Header";
 import TitleBar from "../TitleBar";
 import "../../css/management.css";
 
-
 class Management extends React.Component {
   state = {
     showAddFile: false,
@@ -48,7 +47,7 @@ class Management extends React.Component {
         showAddFile: false,
         fileName: "",
         NoFileEntered: false,
-        enteredFileName: ''
+        enteredFileName: ""
       });
       
     } else {
