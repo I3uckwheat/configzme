@@ -11,6 +11,7 @@ function AddFileModal(props) {
       isModal={true}
       title={props.title}
       NoFileEntered={props.NoFileEntered}
+      noFilename={props.noFilename}
     >
       <form
         className="add-file-form"
@@ -31,7 +32,6 @@ function AddFileModal(props) {
           name="filenameinput"
           onChange={props.setFileName}
           value={props.fileName}
-          required="required"
           className="input-field"
         ></input>
 

@@ -5,7 +5,10 @@ import "../css/modal.css";
 function Modal(props) {
   function errorMessage() {
     let errorText = null;
-    if (props.NoFileEntered) {
+    
+    if (props.noFilename) {
+      errorText = "File name required."
+    } else if (props.NoFileEntered) {
       errorText = "Select a file.";
     } else if (props.emptyUsername) {
       errorText = "Username Required."

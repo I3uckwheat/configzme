@@ -24,6 +24,7 @@ function Header(props) {
           NoFileEntered={props.NoFileEntered}
           enteredFileName={props.enteredFileName}
           title="New File"
+          noFilename={props.noFilename}
         />
       )
     }
