@@ -32,11 +32,11 @@ router.use((req, res, next) => {
   }
 });
 
-// router.use('public', 
-//   express.static(`{$__dirname}/public/`, {fallthrough: true}),
-//   express.static(`${__dirname}/public/configz-frontend`, {fallthrough: true}),
-//   (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
-// );
+router.use('public', 
+  express.static(`{$__dirname}/public/`, {fallthrough: true}),
+  express.static(`${__dirname}/public/configz-frontend`, {fallthrough: true}),
+  (req, res) => res.sendFile(`${__dirname}/public/configz-frontend/index.html`)
+);
 
 
 router.get('api', directionController.showDirections);
