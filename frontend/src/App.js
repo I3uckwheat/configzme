@@ -5,8 +5,9 @@ import "./css/app.css";
 
 class App extends React.Component {
   state = {
-    username: null,
+    username: '',
     appCrashed: false,
+    badCredentials: false,
   };
 
   componentDidMount() {
@@ -27,7 +28,6 @@ class App extends React.Component {
   };
 
   attemptLogin = async (username, password) => {
-    console.log(username, password);
     const response = await fetch("/login?api=true", {
       method: "POST",
       headers: {
@@ -40,13 +40,30 @@ class App extends React.Component {
     });
     const status = response.status;
     if (status === 201) this.setState({ username: username });
+    if (status === 403 && username !== '' && password !== '') {
+      this.setState({ badCredentials: true });
+    }
   };
 
   userView = username => {
     if (this.state.appCrashed) {
-      return <Landing attemptLogin={this.attemptLogin} appCrashed={this.state.appCrashed} />;
+      return (
+        <Landing 
+          attemptLogin={this.attemptLogin}
+          appCrashed={this.state.appCrashed}
+        />
+      );
     } else {
-      return username ? <Management loggedIn={this.state.username} /> : <Landing attemptLogin={this.attemptLogin} />;
+      if (username) {
+        return <Management loggedIn={this.state.username} />;
+      } else {
+        return (
+          <Landing 
+            attemptLogin={this.attemptLogin}
+            badCredentials={this.state.badCredentials}
+          />
+        )
+      }
     }
   };
 

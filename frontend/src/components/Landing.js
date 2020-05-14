@@ -1,12 +1,15 @@
 import React from "react";
 import Header from "./Header";
 import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 import TitleBar from "./TitleBar";
 import "../css/landing.css";
 
 class Landing extends React.Component {
   state = {
     showLoginModal: false,
+    showRegisterModal: false,
+    usernameTaken: false,
   }
 
   toggleLoginModal = (modalStatus) => {
@@ -20,9 +23,60 @@ class Landing extends React.Component {
           attemptLogin={this.props.attemptLogin}
           showLoginModal={this.state.showLoginModal} 
           toggleLoginModal={this.toggleLoginModal}
+          badCredentials={this.props.badCredentials}
         />
       )
     }
+  }
+
+  toggleRegisterModal = (modalStatus) => {
+    if (modalStatus) {
+      this.setState({ showRegisterModal: false });
+      this.clearUsernameTakenError();
+    } else {
+      this.setState({ showRegisterModal: true });
+    }
+  }
+
+  RegisterForm = () => {
+    if (this.state.showRegisterModal) {
+      return (
+        <RegisterModal
+          showRegisterModal={this.state.showRegisterModal} 
+          toggleRegisterModal={this.toggleRegisterModal}
+          attemptRegistration={this.attemptRegistration}
+          usernameTaken={this.state.usernameTaken}
+        />
+      )
+    }
+  }
+
+  attemptRegistration = async (username, password) => {
+    try {
+      const response = await fetch("/register?api=true", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          username,
+          password
+        })
+      });
+      
+      const data = await response;
+      console.log(data);
+
+      const status = response.status;
+      if (status === 201) this.props.attemptLogin(username, password);
+      if (status === 409) this.setState({ usernameTaken: true });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  clearUsernameTakenError = () => {
+    this.setState({ usernameTaken: false })
   }
 
   configzCommands = () => {
@@ -94,9 +148,12 @@ class Landing extends React.Component {
           <Header
             toggleLoginModal={this.toggleLoginModal}
             showLoginModal={this.state.showLoginModal}
+            toggleRegisterModal={this.toggleRegisterModal}
+            showRegisterModal={this.state.showRegisterModal}
             appCrashed={this.props.appCrashed}
           />
           {this.LoginForm()}
+          {this.RegisterForm()}
           {this.configzCommands()}
         </div>
       </div>

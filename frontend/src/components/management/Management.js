@@ -2,17 +2,18 @@ import React from "react";
 import Files from "./Files";
 import Header from "../Header";
 import TitleBar from "../TitleBar";
-
+import "../../css/management.css";
 
 class Management extends React.Component {
   state = {
     showAddFile: false,
     fileName: "",
     filesFound: null,
-    fileNames: null,
+    fileNames: [],
     file: null,
-    enteredFileName: null,
+    enteredFileName: '',
     NoFileEntered: false,
+    noFilename: false
   };
 
   componentDidMount() {
@@ -34,10 +35,10 @@ class Management extends React.Component {
   };
 
   fileList = () => {
-    if (this.state.filesFound) {
+    if (this.state.fileNames.length >= 1) {
       return <Files fileNames={this.state.fileNames} getFileNames={this.getFileNames} />;
     } else {
-      return <p>No Files Found.</p>;
+      return <p className="no-files">No Files Found.</p>;
     }
   };
 
@@ -47,7 +48,7 @@ class Management extends React.Component {
         showAddFile: false,
         fileName: "",
         NoFileEntered: false,
-        enteredFileName: null
+        enteredFileName: ""
       });
       
     } else {
@@ -78,6 +79,8 @@ class Management extends React.Component {
   };
 
   setFileName = event => {
+    const filename = this.state.fileName
+    filename === '' ? this.setState({ noFilename: true }) : this.setState({ noFilename: false });
     this.setState({ fileName: event.target.value });
   };
 
@@ -92,12 +95,17 @@ class Management extends React.Component {
   fileSubmitHandler = event => {
     event.preventDefault();
 
-    if (this.state.file && this.state.fileName) {
+    if (this.state.fileName === '') {
+      this.setState({ noFilename: true })
+    }
+
+    if (this.state.file && this.state.fileName.length >= 1) {
       this.addFile(this.state.file, this.state.fileName);
       this.setState({
         showAddFile: false,
         fileName: "",
-        file: null
+        file: null,
+        enteredFileName: '',
       });
     } else if (this.state.file === null) {
       console.log("No file found!");
@@ -119,6 +127,7 @@ class Management extends React.Component {
           fileSubmitHandler={this.fileSubmitHandler}
           NoFileEntered={this.state.NoFileEntered}
           enteredFileName={this.state.enteredFileName}
+          noFilename={this.state.noFilename}
         />
         <div className="management">{this.fileList()}</div>
       </>

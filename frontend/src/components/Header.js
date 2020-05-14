@@ -24,6 +24,7 @@ function Header(props) {
           NoFileEntered={props.NoFileEntered}
           enteredFileName={props.enteredFileName}
           title="New File"
+          noFilename={props.noFilename}
         />
       )
     }
@@ -56,15 +57,27 @@ function Header(props) {
             buttontext="Log In"
             styles="base blue"
           />
-          <Button styles="base blue" buttontext="Register" />
+          <Button 
+            function={props.toggleRegisterModal}
+            argument={props.showRegisterModal}
+            styles="base blue"
+            buttontext="Register"
+          />
         </>
       );
     }
   };
 
+  function showUsername() {
+    if (props.loggedIn) {
+      return <p className="user">{`User: ${props.loggedIn}`}</p>;
+    }
+  }
+  
   return (
     <header className="header">
       <h1 className="page-title">Configz.me</h1>
+      {showUsername()}
       <div className="buttons">{showbuttons()}</div>
     </header>
   );
